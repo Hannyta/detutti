@@ -1,12 +1,14 @@
 import Navbar from "./Navbar"
+import logo from "../assets/Logo.png"
 
 const Header = () => {
   return (
     <header>
         <div className="header-container">
           <div className="logo-container">
-              <a className logo-principal href="/">🛒</a>
-              <h1>Detutti Store</h1>
+              <a>
+                <img className="logo-principal" src={logo} alt="Logo Detutti" />
+              </a>
           </div>
 
           <Navbar/>

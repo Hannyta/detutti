@@ -1,6 +1,7 @@
 import Boton from "./Boton";
+import { MdDeleteForever } from "react-icons/md";
 
-const Carrito = ({productos = [], vaciarCarrito}) => {
+const Carrito = ({productos = [], vaciarCarrito, eliminarDelCarrito}) => {
 
     const total = productos.reduce(( acc, producto) => acc + producto.price, 0);
   
@@ -10,10 +11,20 @@ const Carrito = ({productos = [], vaciarCarrito}) => {
             {productos.length === 0 ? (
                 <p> No hay productos en el carrito.</p> ) : (
                 <>
-                    {productos.map(producto =>(
-                        <p key={producto.id}>
-                            {producto.title}: ${producto.price}
-                        </p>
+                    {productos.map((producto, id) =>(
+                        <div className="carrito-item" key={id}>
+                            <img className="carrito-img" src={producto.image} alt={producto.title} />
+                            <div>
+                                <p>{producto.title} - Precio: {producto.price}$ </p>
+                                <Boton 
+                                    texto={<MdDeleteForever />}
+                                    tipo="success"
+                                    onClick={() => {
+                                        eliminarDelCarrito(producto.id);
+                                    }}
+                                />
+                            </div>
+                        </div>
                     ))}
                     <hr />
                     <h3>Total: ${total.toFixed(2)}</h3>

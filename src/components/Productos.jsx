@@ -11,7 +11,7 @@ const ListaProductos = ({ productos, carrito, agregarAlCarrito }) => {
                     img={producto.image}
                     nombre={producto.title}
                     precio={producto.price}
-                    boton={carrito.find(p => p.id === producto.id) ? '✅ Agregado' : 'Agregar'}
+                    boton={carrito.find(producto => producto.id === producto.id) ? '✅ Agregado' : 'Agregar 🛒'}
                     onClick={()=> agregarAlCarrito(producto)}
                 />
             </li>
