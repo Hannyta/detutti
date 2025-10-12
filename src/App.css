@@ -1,0 +1,200 @@
+#root {
+  max-width: calc(1280px + 300px);
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+section {
+  flex: 1;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100% - 336px);
+  background-color: #fff;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 0.8rem 0;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.logo-principal {
+  font-size: 3.6rem;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #0a0a42;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  background-color: #f7f3ff;
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #1e1e2f;
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.nav a:hover,
+.nav a.active {
+  background-color: #f2ebff;
+  color: #5e2ae8;
+}
+
+main {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: calc(100% -300px);
+  box-sizing: border-box;
+  margin-top: 140px;
+  margin-right: 300px;
+  text-align: left;
+}
+
+ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 0px;
+  list-style: none;
+}
+
+li {
+  height: 100%;
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* Tarjetas */
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  width: 100%;
+  margin: 0;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+img {
+  width: 150px;
+  height: 150px;
+}
+
+/* ---- Botones ---- */
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  color: rgb(225, 224, 231);
+  margin-top: 10px;
+  transition: 0.2s;
+}
+
+/* Variantes */
+.btn.primary {
+  background-color: #2d00f7c4; /* Lila */
+}
+
+.btn.success {
+  background-color: #28a745; /* Verde */
+}
+
+.btn.danger {
+  background-color: #dc3545; /* Rojo */
+}
+
+.btn.secondary {
+  background-color: #6c757d; /* Gris */
+}
+
+/* Hover */
+.btn:hover {
+  opacity: 0.85;
+}
+
+aside {
+  position: fixed;
+  right: 0;
+  top: 0px;
+  height: 100vh;
+  width: 300px;
+  min-width: 250px;
+  background-color: #f5f5f5;
+  padding: 1rem;
+  border-left: 2px solid #ccc;
+  text-align: left;
+  overflow-y: auto;
+}
+
+aside h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #17027e;
+}
+
+aside p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+aside h3 {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: #111;
+}
+
+footer {
+  background-color: #100129;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  position: relative;
+  width: 100%;
+}
