@@ -5,6 +5,8 @@
   text-align: center;
 }
 
+/* Header */
+
 header {
   position: fixed;
   top: 0;
@@ -68,6 +70,7 @@ header h1 {
   color: #005BAC;
 }
 
+/* Main */
 main {
   display: flex;
   gap: 2rem;
@@ -119,7 +122,8 @@ li {
   border-radius: 8px;
 }
 
-/* ---- Botones ---- */
+/* Botones */
+
 .btn {
   padding: 8px 16px;
   border: none;
@@ -131,7 +135,6 @@ li {
   transition: 0.2s;
 }
 
-/* Variantes */
 .btn.primary {
   background-color: #4aaae2;
 }
@@ -148,10 +151,11 @@ li {
   background-color: #005BAC;
 }
 
-/* Hover */
 .btn:hover {
   opacity: 0.85;
 }
+
+/* Carrito */
 
 aside {
   position: fixed;
@@ -200,6 +204,8 @@ aside h3 {
   padding: 0.3rem;
 }
 
+/* Footer */
+
 footer {
   background-color: #FFF9F0;
   color: #333;
@@ -209,4 +215,43 @@ footer {
   bottom: 0;
   left: 0;
   width: calc(100% - 366px)
+}
+
+/* Producto Detalle */
+
+.tarjeta-detalle {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background-color: #fefefe;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.tarjeta-detalle img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+}
+
+.tarjeta-detalle h2 {
+  font-size: 1.6rem;
+  color: #005BAC;
+  margin-bottom: 0.5rem;
+}
+
+.tarjeta-detalle h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.tarjeta-detalle p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
 }

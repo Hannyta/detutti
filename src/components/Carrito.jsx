@@ -2,6 +2,7 @@ import Boton from "./Boton";
 import { MdDeleteForever } from "react-icons/md";
 
 const Carrito = ({productos = [], vaciarCarrito, eliminarDelCarrito}) => {
+    console.log(productos)
 
     const total = productos.reduce(( acc, producto) => acc + producto.price, 0);
   

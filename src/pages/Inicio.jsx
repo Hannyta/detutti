@@ -27,6 +27,7 @@ const Inicio = () => {
     const agregarAlCarrito = (producto) => {
         if (!carrito.find(p => p.id === producto.id)) {
             setCarrito([...carrito, producto]);
+            console.log(carrito)
         }
     };
 
