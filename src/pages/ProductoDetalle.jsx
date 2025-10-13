@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-
-const ProductoDetalle = () => {
+const ProductoDetalle = ({ agregarAlCarrito }) => {
 
     const {id} = useParams();
     const [producto, setProducto] = useState(null);
@@ -39,6 +38,7 @@ const ProductoDetalle = () => {
         Agregar al carrito 🛒
       </button>
     </div>
+    
   )
 }
 

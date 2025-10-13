@@ -1,4 +1,4 @@
-import TarjetaProducto from "./TarjetaProducto";
+import TarjetaProducto from './TarjetaProducto';
 
 const Productos = ({ productos, carrito, agregarAlCarrito, error, cargando }) => {
     if (cargando) return <p>Cargando Productos...</p>
@@ -9,6 +9,7 @@ const Productos = ({ productos, carrito, agregarAlCarrito, error, cargando }) =>
         {productos.map(producto => (
             <li key={producto.id}>
                 <TarjetaProducto
+                    id={producto.id}
                     img={producto.image}
                     nombre={producto.title}
                     precio={producto.price}

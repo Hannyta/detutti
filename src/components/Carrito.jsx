@@ -1,14 +1,13 @@
-import Boton from "./Boton";
-import { MdDeleteForever } from "react-icons/md";
+import Boton from './Boton';
+import { MdDeleteForever } from 'react-icons/md';
 
 const Carrito = ({productos = [], vaciarCarrito, eliminarDelCarrito}) => {
-    console.log(productos)
 
     const total = productos.reduce(( acc, producto) => acc + producto.price, 0);
   
     return (
         <div>
-            <h2>Carrito</h2>
+            <h2>Carrito de compras</h2>
             {productos.length === 0 ? (
                 <p> No hay productos en el carrito.</p> ) : (
                 <>
@@ -19,7 +18,7 @@ const Carrito = ({productos = [], vaciarCarrito, eliminarDelCarrito}) => {
                                 <p>{producto.title} - Precio: {producto.price}$ </p>
                                 <Boton 
                                     texto={<MdDeleteForever />}
-                                    tipo="success"
+                                    tipo="danger"
                                     onClick={() => {
                                         eliminarDelCarrito(producto.id);
                                     }}
@@ -32,7 +31,7 @@ const Carrito = ({productos = [], vaciarCarrito, eliminarDelCarrito}) => {
                     <hr />
                     <Boton
                         texto="Vaciar Carrito"
-                        tipo="danger"
+                        tipo="alt"
                         onClick={() => {
                             if (confirm('¿Seguro que querés vaciar el carrito?')) {
                                 vaciarCarrito();

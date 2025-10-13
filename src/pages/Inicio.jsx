@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import Productos from '../components/Productos';
 import Carrito from '../components/Carrito';
 
-const Inicio = () => {
+const Inicio = ({ carrito, agregarAlCarrito, eliminarDelCarrito, vaciarCarrito}) => {
 
     const [productos, setProductos] = useState([]);
-    const [ carrito, setCarrito] = useState([]);
     const [ error, setError] = useState(null);
     const [ cargando, setCargando] = useState(true)
 
@@ -23,21 +22,6 @@ const Inicio = () => {
             setCargando(false);
         })
     },[]);
-
-    const agregarAlCarrito = (producto) => {
-        if (!carrito.find(p => p.id === producto.id)) {
-            setCarrito([...carrito, producto]);
-            console.log(carrito)
-        }
-    };
-
-    const eliminarDelCarrito = (idEliminar) => {
-        setCarrito(carrito.filter(producto => producto.id !== idEliminar))
-    };
-
-    const vaciarCarrito = () => {
-        setCarrito([]);
-    };
     
   return (
     <main>
