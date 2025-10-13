@@ -6,12 +6,22 @@ const Inicio = () => {
 
     const [productos, setProductos] = useState([]);
     const [ carrito, setCarrito] = useState([]);
+    const [ error, setError] = useState(null);
+    const [ cargando, setCargando] = useState(true)
+
     const URL = 'https://fakestoreapi.com/products/'
 
     useEffect(() => {
         fetch(URL)
         .then(resp => resp.json())
-        .then(dato => setProductos(dato));
+        .then(dato => {
+            setProductos(dato);
+            setCargando(false);
+        })
+        .catch((error) => {
+            setError('Error al cargar productos');
+            setCargando(false);
+        })
     },[]);
 
     const agregarAlCarrito = (producto) => {
@@ -36,6 +46,8 @@ const Inicio = () => {
                 productos={productos}
                 carrito={carrito}
                 agregarAlCarrito={agregarAlCarrito}
+                cargando={cargando}
+                error={error}
             />
         </section>
         <aside>

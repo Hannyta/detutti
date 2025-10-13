@@ -1,7 +1,8 @@
 import TarjetaProducto from "./TarjetaProducto";
 
-const ListaProductos = ({ productos, carrito, agregarAlCarrito }) => {
-    if (!productos.length) return <p>Cargando Productos...</p>;
+const Productos = ({ productos, carrito, agregarAlCarrito, error, cargando }) => {
+    if (cargando) return <p>Cargando Productos...</p>
+    if (error) return <p>{error}</p>
 
   return (
     <ul>
@@ -11,7 +12,7 @@ const ListaProductos = ({ productos, carrito, agregarAlCarrito }) => {
                     img={producto.image}
                     nombre={producto.title}
                     precio={producto.price}
-                    boton={carrito.find(producto => producto.id === producto.id) ? '✅ Agregado' : 'Agregar 🛒'}
+                    boton={carrito.find(p => p.id === producto.id) ? '✅ Agregado' : 'Agregar 🛒'}
                     onClick={()=> agregarAlCarrito(producto)}
                 />
             </li>
@@ -20,4 +21,4 @@ const ListaProductos = ({ productos, carrito, agregarAlCarrito }) => {
   )
 }
 
-export default ListaProductos
+export default Productos
