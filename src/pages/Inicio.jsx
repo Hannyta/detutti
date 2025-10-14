@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import Productos from '../components/Productos';
-import Carrito from '../components/Carrito';
 
-const Inicio = ({ carrito, agregarAlCarrito, eliminarDelCarrito, vaciarCarrito}) => {
+const Inicio = ({ carrito, agregarAlCarrito}) => {
 
     const [productos, setProductos] = useState([]);
     const [ error, setError] = useState(null);
@@ -24,25 +23,16 @@ const Inicio = ({ carrito, agregarAlCarrito, eliminarDelCarrito, vaciarCarrito})
     },[]);
     
   return (
-    <main>
-        <section>
-            <h2>Productos</h2>
-            <Productos
-                productos={productos}
-                carrito={carrito}
-                agregarAlCarrito={agregarAlCarrito}
-                cargando={cargando}
-                error={error}
-            />
-        </section>
-        <aside>
-            <Carrito 
-                productos={carrito} 
-                vaciarCarrito={vaciarCarrito} 
-                eliminarDelCarrito={eliminarDelCarrito} 
-            />
-        </aside>
-    </main> 
+    <>
+        <h2>Productos</h2>
+        <Productos
+            productos={productos}
+            carrito={carrito}
+            agregarAlCarrito={agregarAlCarrito}
+            cargando={cargando}
+            error={error}
+        />
+    </> 
   )
 }
 

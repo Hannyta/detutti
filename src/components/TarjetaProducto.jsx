@@ -9,7 +9,7 @@ const TarjetaProducto = ({ img, nombre, precio, boton, onClick, id}) => {
         <img src={img} alt={nombre} />
         <h3>{nombre}</h3>
       </Link>
-      <p>Precio: ${precio} </p>
+      <h4>Precio: ${precio}</h4>
       <Boton texto={boton} onClick={onClick}
       />
     </div>

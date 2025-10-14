@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import TarjetaProducto from "../components/TarjetaProducto";
-import Boton from "../components/Boton";
 
 const Categoria = ({ nombreCategoria, categoriaAPI, carrito = [], agregarAlCarrito }) => {
   const [productos, setProductos] = useState([]);
@@ -24,23 +23,22 @@ const Categoria = ({ nombreCategoria, categoriaAPI, carrito = [], agregarAlCarri
   if (error) return <p>{error}</p>;
 
   return (
-    <div>
+    <section className="categoria">
       <h2 className="title-section">{nombreCategoria}</h2>
-      <ul>
+      <div className="grid-tarjetas">
         {productos.map(producto => (
-          <li key={producto.id}>
-            <TarjetaProducto
-              id={producto.id}
-              img={producto.image}
-              nombre={producto.title}
-              precio={producto.price}
-              boton={carrito.find(p => p.id === producto.id) ? "✅ Agregado" : "Agregar 🛒"}
-              onClick={() => agregarAlCarrito(producto)}
-            />
-          </li>
+          <TarjetaProducto
+            key={producto.id}
+            id={producto.id}
+            img={producto.image}
+            nombre={producto.title}
+            precio={producto.price}
+            boton={carrito.find(p => p.id === producto.id) ? "✅ Agregado" : "Agregar 🛒"}
+            onClick={() => agregarAlCarrito(producto)}
+          />
         ))}
-      </ul>
-    </div>
+      </div>
+    </section>
   );
 };
 

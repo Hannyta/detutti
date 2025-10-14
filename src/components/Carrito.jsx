@@ -11,8 +11,8 @@ const Carrito = ({productos = [], vaciarCarrito, eliminarDelCarrito}) => {
             {productos.length === 0 ? (
                 <p> No hay productos en el carrito.</p> ) : (
                 <>
-                    {productos.map((producto, id) =>(
-                        <div className="carrito-item" key={id}>
+                    {productos.map((producto) =>(
+                        <div className="carrito-item" key={producto.id}>
                             <img className="carrito-img" src={producto.image} alt={producto.title} />
                             <div>
                                 <p>{producto.title} - Precio: {producto.price}$ </p>
@@ -31,7 +31,7 @@ const Carrito = ({productos = [], vaciarCarrito, eliminarDelCarrito}) => {
                     <hr />
                     <Boton
                         texto="Vaciar Carrito"
-                        tipo="alt"
+                        tipo="danger-2"
                         onClick={() => {
                             if (confirm('¿Seguro que querés vaciar el carrito?')) {
                                 vaciarCarrito();

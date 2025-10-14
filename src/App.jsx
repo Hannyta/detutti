@@ -41,6 +41,7 @@ function App() {
         contadorCarrito={carrito.length}
         onCarritoClick={toggleAside} 
       />
+
       {mostrarAside && (
         <CarritoAside
           productos={carrito}
@@ -49,37 +50,49 @@ function App() {
           eliminarDelCarrito={eliminarDelCarrito}
         />
       )}
-      <Routes>
-        <Route
-          path='/'
-          element={
-            <Inicio
-              carrito={carrito}
-              agregarAlCarrito={agregarAlCarrito}
-              eliminarDelCarrito={eliminarDelCarrito}
-              vaciarCarrito={vaciarCarrito}
-            />
-          }
-        />
-        <Route path='/productos/:id' element={
-          <ProductoDetalle 
-            agregarAlCarrito={agregarAlCarrito} />} />
-        <Route path='/tecnologia' element={
-          <Tecnologia 
-            carrito={carrito} 
-            agregarAlCarrito={agregarAlCarrito}/>} />
-        <Route path='/moda' element={
-          <Moda 
-            carrito={carrito} 
-            agregarAlCarrito={agregarAlCarrito}/>} />
-        <Route path='/accesorios' element={
-          <Accesorios 
-            carrito={carrito} 
-            agregarAlCarrito={agregarAlCarrito}/>} />
-      </Routes>
+      
+      <main>
+        <section>
+            <Routes>
+              <Route
+                path='/'
+                element={
+                  <Inicio
+                    carrito={carrito}
+                    agregarAlCarrito={agregarAlCarrito}
+                    eliminarDelCarrito={eliminarDelCarrito}
+                    vaciarCarrito={vaciarCarrito}
+                  />
+                }
+              />
+              <Route path='/productos/:id' element={
+                <ProductoDetalle 
+                agregarAlCarrito={agregarAlCarrito} />} 
+              />
+              <Route path='/tecnologia' element={
+                <Tecnologia 
+                  carrito={carrito} 
+                  agregarAlCarrito={agregarAlCarrito}
+                />}
+              />
+              <Route path='/moda' element={
+                <Moda 
+                  carrito={carrito} 
+                  agregarAlCarrito={agregarAlCarrito}
+                />} 
+              />
+              <Route path='/accesorios' element={
+                <Accesorios 
+                  carrito={carrito} 
+                  agregarAlCarrito={agregarAlCarrito}
+                />} 
+              />
+            </Routes>
+        </section>
+      </main>
       <Footer/>
-    </>
-  )
-}
+      </>
+    )
+  }
 
 export default App;

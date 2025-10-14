@@ -22,4 +22,4 @@ const Productos = ({ productos, carrito, agregarAlCarrito, error, cargando }) =>
   )
 }
 
-export default Productos
+export default Productos;
