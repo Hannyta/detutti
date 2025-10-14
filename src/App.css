@@ -45,7 +45,7 @@ header h1 {
 }
 
 .nav {
-  background-color: #1e8fff2f;
+  background-color: #1e8fff11;
   padding: 0.5rem 1.2rem;
   border-radius: 8px;
 }
@@ -61,7 +61,7 @@ header h1 {
 
 .nav li {
   text-decoration: none;
-  color: #1e1e2f;
+  color: #005BAC;
   font-weight: 600;
   padding: 0.5rem 0.8rem;
   border-radius: 6px;
@@ -70,7 +70,7 @@ header h1 {
 
 .nav li:hover,
 .nav li.active {
-  background-color: #ebedff;
+  background-color: #ebefff;
   color: #005BAC;
 }
 
@@ -193,13 +193,14 @@ li {
 
 .btn {
   padding: 8px 16px;
-  border: none;
+  border: 1px solid transparent;
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
   color: rgb(241, 240, 245);
   margin-top: 10px;
-  transition: 0.2s;
+  font-size: 1em;
+  transition: border-color 0.25s;
 }
 
 .btn.primary {
@@ -237,6 +238,7 @@ li {
   overflow-y: auto;
   z-index: 1000;          /* encima de todo */
   transition: transform 0.3s ease;
+  transform: translateX(0);
 }
 
 .aside-carrito.oculto {
@@ -256,11 +258,11 @@ li {
   padding: 0.5rem;
 }
 
-aside::-webkit-scrollbar {
+.aside-carrito::-webkit-scrollbar {
   width: 6px;
 }
 
-aside::-webkit-scrollbar-thumb {
+.aside-carrito::-webkit-scrollbar-thumb {
   background-color: #ccc;
   border-radius: 4px;
 }
@@ -299,6 +301,13 @@ aside h3 {
   padding: 0.3rem;
 }
 
+.Botones-carrito {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+  gap: 1.2rem;
+}
+
 /* Footer */
 
 footer {
@@ -322,7 +331,7 @@ footer {
 
 .tarjeta-detalle {
   max-width: 700px;
-  margin: 200px;
+  margin: 20px;
   padding: 2rem;
   border: 1px solid #ccc;
   border-radius: 12px;
@@ -377,19 +386,98 @@ footer {
   color: #005BAC;
 }
 
+html, body {
+  overflow-x: hidden;
+}
+
 /* Responsive */
+
 @media (max-width: 900px) {
   main {
     flex-direction: column;
+    align-items: center;
   }
 
-  aside {
+  .aside-carrito {
+    position: relative;
+    top: 0;
+    right: 0;
     width: 100%;
     max-height: none;
     margin-top: 2rem;
+    transform: translateX(0) !important; /* siempre visible en móvil */
+  }
+
+  .grid-tarjetas {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .tarjeta img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .tarjeta-detalle {
+    margin: 2rem 1rem;
+    width: 90%;
+  }
+
+  .Botones-carrito {
+    flex-direction: column;
+    gap: 0.8rem;
   }
 }
 
-html, body {
-  overflow-x: hidden;
+@media (max-width: 600px) {
+  .tarjeta {
+    padding: 1rem;
+  }
+
+  .tarjeta img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .header-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    height: auto;
+    padding: 0.5rem 1rem;
+  }
+
+  .logo-principal {
+    height: 60px; /* más pequeño para móviles */
+    margin-left: 0;
+  }
+
+  .nav {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .nav ul {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .header-icon {
+    margin-top: 0.5rem;
+  }
+
+  .contador-carrito {
+    top: -6px;
+    right: -6px;
+    width: 14px;
+    height: 14px;
+    font-size: 0.7rem;
+  }
 }
