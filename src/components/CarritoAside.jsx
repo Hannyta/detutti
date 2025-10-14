@@ -1,11 +1,11 @@
-import { IoMdClose } from "react-icons/io";
-import Carrito from "./Carrito";
+import { IoMdClose } from 'react-icons/io';
+import Carrito from './Carrito';
 
 
 const CarritoAside = ({ productos, cerrarAside, vaciarCarrito, eliminarDelCarrito}) => {
 
   return (
-    <aside className="aside-carrito">
+    <aside className="aside-carrito" id="carritoAside">
       <div className="aside-header">
         <button className="cerrar-aside" onClick={cerrarAside}>
           <IoMdClose />

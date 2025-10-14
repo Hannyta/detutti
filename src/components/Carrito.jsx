@@ -45,7 +45,7 @@ const Carrito = ({productos = [], vaciarCarrito, eliminarDelCarrito}) => {
                             onClick={() => {
                                 if (confirm('¿Confirma esta compra?')) {
                                     alert('Muchas gracias por tu compra!');
-                                    Comprar();
+                                    vaciarCarrito();
                                 }}
                             }
                         />

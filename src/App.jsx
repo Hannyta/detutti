@@ -1,21 +1,22 @@
 import './App.css'
 import { Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
-import Header from './components/Header'
-import Footer from './components/Footer'
-import Inicio from './pages/Inicio'
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Inicio from './pages/Inicio';
 import ProductoDetalle from './pages/ProductoDetalle';
 import Tecnologia from './pages/Tecnologia';
 import Moda from './pages/Moda';
 import Accesorios from './pages/Accesorios';
 import CarritoAside from './components/CarritoAside';
-
-
+import Login from './components/Login';
 
 function App() {
 
   const [carrito, setCarrito] = useState([]);
   const [mostrarAside, setMostrarAside] = useState(false);
+  const [usuarioLogueado, setUsuarioLogueado] = useState(false);
+
 
   const agregarAlCarrito = (producto) => {
     if (!carrito.find(p => p.id === producto.id)) {
@@ -32,8 +33,21 @@ function App() {
   };
 
   const toggleAside = () => {
-    setMostrarAside(!mostrarAside);
-  };
+    setMostrarAside(prev => {
+    const nuevoEstado = !prev;
+
+    if (!prev) {
+      setTimeout(() => {
+        const carrito = document.getElementById('carritoAside');
+        if (carrito) {
+          carrito.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100); 
+    }
+
+    return nuevoEstado;
+  });
+};
 
   return (
     <>
@@ -48,6 +62,7 @@ function App() {
           cerrarAside={toggleAside}
           vaciarCarrito={vaciarCarrito}
           eliminarDelCarrito={eliminarDelCarrito}
+          usuarioLogueado={usuarioLogueado}
         />
       )}
       
@@ -87,6 +102,12 @@ function App() {
                   agregarAlCarrito={agregarAlCarrito}
                 />} 
               />
+              <Route path="/login" element={
+                <Login 
+                  setUsuarioLogueado={setUsuarioLogueado} 
+                />} 
+              />
+
             </Routes>
         </section>
       </main>
@@ -95,4 +116,4 @@ function App() {
     )
   }
 
-export default App;
+export default App

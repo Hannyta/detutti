@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import TarjetaProducto from "../components/TarjetaProducto";
+import { useEffect, useState } from 'react';
+import TarjetaProducto from '../components/TarjetaProducto';
 
 const Categoria = ({ nombreCategoria, categoriaAPI, carrito = [], agregarAlCarrito }) => {
   const [productos, setProductos] = useState([]);
