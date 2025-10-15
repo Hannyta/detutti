@@ -75,9 +75,30 @@ header h1 {
 }
 
 .header-icon {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-left: 0;
+}
+
+.header-carrito {
   position: relative;
   display: flex;
   align-items: center;
+  margin: 0;
+}
+
+.icono-user, 
+.icono-carrito {
+  font-size: 1.7rem;
+  color: #3ca8f0;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.icono-user:hover,
+.icono-carrito:hover {
+  color: #005BAC;
 }
 
 .carrito-link {
@@ -88,6 +109,13 @@ header h1 {
 .icono-carrito {
   font-size: 1.8rem;
   color: #3ca8f0;
+}
+
+.login-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
 .contador-carrito {
@@ -415,10 +443,11 @@ html, body {
 .login-form input[type="email"],
 .login-form input[type="password"] {
   width: 100%;
-  padding: 0.8rem;
-  margin-bottom: 1rem;
-  border-radius: 4px;
+  padding: 0.6rem;
+  margin-bottom: 0.4rem;
+  border-radius: 6px;
   border: 1px solid #ccc;
+  box-sizing: border-box;
   transition: border-color 0.3s ease;
 }
 
@@ -430,17 +459,20 @@ html, body {
 .recordarme {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-  justify-content: start;
-  color: #555;
-  font-size: 0.9rem;
+  justify-content: flex-start; 
+  gap: 0.4rem; 
+  width: 100%;
+  margin: 0.6rem 0;
 }
 
-/* Botones */
+.recordarme label {
+  font-size: 0.9rem;
+  color: #333;
+}
+
 .login-form button {
   width: 100%;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.2rem;
 }
 
 /* Responsive */
@@ -473,6 +505,10 @@ html, body {
 }
 
 @media (max-width: 600px) {
+
+  main {
+    padding-top: 220px;
+  }
 
   .aside-carrito {
     position: relative;

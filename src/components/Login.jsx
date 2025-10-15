@@ -38,12 +38,12 @@ const Login = ({ setUsuarioLogueado }) => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <div>
+        <div className="recordarme">
           <input 
             type="checkbox"
             id="recordame"
             checked={recordarme}
-            onChange={(e) => setRecordarme(e.target.che)}
+            onChange={(e) => setRecordarme(e.target.checked)}
           />
           <label htmlFor="recordarme"> Recordarme </label>
         </div>

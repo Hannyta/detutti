@@ -17,14 +17,14 @@ const Header = ({contadorCarrito, onCarritoClick}) => {
           <Navbar/>
 
           <div className="header-icon">
-            <Link to="/login" className="login-link">
+            <Link to="/login" className="login-link" title="Iniciar sesión">
             <FaUserLarge
             className="icono-user"/>
             </Link>
-          </div>
-          <div className="header-icon" onClick={onCarritoClick}>
-              <FaShoppingCart className="icono-carrito"/>
+            <div className="header-carrito" onClick={onCarritoClick}>
+              <FaShoppingCart className="icono-carrito" title="Ver carrito"/>
               {contadorCarrito > 0 && (<span className="contador-carrito">{contadorCarrito}</span>)}
+            </div>
           </div>
         </div>
     </header>
