@@ -9,7 +9,9 @@ import Tecnologia from './pages/Tecnologia';
 import Moda from './pages/Moda';
 import Accesorios from './pages/Accesorios';
 import CarritoAside from './components/CarritoAside';
-import Login from './components/Login';
+import Login from './pages/Login';
+import Compra from './pages/Compra';
+import RutaProtegida from './components/RutaProtegida';
 
 function App() {
 
@@ -107,7 +109,11 @@ function App() {
                   setUsuarioLogueado={setUsuarioLogueado} 
                 />} 
               />
-
+              <Route path="/compra" element={
+                <RutaProtegida usuarioLogueado={usuarioLogueado}>
+                  <Compra productos={carrito} vaciarCarrito={vaciarCarrito}/>
+                </RutaProtegida>}
+              />
             </Routes>
         </section>
       </main>

@@ -1,4 +1,4 @@
-import Boton from './Boton';
+import Boton from '../components/Boton';
 import { useState } from 'react';
 
 const Login = ({ setUsuarioLogueado }) => {
