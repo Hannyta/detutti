@@ -1,8 +1,14 @@
+import styles from './Boton.module.css';
+
 const Boton = ({ texto, onClick, tipo = 'primary', disabled = false }) => {
-  
+  const tipoClases = tipo
+    .split(' ')
+    .map(t => styles[t])
+    .join(' ');
+
   return (
     <button
-      className={`btn ${tipo}`}
+      className={`${styles.btn} ${tipoClases}`}
       onClick={onClick}
       disabled={disabled}
     >
@@ -11,4 +17,4 @@ const Boton = ({ texto, onClick, tipo = 'primary', disabled = false }) => {
   );
 };
 
-export default Boton
+export default Boton;

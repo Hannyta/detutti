@@ -1,0 +1,45 @@
+.tarjetaDetalle {
+  max-width: 700px;
+  margin: 20px;
+  padding: 2rem;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background-color: #fefefe;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.tarjetaDetalle img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+}
+
+.tarjetaDetalle h2 {
+  font-size: 1.6rem;
+  color: #005BAC;
+  margin-bottom: 0.5rem;
+}
+
+.tarjetaDetalle h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.tarjetaDetalle p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
+  text-align: justify;
+}
+
+@media (max-width: 900px) {
+
+  .tarjetaDetalle {
+    margin: 2rem 1rem;
+    width: 90%;
+  }
+}

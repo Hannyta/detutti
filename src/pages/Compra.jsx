@@ -1,7 +1,12 @@
-import { useState } from "react";
-import Boton from "../components/Boton";
+import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import Boton from '../components/Boton';
+import styles from './Compra.module.css';
 
 const Compra = ({ productos = [], vaciarCarrito }) => {
+  const { state } = useLocation();
+  const productosCompra = state?.productos || productos;
+
   const [formData, setFormData] = useState({
     nombre: "",
     dni:"",
@@ -9,7 +14,7 @@ const Compra = ({ productos = [], vaciarCarrito }) => {
     metodoPago: "tarjeta",
   });
 
-  const total = productos.reduce((acc, p) => acc + p.price, 0);
+  const total = productosCompra.reduce((acc, p) => acc + p.price, 0);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,20 +33,24 @@ const Compra = ({ productos = [], vaciarCarrito }) => {
   };
 
   return (
-    <section className="compra-container">
+    <section className={styles.compraContainer}>
       <h2>Finalizar compra</h2>
 
-      <div className="compra-resumen">
+      <div className={styles.compraResumen}>
         <h3>Resumen del pedido:</h3>
-        {productos.map((p) => (
-          <p key={p.id}>
-            {p.title} - ${p.price}
-          </p>
+        {productosCompra.map((p) => (
+          <div className={styles.resumenItem} key={p.id}>
+            <img src={p.image} alt={p.title}/>
+            <div className={styles.resumenInfo}>
+              <p className={styles.resumenTitle}>{p.title}</p>
+              <p className={styles.resumenPrice}>${p.price.toFixed(2)}</p>
+            </div>
+          </div>
         ))}
-        <strong>Total: ${total.toFixed(2)}</strong>
+        <strong className={styles.resumenTotal}>Total: ${total.toFixed(2)}</strong>
       </div>
 
-      <div className="compra-form">
+      <div className={styles.compraForm}>
         <h3>Datos de envío</h3>
         <input
           type="text"

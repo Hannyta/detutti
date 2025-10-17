@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import TarjetaProducto from '../components/TarjetaProducto';
+import styles from './Categoria.module.css';
 
 const Categoria = ({ nombreCategoria, categoriaAPI, carrito = [], agregarAlCarrito }) => {
   const [productos, setProductos] = useState([]);
@@ -23,9 +24,9 @@ const Categoria = ({ nombreCategoria, categoriaAPI, carrito = [], agregarAlCarri
   if (error) return <p>{error}</p>;
 
   return (
-    <section className="categoria">
-      <h2 className="title-section">{nombreCategoria}</h2>
-      <div className="grid-tarjetas">
+    <section className={styles.categoria}>
+      <h2 className={styles.titleSection}>{nombreCategoria}</h2>
+      <div className={styles.gridTarjetas}>
         {productos.map(producto => (
           <TarjetaProducto
             key={producto.id}

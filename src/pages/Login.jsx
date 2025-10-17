@@ -1,8 +1,8 @@
 import Boton from '../components/Boton';
 import { useState } from 'react';
+import styles from './Login.module.css';
 
 const Login = ({ setUsuarioLogueado }) => {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [recordarme, setRecordarme] = useState(false);
@@ -21,9 +21,9 @@ const Login = ({ setUsuarioLogueado }) => {
   };
 
   return (
-    <div className="login-container">
+    <div className={styles.loginContainer}>
       <h2>Iniciar sesión</h2>
-      <form onSubmit={autenticarUsuario} className="login-form">
+      <form onSubmit={autenticarUsuario} className={styles.loginForm}>
         <input 
           type="email"
           placeholder="Correo electrónico"
@@ -38,10 +38,10 @@ const Login = ({ setUsuarioLogueado }) => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <div className="recordarme">
+        <div className={styles.recordarme}>
           <input 
             type="checkbox"
-            id="recordame"
+            id="recordarme"
             checked={recordarme}
             onChange={(e) => setRecordarme(e.target.checked)}
           />
@@ -50,15 +50,17 @@ const Login = ({ setUsuarioLogueado }) => {
         <Boton
           texto="Iniciar sesión"
           tipo="primary"
-          onClick={autenticarUsuario}
+          type="submit"
         />
         <Boton
           texto="Olvidé mi contraseña"
           tipo="secondary"
+          type="button"
         />
         <Boton
           texto="Registrarme"
           tipo="primary"
+          type="button"
         />
       </form>
     </div>

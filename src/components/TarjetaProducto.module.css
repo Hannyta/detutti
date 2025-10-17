@@ -1,0 +1,59 @@
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  min-height: 300px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  width: 100%;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.tarjeta img {
+  width: 150px;
+  height: 150px;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.tarjetaLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+.tarjetaLink:hover img {
+  transform: scale(1.05);
+  transition: transform 0.2s ease-in-out;
+}
+
+.tarjetaLink:hover h3 {
+  color: #005BAC;
+}
+
+@media (max-width: 900px) {
+
+  .tarjeta img {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .tarjeta {
+    padding: 1rem;
+  }
+
+  .tarjeta img {
+    width: 100px;
+    height: 100px;
+  }
+
+}

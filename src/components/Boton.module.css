@@ -1,0 +1,55 @@
+.btn {
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  color: rgb(253, 253, 253);
+  margin-top: 10px;
+  font-size: 1em;
+  transition: border-color 0.25s;
+}
+
+.btn.primary {
+  background-color: #32a3e4;
+}
+
+.btn.danger {
+  background-color: #dd394f;
+}
+
+.btn.danger-2 {
+  background-color: #964fd9;
+}
+
+.btn.secondary {
+  background-color: #005BAC;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+.btn:focus,
+.nav li:focus {
+  outline: 2px solid color #003166;
+  outline-offset: 2px;
+}
+
+.btn.small {
+  padding: 8px 6px;
+  font-size: 1.8rem;
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
+  .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}

@@ -1,0 +1,49 @@
+.loginContainer {
+  max-width: 400px;
+  margin: 100px auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.loginContainer h2 {
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.loginForm input[type="email"],
+.loginForm input[type="password"] {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 0.4rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.loginForm input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.recordarme {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; 
+  gap: 0.4rem; 
+  width: 100%;
+  margin: 0.6rem 0;
+}
+
+.recordarme label {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.loginForm button {
+  width: 100%;
+  margin-bottom: 0.2rem;
+}

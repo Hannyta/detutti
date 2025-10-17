@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import styles from './ProductoDetalle.module.css';
 
 const ProductoDetalle = ({ agregarAlCarrito }) => {
 
@@ -25,7 +26,7 @@ const ProductoDetalle = ({ agregarAlCarrito }) => {
     if(error) return <p>{error}</p>;
 
   return (
-    <div className="tarjeta-detalle">
+    <div className={styles.tarjetaDetalle}>
       <h2>Detalles del Producto Nro {id} </h2>
       <img src={producto.image} alt={producto.title} />
       <h3>{producto.title}</h3>

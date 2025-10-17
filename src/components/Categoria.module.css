@@ -1,0 +1,25 @@
+.gridTarjetas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  width: 100%;
+}
+
+.categoria {
+  margin-bottom: 3rem;
+  padding: 0 0.5rem;
+}
+
+.titleSection {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #005BAC;
+}
+
+@media (max-width: 900px) {
+
+  .gridTarjetas {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+  }
+}
