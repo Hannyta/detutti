@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Boton from '../components/Boton';
 import styles from './ProductoDetalle.module.css';
 
 const ProductoDetalle = ({ agregarAlCarrito }) => {
@@ -32,12 +33,11 @@ const ProductoDetalle = ({ agregarAlCarrito }) => {
       <h3>{producto.title}</h3>
       <p>{producto.description}</p>
       <h5>Precio: {producto.price}</h5>
-      <button
-        className="btn primary"
+      <Boton
+        texto="Agregar al carrito 🛒"
         onClick={() => agregarAlCarrito(producto)}
-      >
-        Agregar al carrito 🛒
-      </button>
+        tipo="primary"
+      />
     </div>
     
   )
