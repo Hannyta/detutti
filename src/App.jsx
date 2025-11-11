@@ -21,9 +21,20 @@ function App() {
 
 
   const agregarAlCarrito = (producto) => {
-    if (!carrito.find(p => p.id === producto.id)) {
-      setCarrito([...carrito, producto]);
+    const yaExiste = carrito.find(p => p.id === producto.id);
+    if (yaExiste) {
+      setCarrito(carrito.map(p =>
+        p.id === producto.id ? { ...p, cantidad: p.cantidad + 1 } : p
+      ));
+    } else {
+      setCarrito([...carrito, { ...producto, cantidad: 1 }]);
     }
+  };
+
+  const actualizarCantidad = (id, nuevaCantidad) => {
+    setCarrito(carrito.map(p =>
+      p.id === id ? { ...p, cantidad: Math.max(1, nuevaCantidad) } : p
+    ));
   };
 
   const eliminarDelCarrito = (idEliminar) => {
@@ -65,6 +76,7 @@ function App() {
           vaciarCarrito={vaciarCarrito}
           eliminarDelCarrito={eliminarDelCarrito}
           usuarioLogueado={usuarioLogueado}
+          actualizarCantidad={actualizarCantidad}
         />
       )}
       

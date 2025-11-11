@@ -4,7 +4,7 @@ const Accesorios = ({ carrito, agregarAlCarrito}) => {
   return (
     <>
       <Categoria
-        nombreCategoria="Accecorios"
+        nombreCategoria="Accesorios"
         categoriaAPI="jewelery"
         carrito={carrito}
         agregarAlCarrito={agregarAlCarrito}

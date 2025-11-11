@@ -3,10 +3,10 @@ import { MdDeleteForever } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import styles from './Carrito.module.css';
 
-const Carrito = ({ productos = [], vaciarCarrito, eliminarDelCarrito, usuarioLogueado }) => {
+const Carrito = ({ productos = [], vaciarCarrito, eliminarDelCarrito, usuarioLogueado, actualizarCantidad }) => {
 
   const navigate = useNavigate();
-  const total = productos.reduce((acc, producto) => acc + producto.price, 0);
+  const total = productos.reduce((acc, producto) => acc + producto.price * producto.cantidad, 0);
 
   const handleCompra = () => {
     if (!usuarioLogueado) {
@@ -24,7 +24,14 @@ const Carrito = ({ productos = [], vaciarCarrito, eliminarDelCarrito, usuarioLog
       <h2>Carrito de compras</h2>
 
       {productos.length === 0 ? (
-        <p>No hay productos en el carrito.</p>
+        <>
+          <p>No tienes ningún producto en tu carrito de compras.</p>
+          <Boton 
+            texto="Continuar comprando"
+            tipo="danger-2"
+            onClick={() => navigate('/')}
+          />
+        </>
       ) : (
         <>
           <ul className={styles.carritoList}>
@@ -34,6 +41,35 @@ const Carrito = ({ productos = [], vaciarCarrito, eliminarDelCarrito, usuarioLog
                 <div className={styles.carritoInfo}>
                   <p className={styles.carritoTitle}>{producto.title}</p>
                   <p className={styles.carritoPrice}>${producto.price.toFixed(2)}</p>
+                  <div className={styles.cantidadControl}>
+                    <button
+                      className={styles.cantidadBtn}
+                      onClick={() => actualizarCantidad(producto.id, producto.cantidad - 1)}
+                      disabled={producto.cantidad <= 1}
+                    >
+                      -
+                    </button>
+                    
+                    <input
+                      type="number"
+                      min="1"
+                      value={producto.cantidad}
+                      onChange={(e) => {
+                        const nuevaCantidad = parseInt(e.target.value);
+                        if (!isNaN(nuevaCantidad) && nuevaCantidad >= 1) {
+                          actualizarCantidad(producto.id, nuevaCantidad);
+                        }
+                      }}
+                      className={styles.cantidadInput}
+                    />
+
+                    <button
+                      className={styles.cantidadBtn}
+                      onClick={() => actualizarCantidad(producto.id, producto.cantidad + 1)}
+                    >
+                      +
+                    </button>
+                  </div>
                   <Boton 
                     texto={<MdDeleteForever />}
                     tipo="danger small"
