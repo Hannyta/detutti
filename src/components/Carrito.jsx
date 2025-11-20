@@ -2,10 +2,13 @@ import Boton from './Boton';
 import { MdDeleteForever } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import styles from './Carrito.module.css';
+import { useContext } from 'react';
+import { CarritoContext } from '../context/CarritoContext';
 
-const Carrito = ({ productos = [], vaciarCarrito, eliminarDelCarrito, usuarioLogueado, actualizarCantidad }) => {
-
+const Carrito = ({ usuarioLogueado }) => {
+  const { carrito: productos, vaciarCarrito, eliminarProducto, actualizarCantidad } = useContext(CarritoContext);
   const navigate = useNavigate();
+
   const total = productos.reduce((acc, producto) => acc + producto.price * producto.cantidad, 0);
 
   const handleCompra = () => {
@@ -32,7 +35,7 @@ const Carrito = ({ productos = [], vaciarCarrito, eliminarDelCarrito, usuarioLog
             onClick={() => navigate('/')}
           />
         </>
-      ) : (
+        ) : (
         <>
           <ul className={styles.carritoList}>
             {productos.map((producto) => (
@@ -40,7 +43,9 @@ const Carrito = ({ productos = [], vaciarCarrito, eliminarDelCarrito, usuarioLog
                 <img src={producto.image} alt={producto.title} className={styles.carritoImg}/>
                 <div className={styles.carritoInfo}>
                   <p className={styles.carritoTitle}>{producto.title}</p>
-                  <p className={styles.carritoPrice}>${producto.price.toFixed(2)}</p>
+                  <p className={styles.carritoPrice}>
+                    {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(producto.price)}
+                  </p>
                   <div className={styles.cantidadControl}>
                     <button
                       className={styles.cantidadBtn}
@@ -73,7 +78,7 @@ const Carrito = ({ productos = [], vaciarCarrito, eliminarDelCarrito, usuarioLog
                   <Boton 
                     texto={<MdDeleteForever />}
                     tipo="danger small"
-                    onClick={() => eliminarDelCarrito(producto.id)}
+                    onClick={() => eliminarProducto(producto.id)}
                   />
                 </div>
               </li>

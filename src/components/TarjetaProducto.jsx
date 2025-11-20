@@ -10,7 +10,9 @@ const TarjetaProducto = ({ img, nombre, precio, boton, onClick, id}) => {
         <img src={img} alt={nombre} />
         <h3>{nombre}</h3>
       </Link>
-      <h4>Precio: ${precio}</h4>
+      <h4>
+        Precio: {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(precio)}
+      </h4>
       <Boton texto={boton} onClick={onClick}
       />
     </div>

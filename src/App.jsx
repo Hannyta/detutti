@@ -1,4 +1,4 @@
-import './App.css'
+import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import Header from './components/Header';
@@ -12,55 +12,29 @@ import CarritoAside from './components/CarritoAside';
 import Login from './pages/Login';
 import Compra from './pages/Compra';
 import RutaProtegida from './components/RutaProtegida';
+import { useContext } from 'react';
+import { CarritoContext } from './context/CarritoContext';
 
 function App() {
-
-  const [carrito, setCarrito] = useState([]);
   const [mostrarAside, setMostrarAside] = useState(false);
   const [usuarioLogueado, setUsuarioLogueado] = useState(false);
 
-
-  const agregarAlCarrito = (producto) => {
-    const yaExiste = carrito.find(p => p.id === producto.id);
-    if (yaExiste) {
-      setCarrito(carrito.map(p =>
-        p.id === producto.id ? { ...p, cantidad: p.cantidad + 1 } : p
-      ));
-    } else {
-      setCarrito([...carrito, { ...producto, cantidad: 1 }]);
-    }
-  };
-
-  const actualizarCantidad = (id, nuevaCantidad) => {
-    setCarrito(carrito.map(p =>
-      p.id === id ? { ...p, cantidad: Math.max(1, nuevaCantidad) } : p
-    ));
-  };
-
-  const eliminarDelCarrito = (idEliminar) => {
-    setCarrito(carrito.filter(producto => producto.id !== idEliminar));
-  };
-
-  const vaciarCarrito = () => {
-    setCarrito([]);
-  };
+  const { carrito } = useContext(CarritoContext);
 
   const toggleAside = () => {
     setMostrarAside(prev => {
-    const nuevoEstado = !prev;
-
-    if (!prev) {
-      setTimeout(() => {
-        const carrito = document.getElementById('carritoAside');
-        if (carrito) {
-          carrito.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }, 100); 
-    }
-
-    return nuevoEstado;
-  });
-};
+      const nuevoEstado = !prev;
+      if (!prev) {
+        setTimeout(() => {
+          const carritoAside = document.getElementById('carritoAside');
+          if (carritoAside) {
+            carritoAside.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 100);
+      }
+      return nuevoEstado;
+    });
+  };
 
   return (
     <>
@@ -71,67 +45,31 @@ function App() {
 
       {mostrarAside && (
         <CarritoAside
-          productos={carrito}
           cerrarAside={toggleAside}
-          vaciarCarrito={vaciarCarrito}
-          eliminarDelCarrito={eliminarDelCarrito}
           usuarioLogueado={usuarioLogueado}
-          actualizarCantidad={actualizarCantidad}
         />
       )}
       
       <main>
         <section>
-            <Routes>
-              <Route
-                path='/'
-                element={
-                  <Inicio
-                    carrito={carrito}
-                    agregarAlCarrito={agregarAlCarrito}
-                    eliminarDelCarrito={eliminarDelCarrito}
-                    vaciarCarrito={vaciarCarrito}
-                  />
-                }
-              />
-              <Route path='/productos/:id' element={
-                <ProductoDetalle 
-                agregarAlCarrito={agregarAlCarrito} />} 
-              />
-              <Route path='/tecnologia' element={
-                <Tecnologia 
-                  carrito={carrito} 
-                  agregarAlCarrito={agregarAlCarrito}
-                />}
-              />
-              <Route path='/moda' element={
-                <Moda 
-                  carrito={carrito} 
-                  agregarAlCarrito={agregarAlCarrito}
-                />} 
-              />
-              <Route path='/accesorios' element={
-                <Accesorios 
-                  carrito={carrito} 
-                  agregarAlCarrito={agregarAlCarrito}
-                />} 
-              />
-              <Route path="/login" element={
-                <Login 
-                  setUsuarioLogueado={setUsuarioLogueado} 
-                />} 
-              />
-              <Route path="/compra" element={
-                <RutaProtegida usuarioLogueado={usuarioLogueado}>
-                  <Compra productos={carrito} vaciarCarrito={vaciarCarrito}/>
-                </RutaProtegida>}
-              />
-            </Routes>
+          <Routes>
+            <Route path='/' element={<Inicio />} />
+            <Route path='/productos/:id' element={<ProductoDetalle />} />
+            <Route path='/tecnologia' element={<Tecnologia />} />
+            <Route path='/moda' element={<Moda />} />
+            <Route path='/accesorios' element={<Accesorios />} />
+            <Route path='/login' element={<Login setUsuarioLogueado={setUsuarioLogueado} />} />
+            <Route path='/compra' element={
+              <RutaProtegida usuarioLogueado={usuarioLogueado}>
+                <Compra />
+              </RutaProtegida>
+            } />
+          </Routes>
         </section>
       </main>
       <Footer/>
-      </>
-    )
-  }
+    </>
+  );
+}
 
-export default App
+export default App;
