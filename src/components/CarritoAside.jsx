@@ -2,7 +2,7 @@ import { IoMdClose } from 'react-icons/io';
 import Carrito from './Carrito';
 import styles from './CarritoAside.module.css';
 
-const CarritoAside = ({ cerrarAside, usuarioLogueado }) => {
+const CarritoAside = ({ cerrarAside }) => {
   return (
     <aside className={styles.asideCarrito} id="carritoAside">
       <div className={styles.asideHeader}>
@@ -11,7 +11,7 @@ const CarritoAside = ({ cerrarAside, usuarioLogueado }) => {
         </button>
       </div>
 
-      <Carrito usuarioLogueado={usuarioLogueado} />
+      <Carrito />
     </aside>
   );
 };

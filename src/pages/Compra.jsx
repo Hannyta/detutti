@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import Boton from '../components/Boton';
 import styles from './Compra.module.css';
+import { CarritoContext } from '../context/CarritoContext';
 
-const Compra = ({ productos = [], vaciarCarrito }) => {
+const Compra = ({ productos = [] }) => {
   const { state } = useLocation();
   const productosCompra = state?.productos || productos;
+  const { vaciarCarrito } = useContext(CarritoContext);
 
   const [formData, setFormData] = useState({
     nombre: "",
@@ -14,21 +16,26 @@ const Compra = ({ productos = [], vaciarCarrito }) => {
     metodoPago: "tarjeta",
   });
 
-  const total = productosCompra.reduce((acc, p) => acc + p.price, 0);
+  const formatoPrecio = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' });
+
+  const total = productosCompra.reduce(
+    (acc, p) => acc + p.price * (p.cantidad || 1),
+    0
+  );
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleConfirmarCompra = () => {
-    if (!formData.nombre || !formData.direccion) {
+  const handleConfirmarCompra = (e) => {
+    e.preventDefault();
+    if (!formData.nombre || !formData.dni || !formData.direccion) {
       alert("Por favor completa todos los campos.");
       return;
     }
-
     if (confirm("¿Confirmás la compra?")) {
       alert("¡Gracias por tu compra!");
-      vaciarCarrito();
+      vaciarCarrito(); 
     }
   };
 
@@ -43,14 +50,18 @@ const Compra = ({ productos = [], vaciarCarrito }) => {
             <img src={p.image} alt={p.title}/>
             <div className={styles.resumenInfo}>
               <p className={styles.resumenTitle}>{p.title}</p>
-              <p className={styles.resumenPrice}>${p.price.toFixed(2)}</p>
+              <p className={styles.resumenPrice}>
+                {formatoPrecio.format(p.price)} x {p.cantidad || 1}
+              </p>
             </div>
           </div>
         ))}
-        <strong className={styles.resumenTotal}>Total: ${total.toFixed(2)}</strong>
+        <strong className={styles.resumenTotal}>
+          Total: {formatoPrecio.format(total)}
+        </strong>
       </div>
 
-      <div className={styles.compraForm}>
+      <form className={styles.compraForm} onSubmit={handleConfirmarCompra}>
         <h3>Datos de envío</h3>
         <input
           type="text"
@@ -75,14 +86,18 @@ const Compra = ({ productos = [], vaciarCarrito }) => {
         />
 
         <label>Método de pago</label>
-        <select name="metodoPago" value={formData.metodoPago} onChange={handleChange}>
+        <select
+          name="metodoPago"
+          value={formData.metodoPago}
+          onChange={handleChange}
+        >
           <option value="tarjeta">Tarjeta</option>
           <option value="efectivo">Efectivo</option>
           <option value="transferencia">Transferencia</option>
         </select>
 
-        <Boton texto="Confirmar compra" tipo="primary" onClick={handleConfirmarCompra} />
-      </div>
+        <Boton texto="Confirmar compra" tipo="primary" />
+      </form>
     </section>
   );
 };

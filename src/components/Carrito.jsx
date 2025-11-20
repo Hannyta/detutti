@@ -4,15 +4,17 @@ import { useNavigate } from 'react-router-dom';
 import styles from './Carrito.module.css';
 import { useContext } from 'react';
 import { CarritoContext } from '../context/CarritoContext';
+import { useAuthContext } from '../context/AuthContext'; 
 
-const Carrito = ({ usuarioLogueado }) => {
+const Carrito = () => {
   const { carrito: productos, vaciarCarrito, eliminarProducto, actualizarCantidad } = useContext(CarritoContext);
+  const { isAuthenticated } = useAuthContext(); 
   const navigate = useNavigate();
 
   const total = productos.reduce((acc, producto) => acc + producto.price * producto.cantidad, 0);
 
   const handleCompra = () => {
-    if (!usuarioLogueado) {
+    if (!isAuthenticated) {
       alert('Debes iniciar sesión para realizar la compra.');
       navigate('/login');
       return;
@@ -35,7 +37,7 @@ const Carrito = ({ usuarioLogueado }) => {
             onClick={() => navigate('/')}
           />
         </>
-        ) : (
+      ) : (
         <>
           <ul className={styles.carritoList}>
             {productos.map((producto) => (

@@ -1,22 +1,33 @@
 import Boton from '../components/Boton';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useAuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import styles from './Login.module.css';
 
-const Login = ({ setUsuarioLogueado }) => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [recordarme, setRecordarme] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const { login } = useAuthContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const savedEmail = localStorage.getItem("userEmail");
+    if (savedEmail) setEmail(savedEmail);
+  }, []);
 
   const autenticarUsuario = (e) => {
     e.preventDefault();
+
     if (email === "test@demo.com" && password === "1234") {
-      setUsuarioLogueado(true);
-      alert("Inicio de sesión exitoso");
-      setEmail("");
-      setPassword("");
-      setRecordarme(false);
+      login(email, recordarme); 
+      if (recordarme) localStorage.setItem("userEmail", email);
+      setErrorMsg("");
+      navigate("/"); 
     } else {
-      alert("Credenciales incorrectas");
+      setErrorMsg("Credenciales incorrectas");
     }
   };
 
@@ -47,21 +58,10 @@ const Login = ({ setUsuarioLogueado }) => {
           />
           <label htmlFor="recordarme"> Recordarme </label>
         </div>
-        <Boton
-          texto="Iniciar sesión"
-          tipo="primary"
-          type="submit"
-        />
-        <Boton
-          texto="Olvidé mi contraseña"
-          tipo="secondary"
-          type="button"
-        />
-        <Boton
-          texto="Registrarme"
-          tipo="primary"
-          type="button"
-        />
+        {errorMsg && <p className={styles.error}>{errorMsg}</p>}
+        <Boton texto="Iniciar sesión" tipo="primary" type="submit" />
+        <Boton texto="Olvidé mi contraseña" tipo="secondary" type="button" />
+        <Boton texto="Registrarme" tipo="primary" type="button" />
       </form>
     </div>
   )

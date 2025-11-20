@@ -2,21 +2,21 @@ import Boton from './Boton';
 import { Link } from 'react-router-dom';
 import styles from './TarjetaProducto.module.css';
 
-const TarjetaProducto = ({ img, nombre, precio, boton, onClick, id}) => {
-
+const TarjetaProducto = ({ img, nombre, precio, boton, onClick, id }) => {
   return (
-    <div className={styles.tarjeta}>
+    <article className={styles.tarjeta}>
       <Link to={`/productos/${id}`} className={styles.tarjetaLink}>
         <img src={img} alt={nombre} />
         <h3>{nombre}</h3>
       </Link>
-      <h4>
-        Precio: {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(precio)}
-      </h4>
-      <Boton texto={boton} onClick={onClick}
+      <h4>Precio: {precio}</h4> {/* 👈 precio ya formateado */}
+      <Boton 
+        texto={boton} 
+        onClick={onClick} 
+        aria-label={`Agregar ${nombre} al carrito`} 
       />
-    </div>
-  )
-}
+    </article>
+  );
+};
 
-export default TarjetaProducto
+export default TarjetaProducto;

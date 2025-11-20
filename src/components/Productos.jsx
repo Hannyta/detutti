@@ -6,6 +6,11 @@ import { CarritoContext } from '../context/CarritoContext';
 const Productos = ({ productos, error, cargando }) => {
   const { carrito, agregarProducto } = useContext(CarritoContext);
 
+  const formatoPrecio = new Intl.NumberFormat('es-AR', { 
+    style: 'currency', 
+    currency: 'ARS' 
+  });
+
   if (cargando) return <p>Cargando Productos...</p>;
   if (error) return <p>{error}</p>;
 
@@ -17,7 +22,7 @@ const Productos = ({ productos, error, cargando }) => {
             id={producto.id}
             img={producto.image}
             nombre={producto.title}
-            precio={producto.price}
+            precio={formatoPrecio.format(producto.price)} 
             boton={carrito.find(p => p.id === producto.id) ? '✅ Agregado' : 'Agregar 🛒'}
             onClick={() => agregarProducto({ ...producto, cantidad: 1 })}
           />
