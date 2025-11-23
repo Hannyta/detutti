@@ -115,6 +115,17 @@
   border-radius: 8px;
 }
 
+.compraForm label {
+  font-weight: 500;
+  color: #333;
+  display: block;
+}
+
+.compraForm h3 {
+  margin-bottom: 1rem;
+  color: #005BAC;
+}
+
 @media (max-width: 900px) {
 
    .compraContainer {

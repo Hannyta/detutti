@@ -43,7 +43,45 @@
   color: #333;
 }
 
-.loginForm button {
+.loginContainer button {
   width: 100%;
-  margin-bottom: 0.2rem;
+  margin-top: 0.4rem;
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.loginContainer .primary {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.loginContainer .primary:hover {
+  background-color: #0056b3;
+}
+
+.loginContainer .secondary {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+.loginContainer .secondary:hover {
+  background-color: #ddd;
+}
+
+.forgotPassword {
+  margin-top: 0.5rem;
+}
+
+.register {
+  margin-top: 1rem;
+}
+
+.register label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+  color: #555;
 }

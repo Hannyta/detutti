@@ -14,6 +14,7 @@ import Registrarme from './pages/Registro';
 import Compra from './pages/Compra';
 import RutaProtegida from './components/RutaProtegida';
 import { CarritoContext } from './context/CarritoContext';
+import ForgotPassword from './pages/ForgotPassword';
 
 function App() {
   const [mostrarAside, setMostrarAside] = useState(false);
@@ -55,6 +56,7 @@ function App() {
             <Route path='/accesorios' element={<Accesorios />} />
             <Route path='/login' element={<Login />} />
             <Route path='/registrarme' element={<Registrarme />} />
+            <Route path='/forgot-password' element={<ForgotPassword />} />
             <Route path='/compra' element={
               <RutaProtegida>
                 <Compra />

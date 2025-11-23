@@ -23,7 +23,6 @@ const Login = () => {
 
     if (email === "test@demo.com" && password === "1234") {
       login(email, recordarme); 
-      if (recordarme) localStorage.setItem("userEmail", email);
       setErrorMsg("");
       navigate("/"); 
     } else {
@@ -60,9 +59,27 @@ const Login = () => {
         </div>
         {errorMsg && <p className={styles.error}>{errorMsg}</p>}
         <Boton texto="Iniciar sesión" tipo="primary" type="submit" />
-        <Boton texto="Olvidé mi contraseña" tipo="secondary" type="button" />
-        <Boton texto="Registrarme" tipo="primary" type="button" />
+      
       </form>
+
+      <div className={styles.forgotPassword}>
+        <Boton 
+          texto="Olvidé mi contraseña" 
+          tipo="secondary" 
+          type="button" 
+          onClick={() => navigate("/forgot-password")} 
+        />
+      </div>
+
+      <div className={styles.register} >
+        <label>¿Aun no tienes una cuenta?</label>
+        <Boton 
+          texto="Registrarme" 
+          tipo="primary" 
+          type="button"
+          onClick={() => navigate("/registrarme")}
+        />
+      </div>
     </div>
   )
 }
