@@ -1,0 +1,142 @@
+/* Overlay del modal */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+/* Caja principal */
+.modalContainer {
+  max-width: 500px;
+  width: 100%;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.15);
+  text-align: left; /* 👈 importante: contenido alineado a la izquierda */
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Header */
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+
+.modalHeaderTitle {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.6rem;
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+.closeButton:hover {
+  color: #000;
+}
+
+/* Grid para inputs */
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.colSpan2 {
+  grid-column: span 2;
+}
+
+.smColSpan1 {
+  grid-column: span 1;
+}
+
+/* Labels e inputs */
+.formLabel {
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: #444;
+  text-align: left; /* 👈 fuerza alineación a la izquierda */
+  display: block;
+}
+
+.formInputBase,
+textarea {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  font-size: 1rem;
+}
+
+.formInputBase:focus,
+textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Acciones */
+.modalActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Botones */
+.btnBase {
+  flex: 1;
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.btnPrimary {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.btnPrimary:hover {
+  background-color: #0056b3;
+}
+
+.btnSecondary {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+.btnSecondary:hover {
+  background-color: #ddd;
+}
+
+.btnSecondary {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+.btnSecondary:hover {
+  background-color: #ddd;
+}

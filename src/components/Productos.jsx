@@ -20,9 +20,9 @@ const Productos = ({ productos, error, cargando }) => {
         <li className={styles.productoItem} key={producto.id}>
           <TarjetaProducto
             id={producto.id}
-            img={producto.image}
-            nombre={producto.title}
-            precio={formatoPrecio.format(producto.price)} 
+            img={producto.imagen}
+            nombre={producto.nombre}
+            precio={formatoPrecio.format(producto.precio)} 
             boton={carrito.find(p => p.id === producto.id) ? '✅ Agregado' : 'Agregar 🛒'}
             onClick={() => agregarProducto({ ...producto, cantidad: 1 })}
           />

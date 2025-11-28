@@ -15,7 +15,7 @@ const ProductoDetalle = () => {
   useEffect(() => {
     const controller = new AbortController();
 
-    fetch(`https://fakestoreapi.com/products/${id}`, { signal: controller.signal })
+    fetch(`https://68e037b793207c4b4793fe2f.mockapi.io/productos/${id}`, { signal: controller.signal })
       .then(resp => resp.json())
       .then(dato => {
         setProducto(dato);
@@ -37,11 +37,11 @@ const ProductoDetalle = () => {
   return (
     <div className={styles.tarjetaDetalle}>
       <h2>Detalles del Producto Nro {id}</h2>
-      <img src={producto.image} alt={producto.title} />
-      <h3>{producto.title}</h3>
+      <img src={producto.imagen} alt={producto.nombre} />
+      <h3>{producto.nombre}</h3>
       <p>{producto.description}</p>
       <h5>
-        Precio: {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(producto.price)}
+        Precio: {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(producto.precio)}
       </h5>
       <Boton
         texto="Agregar al carrito 🛒"

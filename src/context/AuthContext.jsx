@@ -1,44 +1,48 @@
 import { createContext, useContext, useState } from "react";
+import { usuarios } from '../data/usuarios.js';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
-    // Inicializar usuario desde localStorage si ya estaba guardado
-    const email = localStorage.getItem("userEmail");
-    const nombre = localStorage.getItem("userNombre");
-    return email && nombre ? { email, nombre } : null;
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
   });
 
-  const login = (email, recordarme) => {
-    // Recuperar nombre guardado
-    let nombre = localStorage.getItem("userNombre");
+  const login = (email, password, recordarme) => {
+    
+    const foundUser = usuarios.find(
+      u => u.usuario === email && u.password === password
+    );
 
-    // Caso especial: usuario demo
-    if (email === "test@demo.com") {
-      nombre = "Usuario Demo";
-    }
+    if (foundUser) {
+      const newUser = {
+        email: foundUser.usuario,
+        nombre: foundUser.nombre,
+        rol: foundUser.rol
+      };
 
-    setUser({ email, nombre });
+      setUser(newUser);
 
-    if (recordarme) {
-      localStorage.setItem("userEmail", email);
-      if (nombre) localStorage.setItem("userNombre", nombre);
+      if (recordarme) {
+        localStorage.setItem("user", JSON.stringify(newUser));
+      }
+
+      return { success: true, mensaje: `Bienvenido ${foundUser.nombre}` };
+    } else {
+      return { success: false, mensaje: "Usuario o contraseña incorrectos" };
     }
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem("userEmail");
-    localStorage.removeItem("userPassword");
-    localStorage.removeItem("userNombre");
+    localStorage.removeItem("user");
   };
 
   const register = (email, password, nombre) => {
-    setUser({ email, nombre });
-    localStorage.setItem("userEmail", email);
-    localStorage.setItem("userPassword", password);
-    localStorage.setItem("userNombre", nombre);
+    const newUser = { email, nombre, rol: "cliente" };
+    setUser(newUser);
+    localStorage.setItem("user", JSON.stringify(newUser));
   };
 
   const isAuthenticated = !!user;

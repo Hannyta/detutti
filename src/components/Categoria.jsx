@@ -17,7 +17,7 @@ const Categoria = ({ nombreCategoria, categoriaAPI }) => {
   useEffect(() => {
     const controller = new AbortController();
 
-    fetch(`https://fakestoreapi.com/products/category/${categoriaAPI}`, { signal: controller.signal })
+    fetch(`https://68e037b793207c4b4793fe2f.mockapi.io/products/category/${categoriaAPI}`, { signal: controller.signal })
       .then(res => res.json())
       .then(data => {
         setProductos(data);

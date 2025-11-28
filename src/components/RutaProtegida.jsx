@@ -1,10 +1,21 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 
-const RutaProtegida = ({ children }) => {
-  const { isAuthenticated } = useAuthContext();
+const RutaProtegida = ({ children, rolRequerido }) => {
+  const { isAuthenticated, user } = useAuthContext();
+  const location = useLocation();
 
-  return isAuthenticated ? children : <Navigate to="/login" replace />;
+  if (!isAuthenticated) {
+    
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  if (rolRequerido && user?.rol !== rolRequerido) {
+ 
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
 };
 
 export default RutaProtegida;

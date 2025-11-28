@@ -15,6 +15,7 @@ import Compra from './pages/Compra';
 import RutaProtegida from './components/RutaProtegida';
 import { CarritoContext } from './context/CarritoContext';
 import ForgotPassword from './pages/ForgotPassword';
+import Admin from './pages/Admin';
 
 function App() {
   const [mostrarAside, setMostrarAside] = useState(false);
@@ -39,7 +40,7 @@ function App() {
     <>
       <Header 
         contadorCarrito={carrito.length}
-        onCarritoClick={toggleAside} 
+        onCarritoClick={toggleAside}
       />
 
       {mostrarAside && (
@@ -60,6 +61,11 @@ function App() {
             <Route path='/compra' element={
               <RutaProtegida>
                 <Compra />
+              </RutaProtegida>
+            } />
+            <Route path='/admin' element={
+              <RutaProtegida rolRequerido="admin">
+                <Admin />
               </RutaProtegida>
             } />
           </Routes>

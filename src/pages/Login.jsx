@@ -14,21 +14,25 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const savedEmail = localStorage.getItem("userEmail");
-    if (savedEmail) setEmail(savedEmail);
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      const parsed = JSON.parse(savedUser);
+      setEmail(parsed.email);
+    }
   }, []);
 
   const autenticarUsuario = (e) => {
     e.preventDefault();
 
-    if (email === "test@demo.com" && password === "1234") {
-      login(email, recordarme); 
+    const resultado = login(email, password, recordarme);
+
+    if (resultado?.success) {
       setErrorMsg("");
-      navigate("/"); 
-    } else {
-      setErrorMsg("Credenciales incorrectas");
-    }
-  };
+      navigate("/");
+      } else {
+      setErrorMsg(resultado?.mensaje || "Credenciales incorrectas");
+      }
+    };
 
   return (
     <div className={styles.loginContainer}>

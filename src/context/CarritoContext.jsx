@@ -45,7 +45,7 @@ export const CarritoProvider = ({ children }) => {
   const vaciarCarrito = () => setCarrito([]);
 
   // 💰 Calcular total
-  const total = carrito.reduce((acc, p) => acc + p.price * p.cantidad, 0);
+  const total = carrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
 
   return (
     <CarritoContext.Provider

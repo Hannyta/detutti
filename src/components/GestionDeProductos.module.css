@@ -1,0 +1,224 @@
+/* Contenedor principal */
+.gestionContainer {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.1);
+}
+
+/* Header */
+.gestionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.gestionTitulo {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Botón agregar */
+.btnAgregar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #007bff;
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btnAgregar:hover {
+  background-color: #0056b3;
+}
+
+/* Card de producto */
+.productoCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: box-shadow 0.3s ease;
+}
+
+.productoCard:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Imagen */
+.productoImagen {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 1rem;
+}
+
+/* Info */
+.productoInfo {
+  flex-grow: 1;
+}
+
+.productoNombre {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.4rem;
+}
+
+.productoPrecio {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #007bff;
+}
+
+/* Acciones */
+.acciones {
+  display: flex;
+  gap: 0.6rem;
+}
+
+/* Botón editar */
+.btnEditar {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background-color: #333;
+  color: #fff;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btnEditar:hover {
+  background-color: #111;
+}
+
+/* Botón eliminar */
+.btnEliminar {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background-color: #f9dcdc;
+  color: #c00;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btnEliminar:hover {
+  background-color: #f5b5b5;
+}
+
+/* Modal de confirmación */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.modalContainer {
+  background: #fff;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 100%;
+  padding: 2rem;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.modalIcon {
+  background-color: #fdd;
+  padding: 0.8rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalTitle {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.modalText {
+  font-size: 0.95rem;
+  color: #555;
+  margin-top: 0.2rem;
+}
+
+.modalBody {
+  margin-bottom: 1.2rem;
+  color: #444;
+}
+
+.modalActions {
+  display: flex;
+  gap: 1rem;
+}
+
+.btnCancel {
+  flex: 1;
+  padding: 0.6rem;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  font-weight: 600;
+  color: #333;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btnCancel:hover {
+  background-color: #eee;
+}
+
+.btnDelete {
+  flex: 1;
+  padding: 0.6rem;
+  border-radius: 6px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #c00;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btnDelete:hover {
+  background-color: #900;
+}
