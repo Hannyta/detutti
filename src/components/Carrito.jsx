@@ -48,6 +48,12 @@ const Carrito = () => {
                   <p className={styles.carritoPrice}>
                     {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(producto.price)}
                   </p>
+
+                  {/* 👇 Mostrar cuotas si aplica */}
+                  {producto.aplicaCuotas && (
+                    <p className={styles.cuotas}>Hasta 6 cuotas sin interés</p>
+                  )}
+
                   <div className={styles.cantidadControl}>
                     <button
                       className={styles.cantidadBtn}

@@ -222,3 +222,15 @@
 .btnDelete:hover {
   background-color: #900;
 }
+
+.productoCuotas {
+  font-size: 0.9rem;
+  color: var(--color-secundario);
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.productoCuotas span {
+  font-weight: 700;
+  color: var(--color-principal);
+}

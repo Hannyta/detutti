@@ -136,3 +136,10 @@
     font-size: 0.75rem;
   }
 }
+
+.cuotas {
+  font-size: 0.9rem;
+  color: #005BAC; /* azul Detutti */
+  font-style: italic;
+  margin-top: -0.3rem;
+}

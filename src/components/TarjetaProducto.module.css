@@ -37,6 +37,13 @@
   color: #005BAC;
 }
 
+.cuotas {
+  font-size: 0.85rem;
+  color: #005BAC; /* azul Detutti */
+  font-style: italic;
+  margin-top: 0.2rem;
+}
+
 @media (max-width: 900px) {
 
   .tarjeta img {

@@ -28,7 +28,14 @@ export const ProductosProvider = ({ children }) => {
       if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
 
       const datos = await respuesta.json();
-      setProductos(datos);
+
+      // 👇 Aquí aplicamos la lógica de cuotas
+      const productosConCuotas = datos.map(p => ({
+        ...p,
+        aplicaCuotas: p.categoria === "tecnologia" || p.precio > 200000
+      }));
+
+      setProductos(productosConCuotas);
 
     } catch (error) {
       manejarError(error, "Error al cargar los productos", setError);
@@ -51,9 +58,16 @@ export const ProductosProvider = ({ children }) => {
       if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
 
       const nuevoProducto = await respuesta.json();
-      setProductos(prev => [...prev, nuevoProducto]);
 
-      return nuevoProducto;
+      // 👇 Aplicamos la misma lógica al nuevo producto
+      const productoConCuotas = {
+        ...nuevoProducto,
+        aplicaCuotas: nuevoProducto.categoria === "tecnologia" || nuevoProducto.precio > 200000
+      };
+
+      setProductos(prev => [...prev, productoConCuotas]);
+
+      return productoConCuotas;
 
     } catch (error) {
       manejarError(error, "Hubo un problema al agregar el producto.", setError);
@@ -77,11 +91,18 @@ export const ProductosProvider = ({ children }) => {
       if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
 
       const productoActualizado = await respuesta.json();
+
+      // 👇 Recalcular aplicaCuotas
+      const productoConCuotas = {
+        ...productoActualizado,
+        aplicaCuotas: productoActualizado.categoria === "tecnologia" || productoActualizado.precio > 200000
+      };
+
       setProductos(prev =>
-        prev.map(p => p.id === productoActualizado.id ? productoActualizado : p)
+        prev.map(p => p.id === productoConCuotas.id ? productoConCuotas : p)
       );
 
-      return productoActualizado;
+      return productoConCuotas;
 
     } catch (error) {
       manejarError(error, "Hubo un problema al editar el producto.", setError);
@@ -92,20 +113,20 @@ export const ProductosProvider = ({ children }) => {
   };
 
   const eliminarProducto = async (id) => {
-  try {
-    setLoadingEliminar(true);
-    setError(null);
-    const respuesta = await fetch(`${API}/${id}`, { method: "DELETE" });
-    if (!respuesta.ok) throw new Error("Error al eliminar");
-    setProductos(prev => prev.filter(p => p.id !== id));
-    return true;
-  } catch (error) {
-    manejarError(error, "Hubo un problema al eliminar el producto.", setError);
-    return false;
-  } finally {
-    setLoadingEliminar(false);
-  }
-};
+    try {
+      setLoadingEliminar(true);
+      setError(null);
+      const respuesta = await fetch(`${API}/${id}`, { method: "DELETE" });
+      if (!respuesta.ok) throw new Error("Error al eliminar");
+      setProductos(prev => prev.filter(p => p.id !== id));
+      return true;
+    } catch (error) {
+      manejarError(error, "Hubo un problema al eliminar el producto.", setError);
+      return false;
+    } finally {
+      setLoadingEliminar(false);
+    }
+  };
 
   return (
     <ProductosContext.Provider value={{
