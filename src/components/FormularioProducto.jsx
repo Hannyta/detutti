@@ -2,12 +2,13 @@ import { useState } from "react";
 import { useProductosContext } from "../context/ProductosContext";
 import styles from './FormularioProducto.module.css';
 import { IoClose } from "react-icons/io5";
+import { NumericFormat } from "react-number-format";
 
 const FormularioProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }) => {
   const [producto, setProducto] = useState(productoInicial);
   const { agregarProducto, editarProducto } = useProductosContext();
 
-  // Manejar cambios en los inputs
+  // Manejar cambios en los inputs genéricos
   const manejarChange = (evento) => {
     const { name, value } = evento.target;
     setProducto({ ...producto, [name]: value });
@@ -63,17 +64,22 @@ const FormularioProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }
               {/* Precio */}
               <div className={`${styles.colSpan2} ${styles.smColSpan1}`}>
                 <label className={styles.formLabel}>Precio</label>
-                <input
-                  type="number"
+                <NumericFormat
+                  thousandSeparator="."
+                  decimalSeparator=","
+                  prefix="$"
                   name="precio"
                   id="precio"
                   className={styles.formInputBase}
-                  placeholder="$0.00"
+                  placeholder="$0"
                   value={producto.precio || ""}
-                  onChange={manejarChange}
+                  onValueChange={(val) => {
+                    setProducto({ ...producto, precio: val.floatValue });
+                  }}
                   required
-                  min="0"
-                  step="any"
+                  decimalScale={0}
+                  fixedDecimalScale={false}
+                  allowNegative={false}
                 />
               </div>
 
@@ -97,7 +103,7 @@ const FormularioProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }
                 <label className={styles.formLabel}>SubCategoria</label>
                 <input
                   type="text"
-                  name="SubCategoria"
+                  name="subCategoria"
                   id="SubCategoria"
                   className={styles.formInputBase}
                   placeholder="Ingrese la Sub-categoria"
