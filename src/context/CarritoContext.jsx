@@ -1,51 +1,56 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useMemo } from 'react';
 
 export const CarritoContext = createContext();
 
 export const CarritoProvider = ({ children }) => {
-  // Inicializamos el carrito leyendo de localStorage
   const [carrito, setCarrito] = useState(() => {
-    const data = localStorage.getItem('carrito');
-    return data ? JSON.parse(data) : [];
+    try {
+      const data = localStorage.getItem('carrito');
+      return data ? JSON.parse(data) : [];
+    } catch {
+      return [];
+    }
   });
 
-  // Guardamos el carrito en localStorage cada vez que cambia
   useEffect(() => {
     localStorage.setItem('carrito', JSON.stringify(carrito));
   }, [carrito]);
 
-  // ➕ Agregar producto
   const agregarProducto = (producto) => {
-    setCarrito((prev) => {
-      const existe = prev.find((p) => p.id === producto.id);
+    const productoNormalizado = {
+      ...producto,
+      precio: Number(producto.precio), // 👈 aseguramos número
+    };
+
+    setCarrito(prev => {
+      const existe = prev.find(p => p.id === productoNormalizado.id);
       if (existe) {
-        return prev.map((p) =>
-          p.id === producto.id ? { ...p, cantidad: p.cantidad + 1 } : p
+        return prev.map(p =>
+          p.id === productoNormalizado.id ? { ...p, cantidad: p.cantidad + 1 } : p
         );
       }
-      return [...prev, { ...producto, cantidad: 1 }];
+      return [...prev, { ...productoNormalizado, cantidad: 1 }];
     });
   };
 
-  // ➖ Eliminar producto
   const eliminarProducto = (id) => {
-    setCarrito((prev) => prev.filter((p) => p.id !== id));
+    setCarrito(prev => prev.filter(p => p.id !== id));
   };
 
-  // 🔄 Actualizar cantidad
   const actualizarCantidad = (id, cantidad) => {
-    setCarrito((prev) =>
-      prev.map((p) =>
-        p.id === id ? { ...p, cantidad } : p
-      )
+    setCarrito(prev =>
+      cantidad > 0
+        ? prev.map(p => p.id === id ? { ...p, cantidad } : p)
+        : prev.filter(p => p.id !== id)
     );
   };
 
-  // 🧹 Vaciar carrito
   const vaciarCarrito = () => setCarrito([]);
 
-  // 💰 Calcular total
-  const total = carrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
+  const total = useMemo(
+    () => carrito.reduce((acc, p) => acc + (Number(p.precio) || 0) * p.cantidad, 0),
+    [carrito]
+  );
 
   return (
     <CarritoContext.Provider

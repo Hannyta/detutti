@@ -7,13 +7,22 @@ const Moda = () => {
       <div>
         <Categoria
           nombreCategoria="Moda de Caballero"
-          categoriaAPI="men's clothing" 
+          categoriaAPI="Moda"
+          subCategoriaAPI="Hombre"
         />
       </div>
       <div>
         <Categoria
           nombreCategoria="Moda de Dama"
-          categoriaAPI="women's clothing" 
+          categoriaAPI="Moda"
+          subCategoriaAPI="Mujer"
+        />
+      </div>
+      <div>
+        <Categoria
+          nombreCategoria="Moda Infantil"
+          categoriaAPI="Moda"
+          subCategoriaAPI="Infantil"
         />
       </div>
     </>

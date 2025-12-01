@@ -12,7 +12,7 @@ const ProductoDetalle = () => {
   const { agregarProducto } = useContext(CarritoContext);
 
   const producto = productos.find(p => p.id === id);
-  const [cantidad, setCantidad] = useState(1); // 👈 estado para la cantidad
+  const [cantidad, setCantidad] = useState(1);
 
   if (cargando) return <p>Cargando producto...</p>;
   if (error) return <p>{error}</p>;
@@ -24,19 +24,36 @@ const ProductoDetalle = () => {
 
   return (
     <div className={styles.detalleContainer}>
+      {/* Galería de imágenes */}
       <div className={styles.galeria}>
-        <img src={producto.imagen} alt={producto.nombre} className={styles.imagenPrincipal} />
+        <img 
+          src={producto.imagen} 
+          alt={producto.nombre} 
+          className={styles.imagenPrincipal} 
+        />
       </div>
 
+      {/* Información del producto */}
       <div className={styles.infoProducto}>
         <h2 className={styles.titulo}>{producto.nombre}</h2>
 
+        {/* Precio + cuotas */}
         <div className={styles.precioBox}>
-          <span className={styles.precioFinal}>{formatearPrecio(producto.precio)}</span>
-          {(producto.categoria === "tecnologia" || producto.precio > 200000) && (
-            <p className={styles.cuotas}>Hasta 6 cuotas sin interés</p>
+          <span className={styles.precioFinal}>
+            {formatearPrecio(producto.precio)}
+          </span>
+
+          {producto.aplicaCuotas && producto.cuotas && producto.valorCuota && (
+            <div className={styles.cuotasPromo}>
+              <span className={styles.bloqueMagenta}>
+                {producto.cuotas} cuotas
+              </span>
+              <span className={styles.bloqueAzul}>
+                sin interés de ${producto.valorCuota.toLocaleString('es-AR', { minimumFractionDigits: 2 })}
+              </span>
+            </div>
           )}
-        </div>
+        </div> {/* 👈 cierre de precioBox */}
 
         {/* Selector de cantidad + botón */}
         <div className={styles.acciones}>
@@ -53,11 +70,13 @@ const ProductoDetalle = () => {
           />
         </div>
 
+        {/* Descripción */}
         <div className={styles.descripcion}>
           <h4>Descripción del producto</h4>
           <p>{producto.descripcion}</p>
         </div>
 
+        {/* Info extra */}
         <div className={styles.infoExtra}>
           <p><strong>Categoría:</strong> {producto.categoria}</p>
           <p><strong>Subcategoría:</strong> {producto.subCategoria}</p>
@@ -67,4 +86,4 @@ const ProductoDetalle = () => {
   );
 };
 
-export default ProductoDetalle;
+export default ProductoDetalle

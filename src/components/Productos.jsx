@@ -9,8 +9,6 @@ const Productos = ({ productos, error, cargando }) => {
 
   if (cargando) return <p>Cargando Productos...</p>;
   if (error) return <p>{error}</p>;
-
-  console.log(productos);
   
   return (
     <ul className={styles.productosContainer}>
@@ -22,8 +20,22 @@ const Productos = ({ productos, error, cargando }) => {
             nombre={producto.nombre}
             precio={formatearPrecio(producto.precio)}
             aplicaCuotas={producto.aplicaCuotas}
+            cuotas={producto.cuotas}
+            valorCuota={producto.valorCuota}
             boton={carrito.find(p => p.id === producto.id) ? '✅ Agregado' : 'Agregar al carrito 🛒'}
-            onClick={() => agregarProducto({ ...producto, cantidad: 1 })}
+            onClick={() => {
+              const productoParaCarrito = {
+                id: producto.id,
+                nombre: producto.nombre,
+                imagen: producto.imagen,
+                precio: Number(producto.precio),
+                aplicaCuotas: producto.aplicaCuotas ?? false,
+                cuotas: producto.cuotas ?? null,
+                valorCuota: producto.valorCuota ?? null,
+                cantidad: 1,
+              };
+              agregarProducto(productoParaCarrito);
+            }}
           />
         </li>
       ))}

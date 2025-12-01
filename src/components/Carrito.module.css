@@ -30,6 +30,7 @@
   border-radius: 10px;
   box-shadow: 1px 1px 6px rgba(0,0,0,0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative; /* necesario para deleteTopRight */
 }
 
 .carritoItem:hover {
@@ -37,14 +38,16 @@
   box-shadow: 2px 4px 10px rgba(0,0,0,0.15);
 }
 
+/* IMG */
 .carritoImg {
-  width: 60px;
-  height: 60px;
+  width: 100px;
+  height: 100px;
   object-fit: contain;
   border-radius: 8px;
   border: 1px solid #ddd;
 }
 
+/* INFO */
 .carritoInfo {
   flex: 1;
   display: flex;
@@ -62,9 +65,11 @@
 
 .carritoPrice {
   margin-bottom: 0.5rem;
-  color: #0f0f0f;
+  color: #d32f2f;
+  font-weight: 700;
 }
 
+/* TOTAL */
 .carritoTotal {
   text-align: right;
   font-size: 1.2rem;
@@ -73,6 +78,7 @@
   color: #0a0a42;
 }
 
+/* BOTONES FINALES */
 .botonesCarrito {
   display: flex;
   justify-content: center;
@@ -86,6 +92,12 @@
   padding: 0.5rem;
 }
 
+/* ----------------------------- */
+/*      CONTROL CANTIDAD VIEJO   */
+/* (dejado por compatibilidad,   */
+/*   ya no se usa, pero no quita)*/
+/* ----------------------------- */
+
 .cantidadControl {
   display: flex;
   align-items: center;
@@ -93,12 +105,12 @@
 }
 
 .cantidadBtn {
-  background-color: #F7C948; /* amarillo Detutti */
+  background-color: #F7C948;
   border: none;
   padding: 4px 8px;
   font-size: 18px;
   font-weight: bold;
-  color: #1F4DA8; /* azul Detutti */
+  color: #1F4DA8;
   border-radius: 4px;
   cursor: pointer;
 }
@@ -118,6 +130,7 @@
   color: #3A3A3A;
 }
 
+/* RESPONSIVE */
 @media (max-width: 600px) {
   .carritoItem {
     padding: 0.5rem;
@@ -137,9 +150,110 @@
   }
 }
 
-.cuotas {
-  font-size: 0.9rem;
-  color: #005BAC; /* azul Detutti */
-  font-style: italic;
-  margin-top: -0.3rem;
+/* ----------------------------- */
+/*    NUEVO BOTÓN ELIMINAR TOP   */
+/* ----------------------------- */
+
+.deleteTopRight {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #d90429;
+  font-size: 1.1rem; /* antes 1.4rem */
+  transition: transform 0.2s ease;
+}
+
+.deleteTopRight:hover {
+  transform: scale(1.15);
+}
+
+/* ----------------------------- */
+/*   NUEVO CONTROL DE CANTIDAD   */
+/*      estilo Detutti ✔️        */
+/* ----------------------------- */
+
+.cantidadWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* centramos */
+  gap: 10px;
+  margin-top: 6px;
+  width: 100%; /* ocupa ancho completo */
+}
+
+.btnQty {
+  background-color: #48c0f733;
+  border: none;
+  width: 26px;
+  height: 26px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #1F4DA8;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btnQty:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.qtyDisplay {
+  font-size: 1rem;
+  font-weight: bold;
+  min-width: 20px;
+  text-align: center;
+  color: #333;
+}
+
+/* ----------------------------- */
+/*   CUOTAS CON BLOQUES COLOR    */
+/* ----------------------------- */
+
+.cuotasPromo {
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.bloqueMagenta {
+  background-color: #e74883;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 16px;
+  font-weight: 300;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  white-space: nowrap;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  margin-right: -12px
+}
+
+.bloqueAzul {
+  background-color: #209ce4;
+  color: white;
+  padding: 2px 14px;
+  border-radius: 8px;
+  font-weight: 300;
+  font-size: 0.7rem;
+  line-height: 1.4;
+  white-space: nowrap;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
 }

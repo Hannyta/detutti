@@ -37,11 +37,61 @@
   color: #005BAC;
 }
 
-.cuotas {
-  font-size: 0.85rem;
-  color: #005BAC; /* azul Detutti */
-  font-style: italic;
-  margin-top: 0.2rem;
+.cuotasPromo {
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+  margin-bottom: 16px; /* 👈 separa del botón */
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.bloqueMagenta {
+  background-color: #e74883;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  white-space: nowrap;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  margin-right: -12px; /* 👈 se monta sobre el azul */
+}
+
+.bloqueAzul {
+  background-color: #209ce4;
+  color: white;
+  padding: 4px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  white-space: nowrap;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 1024px) {
+  .bloqueMagenta {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    height: 20px;
+  }
+
+  .bloqueAzul {
+    font-size: 0.65rem;
+    padding: 2px 12px;
+    height: 15px;
+  }
 }
 
 @media (max-width: 900px) {

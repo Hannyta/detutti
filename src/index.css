@@ -23,8 +23,7 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
+  padding-top: 90px; /* Para que no tape el header */
   min-width: 320px;
   min-height: 100vh;
 }

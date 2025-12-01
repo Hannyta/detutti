@@ -1,8 +1,21 @@
 export const manejarError = (error, mensajeDefault, setError) => {
+  // Log completo para debugging
+  console.error("Error capturado:", error);
 
-  console.error(error);
-  const mensaje = error.message || mensajeDefault;
-  setError(mensaje);
+  let mensaje;
+
+  if (error instanceof Error) {
+    mensaje = error.message;
+  } else if (typeof error === "string") {
+    mensaje = error;
+  } else {
+    mensaje = mensajeDefault;
+  }
+
+  // Seteamos el estado de error si existe
+  if (typeof setError === "function") {
+    setError(mensaje);
+  }
+
   return mensaje;
-  
 };

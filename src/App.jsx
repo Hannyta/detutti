@@ -16,6 +16,7 @@ import RutaProtegida from './components/RutaProtegida';
 import { CarritoContext } from './context/CarritoContext';
 import ForgotPassword from './pages/ForgotPassword';
 import Admin from './pages/Admin';
+import styles from './components/CarritoAside.module.css'; // 👈 para usar overlay
 
 function App() {
   const [mostrarAside, setMostrarAside] = useState(false);
@@ -43,9 +44,16 @@ function App() {
         onCarritoClick={toggleAside}
       />
 
+      {/* Overlay para cerrar al click fuera */}
       {mostrarAside && (
-        <CarritoAside cerrarAside={toggleAside} />
+        <div 
+          className={`${styles.overlay} ${styles.open}`} 
+          onClick={toggleAside}
+        ></div>
       )}
+
+      {/* Aside siempre montado, controlado por clases */}
+      <CarritoAside cerrarAside={toggleAside} isOpen={mostrarAside} />
       
       <main>
         <section>

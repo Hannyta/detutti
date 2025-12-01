@@ -1,5 +1,6 @@
 import { useState, useEffect, createContext, useContext } from 'react';
 import { manejarError } from '../helpers/manejarError'; 
+import calcularCuotas from '../helpers/calcularCuotas';
 
 export const ProductosContext = createContext();
 
@@ -8,7 +9,6 @@ export const ProductosProvider = ({ children }) => {
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
 
-  // Loading por acción
   const [loadingAgregar, setLoadingAgregar] = useState(false);
   const [loadingEditar, setLoadingEditar] = useState(false);
   const [loadingEliminar, setLoadingEliminar] = useState(false);
@@ -29,10 +29,9 @@ export const ProductosProvider = ({ children }) => {
 
       const datos = await respuesta.json();
 
-      // 👇 Aquí aplicamos la lógica de cuotas
-      const productosConCuotas = datos.map(p => ({
+      const productosConCuotas = datos.map(p => calcularCuotas({
         ...p,
-        aplicaCuotas: p.categoria === "tecnologia" || p.precio > 200000
+        precio: Number(p.precio) // 👈 aseguramos número
       }));
 
       setProductos(productosConCuotas);
@@ -59,11 +58,10 @@ export const ProductosProvider = ({ children }) => {
 
       const nuevoProducto = await respuesta.json();
 
-      // 👇 Aplicamos la misma lógica al nuevo producto
-      const productoConCuotas = {
+      const productoConCuotas = calcularCuotas({
         ...nuevoProducto,
-        aplicaCuotas: nuevoProducto.categoria === "tecnologia" || nuevoProducto.precio > 200000
-      };
+        precio: Number(nuevoProducto.precio)
+      });
 
       setProductos(prev => [...prev, productoConCuotas]);
 
@@ -92,11 +90,10 @@ export const ProductosProvider = ({ children }) => {
 
       const productoActualizado = await respuesta.json();
 
-      // 👇 Recalcular aplicaCuotas
-      const productoConCuotas = {
+      const productoConCuotas = calcularCuotas({
         ...productoActualizado,
-        aplicaCuotas: productoActualizado.categoria === "tecnologia" || productoActualizado.precio > 200000
-      };
+        precio: Number(productoActualizado.precio)
+      });
 
       setProductos(prev =>
         prev.map(p => p.id === productoConCuotas.id ? productoConCuotas : p)

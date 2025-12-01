@@ -26,12 +26,13 @@ header {
   height: 70px;
   width: auto;
   margin-left: 16px;
+  max-width: 160px;
 }
 
 .headerIcon {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.8rem;
   margin-left: 0;
 }
 
@@ -50,7 +51,9 @@ header {
   transition: color 0.3s ease;
 }
 
-.iconoHover {
+.iconoUser:hover,
+.iconoCarrito:hover,
+.logoutIcon:hover {
   color: #005BAC;
 }
 
@@ -63,8 +66,8 @@ header {
 
 .contadorCarrito {
   position: absolute;
-  top: -8px;     
-  right: -10px;   
+  top: -6px;     
+  right: -6px;   
   background: #f9ce31;
   color: #003166;
   border-radius: 50%;
@@ -87,6 +90,10 @@ header {
 
 @media (max-width: 600px) {
   
+  body {
+    padding-top: 120px;
+  }
+  
   .headerContainer {
     flex-direction: column;
     align-items: center;
@@ -98,6 +105,7 @@ header {
   .logoPrincipal {
     height: 60px;
     margin-left: 0;
+    max-width: 140px;
   }
 
 }

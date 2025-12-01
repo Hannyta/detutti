@@ -1,36 +1,19 @@
-import { useEffect, useState, useContext } from 'react';
+import { useContext } from 'react';
 import TarjetaProducto from '../components/TarjetaProducto';
 import styles from './Categoria.module.css';
 import { CarritoContext } from '../context/CarritoContext';
+import { useProductosContext } from '../context/ProductosContext';
+import { formatearPrecio } from '../helpers/formatearPrecio';
 
-const Categoria = ({ nombreCategoria, categoriaAPI }) => {
+const Categoria = ({ nombreCategoria, categoriaAPI, subCategoriaAPI }) => {
   const { carrito, agregarProducto } = useContext(CarritoContext);
-  const [productos, setProductos] = useState([]);
-  const [cargando, setCargando] = useState(true);
-  const [error, setError] = useState(null);
-
-  const formatoPrecio = new Intl.NumberFormat('es-AR', { 
-    style: 'currency', 
-    currency: 'ARS' 
-  });
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    fetch(`https://68e037b793207c4b4793fe2f.mockapi.io/products/category/${categoriaAPI}`, { signal: controller.signal })
-      .then(res => res.json())
-      .then(data => {
-        setProductos(data);
-        setCargando(false);
-      })
-      .catch(err => {
-        if (err.name !== "AbortError") {
-          setError("Error al cargar productos");
-          setCargando(false);
-        }
-      });
-    return () => controller.abort();
-  }, [categoriaAPI]);
+  const { productos, cargando, error } = useProductosContext();
+  
+  const productosFiltrados = productos.filter(
+    (p) =>
+      p.categoria?.toLowerCase() === categoriaAPI.toLowerCase() &&
+      (!subCategoriaAPI || p.subCategoria?.toLowerCase() === subCategoriaAPI.toLowerCase())
+  );
 
   if (cargando) return <p>Cargando productos...</p>;
   if (error) return <p>{error}</p>;
@@ -39,15 +22,22 @@ const Categoria = ({ nombreCategoria, categoriaAPI }) => {
     <section className={styles.categoria}>
       <h2 className={styles.titleSection}>{nombreCategoria}</h2>
       <div className={styles.gridTarjetas}>
-        {productos.map(producto => (
+        {productosFiltrados.map((producto) => (
           <TarjetaProducto
             key={producto.id}
             id={producto.id}
-            img={producto.image}
-            nombre={producto.title}
-            precio={formatoPrecio.format(producto.price)}  
-            boton={carrito.find(p => p.id === producto.id) ? "✅ Agregado" : "Agregar 🛒"}
-            onClick={() => agregarProducto(producto)}
+            img={producto.imagen}
+            nombre={producto.nombre}
+            precio={formatearPrecio(producto.precio)}
+            aplicaCuotas={producto.aplicaCuotas}
+            cuotas={producto.cuotas}
+            valorCuota={producto.valorCuota}
+            boton={
+              carrito.find((p) => p.id === producto.id)
+                ? '✅ Agregado'
+                : 'Agregar 🛒'
+            }
+            onClick={() => agregarProducto({ ...producto, cantidad: 1 })}
           />
         ))}
       </div>

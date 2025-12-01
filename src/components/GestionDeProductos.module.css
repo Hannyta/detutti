@@ -97,7 +97,7 @@
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  background-color: #333;
+  background-color: #005cac9c;
   color: #fff;
   padding: 0.5rem 0.8rem;
   border-radius: 6px;
@@ -107,7 +107,7 @@
 }
 
 .btnEditar:hover {
-  background-color: #111;
+  background-color: #28b7f0;
 }
 
 /* Botón eliminar */
@@ -224,13 +224,15 @@
 }
 
 .productoCuotas {
-  font-size: 0.9rem;
-  color: var(--color-secundario);
-  font-weight: 500;
-  margin-top: 4px;
+  font-size: 1rem;
+  color: #005BAC; /* verde confianza */
+  font-weight: 600;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  line-height: 1.4;
 }
 
 .productoCuotas span {
   font-weight: 700;
-  color: var(--color-principal);
+  color: #005BAC; /* azul principal */
 }

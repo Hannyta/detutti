@@ -78,8 +78,8 @@ const GestionDeProductos = () => {
               {/* 👇 Bloque de cuotas */}
               {producto.aplicaCuotas && (
                 <p className={styles.productoCuotas}>
-                  Hasta <span>6 cuotas</span> sin interés de $
-                  <span>{(producto.precio / 6).toLocaleString('es-AR')}</span>
+                  Hasta <span>{producto.cuotas}</span> cuotas sin interés de $
+                  <span>{producto.valorCuota?.toLocaleString('es-AR')}</span>
                 </p>
               )}
             </div>

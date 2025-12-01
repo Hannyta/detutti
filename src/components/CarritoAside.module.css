@@ -1,86 +1,93 @@
+/* ---------------------------- */
+/* ASIDE CONTENEDOR PRINCIPAL  */
+/* ---------------------------- */
+
 .asideCarrito {
   position: fixed;
-  top: 100px;
-  right: 20px;
-  width: 300px;
-  max-height: 80vh;
-  background-color: #d8edffda;
+  top: 0;
+  right: 0;
+  width: 380px;
+  max-width: 90%;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  box-shadow: -4px 0 12px rgba(0,0,0,0.15);
   padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  overflow-y: auto;
-  z-index: 1000;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  transform: translateX(0);
-  display: flex;
-  flex-direction: column;
-  align-items: center; 
-  text-align: center;
-}
-
-.asideCarrito.oculto {
-  transform: translateX(110%);
+  transform: translateX(100%);
+  transition: transform 0.35s ease, opacity 0.3s ease;
   opacity: 0;
-  pointer-events: none;
+  z-index: 9999;
+  overflow-y: auto;
 }
 
-.asideHeader {
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-  margin-bottom: 1rem;
+.open {
+  transform: translateX(0);
+  opacity: 1;
 }
 
-.cerrarAside {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.5rem;
-  padding: 0.5rem;
+.closed {
+  transform: translateX(100%);
+  opacity: 0;
 }
 
+/* SCROLLBAR ELEGANTE */
 .asideCarrito::-webkit-scrollbar {
   width: 6px;
 }
 
 .asideCarrito::-webkit-scrollbar-thumb {
-  background-color: #ccc;
+  background: #c0c0c0;
   border-radius: 4px;
 }
 
-aside h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #005BAC;
+/* ---------------------------- */
+/* CABECERA DEL ASIDE           */
+/* ---------------------------- */
+
+.asideHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.8rem;
+  border-bottom: 2px solid #e4e4e4;
 }
 
-aside p {
-  margin: 0.5rem 0;
-  font-size: 0.95rem;
-  color: black;
-  text-align: left;
+.asideTitle {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #005BAC; /* azul Detutti */
+  margin: 0;
 }
 
-aside h3 {
-  margin-top: 1rem;
-  font-size: 1.2rem;
-  color: #111;
+/* BOTÓN CERRAR */
+.cerrarAside {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.6rem;
+  color: #1F4DA8;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
+
+.cerrarAside:hover {
+  transform: scale(1.15);
+  color: #d90429;
+}
+
+/* ---------------------------- */
+/* AJUSTES RESPONSIVE           */
+/* ---------------------------- */
 
 @media (max-width: 600px) {
   .asideCarrito {
-    position: relative;
-    top: 0;
-    right: 0;
     width: 100%;
-    max-height: none;
-    margin-top: 4rem;
-    transform: translateX(0) !important;
-    align-items: center;
-    text-align: center;
   }
 
-  .asideHeader {
-    justify-content: center;
+  .asideTitle {
+    font-size: 1.15rem;
+  }
+
+  .cerrarAside {
+    font-size: 1.4rem;
   }
 }

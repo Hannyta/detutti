@@ -1,55 +1,57 @@
 .compraContainer {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  max-width: 900px;
-  margin: 80px auto;
-  padding: 2rem;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  gap: 2.5rem;
 }
 
-.compraContainer h2 {
+.tituloPagina {
   grid-column: 1 / -1;
   text-align: center;
-  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #005BAC;
+  margin-bottom: 10px;
 }
 
+/* ------------------- RESUMEN ------------------- */
+
 .compraResumen {
-  background: #e6f0ff;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+  background: #f5f9ff;
+  padding: 1.8rem;
+  border-radius: 14px;
+  border: 1px solid #dce8ff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.07);
 }
 
 .compraResumen h3 {
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
   color: #005BAC;
 }
 
 .resumenItem {
   display: flex;
-  align-items: center;
   gap: 1rem;
   padding: 1rem;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e7e7e7;
   margin-bottom: 1rem;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 1px 1px 6px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: 0.2s ease;
 }
 
 .resumenItem:hover {
-  transform: scale(1.02);
-  box-shadow: 2px 4px 10px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .resumenItem img {
-  width: 70px;
-  height: auto;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 10px;
   border: 1px solid #ddd;
 }
 
@@ -62,80 +64,179 @@
 .resumenTitle {
   font-weight: 600;
   color: #005BAC;
-  margin-bottom: 0.3rem;
 }
 
-.resumenCantidad,
-.resumenPrice,
-.resumenSubtotal {
-  font-size: 0.95rem;
+.resumenCantidad {
+  font-size: 0.9rem;
   color: #333;
-  margin: 1px 0;
+}
+
+.resumenPrice {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0a0a42;
+  margin-top: 2px;
 }
 
 .resumenTotal {
   display: block;
-  margin-top: 1rem;
-  font-size: 1.4rem;
-  font-weight: bold;
+  margin-top: 1.5rem;
+  font-size: 1.5rem;
   text-align: right;
   color: #0a0a42;
+  font-weight: bold;
 }
+
+.cantidadWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.btnQty {
+  background-color: #F7C948;
+  border: none;
+  width: 26px;
+  height: 26px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #1F4DA8;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btnQty:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.qtyDisplay {
+  font-size: 1rem;
+  font-weight: bold;
+  min-width: 22px;
+  text-align: center;
+}
+
+.subtotal {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 6px;
+  color: #0a0a42;
+}
+
+/* ----------- CUOTAS ----------- */
+
+.cuotasPromo {
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.bloqueMagenta {
+  background-color: #e74883;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 16px;
+  font-weight: 300;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  white-space: nowrap;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  margin-right: -12px
+}
+
+.bloqueAzul {
+  background-color: #209ce4;
+  color: white;
+  padding: 2px 14px;
+  border-radius: 8px;
+  font-weight: 300;
+  font-size: 0.7rem;
+  line-height: 1.4;
+  white-space: nowrap;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* ------------------- FORMULARIO ------------------- */
 
 .compraForm {
   display: flex;
   flex-direction: column;
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 14px;
+  border: 1px solid #e1e1e1;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.07);
   gap: 1rem;
+}
+
+.compraForm h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
   color: #005BAC;
-}
-
-.compraForm input,
-.compraForm select {
-  width: 100%;
-  padding: 0.8rem;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  transition: all 0.2s ease;
-}
-
-.compraForm input:focus,
-.compraForm select:focus,
-.compraForm input:hover,
-.compraForm select:hover {
-  border-color: #32a3e4;
-  box-shadow: 0 0 5px rgba(50, 163, 228, 0.4);
-  outline: none;
-}
-
-.compraForm button {
-  margin-top: 1rem;
-  width: 100%;
-  padding: 0.8rem;
-  font-size: 1rem;
-  border-radius: 8px;
+  margin-bottom: 0.5rem;
 }
 
 .compraForm label {
   font-weight: 500;
   color: #333;
-  display: block;
 }
 
-.compraForm h3 {
-  margin-bottom: 1rem;
-  color: #005BAC;
+.compraForm input,
+.compraForm select {
+  padding: 0.9rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: 0.2s ease;
 }
+
+.compraForm input:focus,
+.compraForm select:focus {
+  border-color: #209ce4;
+  box-shadow: 0 0 6px rgba(32, 156, 228, 0.3);
+  outline: none;
+}
+
+/* ------------------- RESPONSIVE ------------------- */
 
 @media (max-width: 900px) {
-
-   .compraContainer {
+  .compraContainer {
     grid-template-columns: 1fr;
+  }
+
+  .resumenTotal {
+    text-align: center;
   }
 }
 
 @media (max-width: 600px) {
+  .compraContainer {
+    padding: 10px;
+  }
 
-  .resumenTotal {
-    text-align: center;
+  .compraForm,
+  .compraResumen {
+    padding: 1.4rem;
+  }
+
+  .resumenItem img {
+    width: 70px;
+    height: 70px;
   }
 }
