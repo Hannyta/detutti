@@ -53,7 +53,7 @@ const ProductoDetalle = () => {
               </span>
             </div>
           )}
-        </div> {/* 👈 cierre de precioBox */}
+        </div>
 
         {/* Selector de cantidad + botón */}
         <div className={styles.acciones}>

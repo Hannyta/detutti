@@ -1,6 +1,6 @@
 .gridTarjetas {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* ← CAMBIO CLAVE */
   gap: 1rem;
   list-style: none;
   padding: 0;
@@ -9,28 +9,13 @@
 .categoria {
   margin: 3rem auto;
   padding: 0 1rem;
-
-  max-width: 1300px; /* ajusta a tu gusto */
+  max-width: 1300px;
 }
 
 .titleSection {
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
   color: #005BAC;
-}
-
-@media (min-width: 1024px) {
-  .bloqueMagenta {
-    font-size: 0.75rem;
-    padding: 2px 8px;
-    height: 20px;
-  }
-
-  .bloqueAzul {
-    font-size: 0.65rem;
-    padding: 2px 12px;
-    height: 15px;
-  }
 }
 
 @media (min-width: 1500px) {
@@ -41,8 +26,8 @@
 
 @media (max-width: 600px) {
   .gridTarjetas {
-  grid-template-columns: 1fr;
-  gap: 1rem;
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   .tarjeta {
@@ -57,6 +42,6 @@
 
 @media (max-width: 360px) {
   .gridTarjetas {
-    grid-template-columns: 1fr; /* una tarjeta por fila */
+    grid-template-columns: 1fr;
   }
 }

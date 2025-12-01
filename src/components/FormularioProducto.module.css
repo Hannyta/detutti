@@ -21,6 +21,10 @@
   animation: fadeIn 0.3s ease-in-out;
 }
 
+.modalContent {
+  padding-top: 0.5rem;
+}
+
 /* Animación de entrada */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
@@ -32,7 +36,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.2rem;
+  margin-bottom: 2rem;
 }
 
 .modalHeaderTitle {
@@ -60,6 +64,7 @@
   grid-template-columns: 1fr;
   gap: 1rem;
   margin-bottom: 1.5rem;
+  margin-top: 1rem;
 }
 
 .colSpan2 {
@@ -68,6 +73,12 @@
 
 .smColSpan1 {
   grid-column: span 1;
+}
+
+.tituloAzul {
+  color: #005BAC;
+  font-weight: bold;
+  margin-bottom: 0.4rem;
 }
 
 /* Labels e inputs */
@@ -139,4 +150,41 @@ textarea:focus {
 
 .btnSecondary:hover {
   background-color: #ddd;
+}
+
+/* Fila de campos en línea */
+.camposFila {
+  display: flex;
+  gap: 1rem;                /* espacio entre cada campo */
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.campo {
+  flex: 1;                  /* cada campo ocupa el mismo ancho */
+  display: flex;
+  flex-direction: column;
+}
+
+.campo label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #444;
+}
+
+.campo input,
+.campo select {
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
+
+/* Responsive: en pantallas chicas se apilan */
+@media (max-width: 600px) {
+  .camposFila {
+    flex-direction: column;
+  }
 }

@@ -35,57 +35,58 @@ const Login = () => {
     };
 
   return (
-    <div className={styles.loginContainer}>
-      <h2>Iniciar sesión</h2>
-      <form onSubmit={autenticarUsuario} className={styles.loginForm}>
-        <input 
-          type="email"
-          placeholder="Correo electrónico"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input 
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <div className={styles.recordarme}>
+    <div className={styles.pageWrapper}>
+      <div className={styles.loginContainer}>
+        <h2>Iniciar sesión</h2>
+        <form onSubmit={autenticarUsuario} className={styles.loginForm}>
           <input 
-            type="checkbox"
-            id="recordarme"
-            checked={recordarme}
-            onChange={(e) => setRecordarme(e.target.checked)}
+            type="email"
+            placeholder="Correo electrónico"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
           />
-          <label htmlFor="recordarme"> Recordarme </label>
+          <input 
+            type="password"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <div className={styles.recordarme}>
+            <input 
+              type="checkbox"
+              id="recordarme"
+              checked={recordarme}
+              onChange={(e) => setRecordarme(e.target.checked)}
+            />
+            <label htmlFor="recordarme"> Recordarme </label>
+          </div>
+          {errorMsg && <p className={styles.error}>{errorMsg}</p>}
+          <Boton texto="Iniciar sesión" tipo="primary" type="submit" />
+        </form>
+
+        <div className={styles.forgotPassword}>
+          <Boton 
+            texto="Olvidé mi contraseña" 
+            tipo="secondary" 
+            type="button" 
+            onClick={() => navigate("/forgot-password")} 
+          />
         </div>
-        {errorMsg && <p className={styles.error}>{errorMsg}</p>}
-        <Boton texto="Iniciar sesión" tipo="primary" type="submit" />
-      
-      </form>
 
-      <div className={styles.forgotPassword}>
-        <Boton 
-          texto="Olvidé mi contraseña" 
-          tipo="secondary" 
-          type="button" 
-          onClick={() => navigate("/forgot-password")} 
-        />
-      </div>
-
-      <div className={styles.register} >
-        <label>¿Aun no tienes una cuenta?</label>
-        <Boton 
-          texto="Registrarme" 
-          tipo="primary" 
-          type="button"
-          onClick={() => navigate("/registrarme")}
-        />
+        <div className={styles.register} >
+          <label>¿Aun no tienes una cuenta?</label>
+          <Boton 
+            texto="Registrarme" 
+            tipo="primary" 
+            type="button"
+            onClick={() => navigate("/registrarme")}
+          />
+        </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default Login;

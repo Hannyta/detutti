@@ -1,26 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useProductosContext } from '../context/ProductosContext';
 import Productos from '../components/Productos';
-import { manejarError } from '../helpers/manejarError'; // 👈 importa tu helper
 
 const Inicio = () => {
-  const [productos, setProductos] = useState([]);
-  const [error, setError] = useState(null);
-  const [cargando, setCargando] = useState(true);
-
-  const URL = 'https://68e037b793207c4b4793fe2f.mockapi.io/productos/';
-
-  useEffect(() => {
-    fetch(URL)
-      .then(resp => resp.json())
-      .then(dato => {
-        setProductos(dato);
-        setCargando(false);
-      })
-      .catch(error => {
-        manejarError(error, "Error al cargar productos", setError);
-        setCargando(false);
-      });
-  }, []);
+  const { productos, cargando, error } = useProductosContext();
 
   return (
     <>

@@ -92,12 +92,6 @@
   padding: 0.5rem;
 }
 
-/* ----------------------------- */
-/*      CONTROL CANTIDAD VIEJO   */
-/* (dejado por compatibilidad,   */
-/*   ya no se usa, pero no quita)*/
-/* ----------------------------- */
-
 .cantidadControl {
   display: flex;
   align-items: center;
@@ -130,30 +124,6 @@
   color: #3A3A3A;
 }
 
-/* RESPONSIVE */
-@media (max-width: 600px) {
-  .carritoItem {
-    padding: 0.5rem;
-  }
-
-  .carritoImg {
-    width: 50px;
-    height: 50px;
-  }
-
-  .carritoTitle {
-    font-size: 0.8rem;
-  }
-
-  .carritoPrice {
-    font-size: 0.75rem;
-  }
-}
-
-/* ----------------------------- */
-/*    NUEVO BOTÓN ELIMINAR TOP   */
-/* ----------------------------- */
-
 .deleteTopRight {
   position: absolute;
   top: 6px;
@@ -169,11 +139,6 @@
 .deleteTopRight:hover {
   transform: scale(1.15);
 }
-
-/* ----------------------------- */
-/*   NUEVO CONTROL DE CANTIDAD   */
-/*      estilo Detutti ✔️        */
-/* ----------------------------- */
 
 .cantidadWrapper {
   display: flex;
@@ -211,10 +176,6 @@
   text-align: center;
   color: #333;
 }
-
-/* ----------------------------- */
-/*   CUOTAS CON BLOQUES COLOR    */
-/* ----------------------------- */
 
 .cuotasPromo {
   display: flex;
@@ -256,4 +217,24 @@
   align-items: center;
   position: relative;
   z-index: 1;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .carritoItem {
+    padding: 0.5rem;
+  }
+
+  .carritoImg {
+    width: 50px;
+    height: 50px;
+  }
+
+  .carritoTitle {
+    font-size: 0.8rem;
+  }
+
+  .carritoPrice {
+    font-size: 0.75rem;
+  }
 }

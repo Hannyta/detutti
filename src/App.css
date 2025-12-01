@@ -1,34 +1,36 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem 2rem 0 2rem;
   text-align: center;
 }
 
 /* Main */
 main {
   display: flex;
+  justify-content: center;      /* <-- centra horizontalmente */
   align-items: flex-start;
-  justify-content: flex-start;
-  gap: 2rem;
   width: 100%;
   margin-top: 80px;
-  padding-bottom: 120px;
+  padding: 2rem 2rem 120px 2rem;
   box-sizing: border-box;
   text-align: left;
   flex-wrap: wrap;
+  gap: 2rem;
 }
 
 html, body {
+  margin: 0;
+  padding: 0;
   overflow-x: hidden;
+  background: #fff;             /* <-- previene fondos raros */
 }
 
 /* Responsive */
-
 @media (max-width: 900px) {
   main {
     flex-direction: column;
     align-items: center;
+    justify-content: center;    /* <-- centra también en móvil */
   }
 }
 

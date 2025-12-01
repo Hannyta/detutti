@@ -14,27 +14,23 @@ const GestionDeProductos = () => {
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
   const [productoAEliminar, setProductoAEliminar] = useState(null);
 
-  // Abrir formulario para AGREGAR
   const abrirFormularioAgregar = () => {
     setModoFormulario("agregar");
     setProductoSeleccionado(null);
     setMostrarForm(true);
   };
 
-  // Abrir formulario para EDITAR
   const abrirFormularioEditar = (producto) => {
     setModoFormulario("editar");
     setProductoSeleccionado(producto);
     setMostrarForm(true);
   };
 
-  // Cerrar formulario
   const cerrarFormulario = () => {
     setMostrarForm(false);
     setProductoSeleccionado(null);
   };
 
-  // Confirmar eliminación
   const confirmarEliminacion = (producto) => {
     setProductoAEliminar(producto);
   };
@@ -57,49 +53,66 @@ const GestionDeProductos = () => {
       </div>
 
       {/* Lista de productos */}
-      {productos.length === 0 ? (
-        <div className={styles.productoCard}>
-          <p>No hay productos</p>
-        </div>
-      ) : (
-        productos.map((producto) => (
-          <div key={producto.id} className={styles.productoCard}>
-            <img 
-              src={producto.imagen} 
-              alt={producto.nombre} 
-              className={styles.productoImagen} 
-            />
-            <div className={styles.productoInfo}>
-              <h3 className={styles.productoNombre}>{producto.nombre}</h3>
-              <p className={styles.productoPrecio}>
-                ${producto.precio?.toLocaleString('es-AR')}
-              </p>
-
-              {/* 👇 Bloque de cuotas */}
-              {producto.aplicaCuotas && (
-                <p className={styles.productoCuotas}>
-                  Hasta <span>{producto.cuotas}</span> cuotas sin interés de $
-                  <span>{producto.valorCuota?.toLocaleString('es-AR')}</span>
-                </p>
-              )}
-            </div>
-            <div className={styles.acciones}>
-              <button 
-                onClick={() => abrirFormularioEditar(producto)} 
-                className={styles.btnEditar}
-              >
-                <LuSquarePen /> Editar
-              </button>
-              <button 
-                onClick={() => confirmarEliminacion(producto)} 
-                className={styles.btnEliminar}
-              >
-                <FaTrashCan /> Eliminar
-              </button>
-            </div>
+      <div className={styles.gridProductos}>
+        {productos.length === 0 ? (
+          <div className={styles.productoCard}>
+            <p>No hay productos</p>
           </div>
-        ))
-      )}
+        ) : (
+          productos.map((producto) => {
+            const aplicaCuotas = producto.precio >= 20000;
+            const cuotas = 6;
+            const valorCuota = producto.precio / cuotas;
+
+            return (
+              <div key={producto.id} className={styles.productoCard}>
+                {/* Imagen a la izquierda */}
+                <img 
+                  src={producto.imagen} 
+                  alt={producto.nombre} 
+                  className={styles.productoImagen} 
+                />
+
+                {/* Info a la derecha */}
+                <div className={styles.productoInfo}>
+                  <h3 className={styles.productoNombre}>{producto.nombre}</h3>
+
+                  {/* Fila: precio + cuotas */}
+                  <div className={styles.productoPrecioFila}>
+                    <p className={styles.productoPrecio}>
+                      ${producto.precio?.toLocaleString('es-AR')}
+                    </p>
+                    {aplicaCuotas && (
+                      <div className={styles.cuotasPromo}>
+                        <span className={styles.bloqueMagenta}>{cuotas} cuotas</span>
+                        <span className={styles.bloqueAzul}>
+                          sin interés de ${valorCuota.toLocaleString('es-AR', { minimumFractionDigits: 2 })}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Acciones */}
+                  <div className={styles.acciones}>
+                    <button 
+                      onClick={() => abrirFormularioEditar(producto)} 
+                      className={styles.btnEditar}
+                    >
+                      <LuSquarePen /> Editar
+                    </button>
+                    <button 
+                      onClick={() => confirmarEliminacion(producto)} 
+                      className={styles.btnEliminar}
+                    >
+                      <FaTrashCan /> Eliminar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        )}
+      </div>
 
       {/* Modal de confirmación de eliminar */}
       {productoAEliminar && (

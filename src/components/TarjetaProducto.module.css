@@ -41,9 +41,10 @@
   display: flex;
   align-items: center;
   margin-top: 12px;
-  margin-bottom: 16px; /* 👈 separa del botón */
+  margin-bottom: 16px;
   justify-content: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  white-space: nowrap;
   position: relative;
 }
 
@@ -61,7 +62,7 @@
   align-items: center;
   position: relative;
   z-index: 2;
-  margin-right: -12px; /* 👈 se monta sobre el azul */
+  margin-right: -12px;
 }
 
 .bloqueAzul {
@@ -80,7 +81,7 @@
   z-index: 1;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1224px) {
   .bloqueMagenta {
     font-size: 0.75rem;
     padding: 2px 8px;
@@ -112,5 +113,18 @@
     width: 100px;
     height: 100px;
   }
+}
 
+@media (max-width: 400px) {
+  .bloqueMagenta {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    height: 20px;
+  }
+
+  .bloqueAzul {
+    font-size: 0.65rem;
+    padding: 2px 12px;
+    height: 15px;
+  }
 }

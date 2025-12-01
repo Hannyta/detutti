@@ -8,13 +8,11 @@ const FormularioProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }
   const [producto, setProducto] = useState(productoInicial);
   const { agregarProducto, editarProducto } = useProductosContext();
 
-  // Manejar cambios en los inputs genéricos
   const manejarChange = (evento) => {
     const { name, value } = evento.target;
     setProducto({ ...producto, [name]: value });
   };
 
-  // Manejar envío del formulario
   const manejarSubmit = async (evento) => {
     evento.preventDefault();
     if (modo === "agregar") {
@@ -32,7 +30,9 @@ const FormularioProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }
           {/* Header del modal */}
           <div className={styles.modalHeader}>
             <h3 className={styles.modalHeaderTitle}>
-              {modo === "agregar" ? "Agregar Producto" : "Editar Producto"}
+              <span className={styles.tituloAzul}>
+                {modo === "agregar" ? "Agregar Producto" : "Editar Producto"}
+              </span>
             </h3>
             <button 
               type="button" 
@@ -45,7 +45,7 @@ const FormularioProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }
 
           {/* Formulario */}
           <form onSubmit={manejarSubmit}>
-            <div className={styles.formGrid}>
+            <div className={styles.formGrid} >
               {/* Nombre */}
               <div className={styles.colSpan2}>
                 <label className={styles.formLabel}>Nombre</label>
@@ -61,60 +61,60 @@ const FormularioProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }
                 />
               </div>
 
-              {/* Precio */}
-              <div className={`${styles.colSpan2} ${styles.smColSpan1}`}>
-                <label className={styles.formLabel}>Precio</label>
-                <NumericFormat
-                  thousandSeparator="."
-                  decimalSeparator=","
-                  prefix="$"
-                  name="precio"
-                  id="precio"
-                  className={styles.formInputBase}
-                  placeholder="$0"
-                  value={producto.precio || ""}
-                  onValueChange={(val) => {
-                    setProducto({ ...producto, precio: val.floatValue });
-                  }}
-                  required
-                  decimalScale={0}
-                  fixedDecimalScale={false}
-                  allowNegative={false}
-                />
+              {/* Fila: Precio + Categoria + SubCategoria */}
+              <div className={styles.camposFila}>
+                <div className={styles.campo}>
+                  <label className={styles.formLabel}>Precio</label>
+                  <NumericFormat
+                    thousandSeparator="."
+                    decimalSeparator=","
+                    prefix="$"
+                    name="precio"
+                    id="precio"
+                    className={styles.formInputBase}
+                    placeholder="$0"
+                    value={producto.precio || ""}
+                    onValueChange={(val) => {
+                      setProducto({ ...producto, precio: val.floatValue });
+                    }}
+                    required
+                    decimalScale={0}
+                    fixedDecimalScale={false}
+                    allowNegative={false}
+                  />
+                </div>
+
+                <div className={styles.campo}>
+                  <label className={styles.formLabel}>Categoría</label>
+                  <input
+                    type="text"
+                    name="categoria"
+                    id="categoria"
+                    className={styles.formInputBase}
+                    placeholder="Ingrese la categoría"
+                    value={producto.categoria || ""}
+                    onChange={manejarChange}
+                    required
+                  />
+                </div>
+
+                <div className={styles.campo}>
+                  <label className={styles.formLabel}>SubCategoría</label>
+                  <input
+                    type="text"
+                    name="subCategoria"
+                    id="subCategoria"
+                    className={styles.formInputBase}
+                    placeholder="Ingrese la subcategoría"
+                    value={producto.subCategoria || ""}
+                    onChange={manejarChange}
+                    required
+                  />
+                </div>
               </div>
 
-              {/* Categoria */}
+              {/* URL de imagen */}
               <div className={styles.colSpan2}>
-                <label className={styles.formLabel}>Categoria</label>
-                <input
-                  type="text"
-                  name="categoria"
-                  id="Categoria"
-                  className={styles.formInputBase}
-                  placeholder="Ingrese la categoria"
-                  value={producto.categoria || ""}
-                  onChange={manejarChange}
-                  required
-                />
-              </div>
-
-              {/* Sub-Categoria */}
-              <div className={styles.colSpan2}>
-                <label className={styles.formLabel}>SubCategoria</label>
-                <input
-                  type="text"
-                  name="subCategoria"
-                  id="SubCategoria"
-                  className={styles.formInputBase}
-                  placeholder="Ingrese la Sub-categoria"
-                  value={producto.subCategoria || ""}
-                  onChange={manejarChange}
-                  required
-                />
-              </div>
-              
-              {/* Imagen */}
-              <div className={`${styles.colSpan2} ${styles.smColSpan1}`}>
                 <label className={styles.formLabel}>URL de Imagen</label>
                 <input
                   type="text"
