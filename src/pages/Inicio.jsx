@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Productos from '../components/Productos';
+import { manejarError } from '../helpers/manejarError'; // 👈 importa tu helper
 
 const Inicio = () => {
   const [productos, setProductos] = useState([]);
@@ -15,8 +16,8 @@ const Inicio = () => {
         setProductos(dato);
         setCargando(false);
       })
-      .catch(() => {
-        setError('Error al cargar productos');
+      .catch(error => {
+        manejarError(error, "Error al cargar productos", setError);
         setCargando(false);
       });
   }, []);
