@@ -1,12 +1,12 @@
-import GestionDeProductos from '../components/GestionDeProductos';
-import styles from './Admin.module.css';
+import GestionDeProductos from "../components/GestionDeProductos";
+import { AdminPage, AdminTitle } from "../ui/AdminLayout";
 
 const Admin = () => {
   return (
-    <section className={styles.adminPage} aria-label="Panel de administración">
-      <h2>Panel de Administración</h2>
+    <AdminPage aria-label="Panel de administración">
+      <AdminTitle>Panel de Administración</AdminTitle>
       <GestionDeProductos />
-    </section>
+    </AdminPage>
   );
 };
 

@@ -1,4 +1,6 @@
-.detalleContainer {
+import styled from "styled-components";
+
+export const DetalleContainer = styled.section`
   display: flex;
   gap: 2rem;
   max-width: 900px;
@@ -7,76 +9,97 @@
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
 
-.galeria {
+  @media (max-width: 700px) {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  @media (max-width: 400px) {
+    padding: 0.5rem;
+  }
+`;
+
+export const Galeria = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
+`;
 
-.imagenPrincipal {
+export const ImagenPrincipal = styled.img`
   width: 100%;
   max-width: 400px;
   border-radius: 8px;
   object-fit: contain;
   margin-bottom: 1rem;
-}
 
-.infoProducto {
+  @media (max-width: 700px) {
+    max-width: 100%;
+  }
+`;
+
+export const InfoProducto = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-}
+`;
 
-.titulo {
+export const Titulo = styled.h2`
   color: #222;
   margin-bottom: 1rem;
-}
 
-.precioBox {
+  @media (max-width: 400px) {
+    font-size: 1.2rem;
+  }
+`;
+
+export const PrecioBox = styled.div`
   margin: 1rem 0;
-}
+`;
 
-.precioFinal {
+export const PrecioFinal = styled.p`
   font-size: 1.5rem;
   font-weight: bold;
   color: #d32f2f;
-}
 
-.descripcion {
+  @media (max-width: 400px) {
+    font-size: 1.2rem;
+  }
+`;
+
+export const Descripcion = styled.div`
   margin-top: 2rem;
-}
 
-.descripcion h4 {
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  color: #005BAC;
-}
+  h4 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #005BAC;
+  }
 
-.descripcion p {
-  font-size: 0.9rem;
-  color: #444;
-  line-height: 1.5;
-}
+  p {
+    font-size: 0.9rem;
+    color: #444;
+    line-height: 1.5;
+  }
+`;
 
-.infoExtra {
+export const InfoExtra = styled.p`
   margin-top: 0.5rem;
   font-size: 0.8rem;
   color: #666;
-}
+`;
 
-.acciones {
+export const Acciones = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
   margin: 1.5rem 0;
-}
+`;
 
-.cantidadSelector {
+export const CantidadSelector = styled.div`
   display: flex;
   align-items: center;
   border: 1px solid #ccc;
@@ -84,9 +107,9 @@
   overflow: hidden;
   height: 40px;
   background: #fff;
-}
+`;
 
-.btnCantidad {
+export const BtnCantidad = styled.button`
   width: 40px;
   height: 100%;
   border: none;
@@ -98,36 +121,50 @@
   justify-content: center;
   transition: background 0.2s ease, transform 0.2s ease;
   font-weight: bold;
-}
 
-.btnCantidad:hover {
-  background: #e0e0e0;
-  transform: scale(1.05);
-}
+  &:hover {
+    background: #e0e0e0;
+    transform: scale(1.05);
+  }
 
-.btnCantidad:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #32a3e4;
-}
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #32a3e4;
+  }
 
-.cantidad {
+  @media (max-width: 400px) {
+    width: 32px;
+    font-size: 1rem;
+  }
+`;
+
+export const Cantidad = styled.span`
   width: 50px;
   text-align: center;
   font-size: 1rem;
   font-weight: 600;
   color: #333;
-}
 
-.cuotasPromo {
+  @media (max-width: 400px) {
+    width: 40px;
+    font-size: 0.9rem;
+  }
+`;
+
+export const CuotasPromo = styled.div`
   display: flex;
   align-items: center;
   margin-top: 12px;
   justify-content: center;
   flex-wrap: wrap;
   position: relative;
-}
 
-.bloqueMagenta {
+  &:hover span {
+    transform: scale(1.05);
+  }
+`;
+
+export const BloqueMagenta = styled.span`
   background-color: #e74883;
   color: white;
   padding: 4px 12px;
@@ -142,9 +179,10 @@
   position: relative;
   z-index: 2;
   margin-right: -12px;
-}
+  transition: transform 0.3s ease;
+`;
 
-.bloqueAzul {
+export const BloqueAzul = styled.span`
   background-color: #209ce4;
   color: white;
   padding: 4px 20px;
@@ -158,19 +196,10 @@
   align-items: center;
   position: relative;
   z-index: 1;
-}
-
-.bloqueMagenta,
-.bloqueAzul {
   transition: transform 0.3s ease;
-}
+`;
 
-.cuotasPromo:hover .bloqueMagenta,
-.cuotasPromo:hover .bloqueAzul {
-  transform: scale(1.05);
-}
-
-.mensaje {
+export const Mensaje = styled.p`
   margin-top: 1rem;
   text-align: center;
   font-size: 1rem;
@@ -180,39 +209,4 @@
   padding: 0.8rem;
   border-radius: 8px;
   border: 1px solid #c8e6c9;
-}
-
-@media (max-width: 700px) {
-  .detalleContainer {
-    flex-direction: column;
-    padding: 1rem;
-  }
-
-  .imagenPrincipal {
-    max-width: 100%;
-  }
-}
-
-@media (max-width: 400px) {
-  .detalleContainer {
-    padding: 0.5rem;
-  }
-
-  .titulo {
-    font-size: 1.2rem;
-  }
-
-  .precioFinal {
-    font-size: 1.2rem;
-  }
-
-  .btnCantidad {
-    width: 32px;
-    font-size: 1rem;
-  }
-
-  .cantidad {
-    width: 40px;
-    font-size: 0.9rem;
-  }
-}
+`;

@@ -1,8 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import { useProductosContext } from "../context/ProductosContext";
-import styles from './FormularioProducto.module.css';
 import { IoClose } from "react-icons/io5";
 import { NumericFormat } from "react-number-format";
+
+// 👉 Importamos los styled-components
+import { 
+  ModalOverlay, ModalContainer, ModalContent, ModalHeader, ModalHeaderTitle, 
+  CloseButton, TituloAzul, FormLabel, FormInputBase, TextArea, 
+  ModalActions, BtnPrimary, BtnSecondary 
+} from "./ui/FormularioProductoLayout";
 
 const FormularioProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }) => {
   const [producto, setProducto] = useState(productoInicial);
@@ -25,6 +31,10 @@ const FormularioProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }
       alert("El precio debe ser mayor a 0");
       return;
     }
+    if (!producto.descripcion || producto.descripcion.length < 10) {
+      alert("La descripción debe tener al menos 10 caracteres");
+      return;
+    }
     if (modo === "agregar") {
       await agregarProducto(producto);
     } else {
@@ -34,37 +44,35 @@ const FormularioProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }
   };
 
   return (
-    <div className={styles.modalOverlay} aria-modal="true" role="dialog" aria-labelledby="modalTitle">
-      <div className={styles.modalContainer}>
-        <div className={styles.modalContent}>   
+    <ModalOverlay aria-modal="true" role="dialog" aria-labelledby="modalTitle">
+      <ModalContainer>
+        <ModalContent>   
           {/* Header del modal */}
-          <div className={styles.modalHeader}>
-            <h3 id="modalTitle" className={styles.modalHeaderTitle}>
-              <span className={styles.tituloAzul}>
+          <ModalHeader>
+            <ModalHeaderTitle id="modalTitle">
+              <TituloAzul>
                 {modo === "agregar" ? "Agregar Producto" : "Editar Producto"}
-              </span>
-            </h3>
-            <button 
+              </TituloAzul>
+            </ModalHeaderTitle>
+            <CloseButton 
               type="button" 
               onClick={onCerrar}
-              className={styles.closeButton}
               aria-label="Cerrar formulario"
             >
               <IoClose />
-            </button>
-          </div>
+            </CloseButton>
+          </ModalHeader>
 
           {/* Formulario con Bootstrap Grid */}
           <form onSubmit={manejarSubmit}>
             <div className="row mb-3">
               <div className="col-12">
-                <label className={styles.formLabel}>Nombre</label>
-                <input
+                <FormLabel>Nombre</FormLabel>
+                <FormInputBase
                   ref={nombreRef}
                   type="text"
                   name="nombre"
                   id="nombre"
-                  className={styles.formInputBase}
                   placeholder="Ingrese el nombre del producto"
                   value={producto.nombre || ""}
                   onChange={manejarChange}
@@ -75,14 +83,14 @@ const FormularioProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }
 
             <div className="row mb-3">
               <div className="col-md-4 col-12">
-                <label className={styles.formLabel}>Precio</label>
+                <FormLabel>Precio</FormLabel>
                 <NumericFormat
                   thousandSeparator="."
                   decimalSeparator=","
                   prefix="$"
                   name="precio"
                   id="precio"
-                  className={styles.formInputBase}
+                  customInput={FormInputBase}
                   placeholder="$0"
                   value={producto.precio || ""}
                   onValueChange={(val) => {
@@ -96,12 +104,11 @@ const FormularioProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }
               </div>
 
               <div className="col-md-4 col-12">
-                <label className={styles.formLabel}>Categoría</label>
-                <input
+                <FormLabel>Categoría</FormLabel>
+                <FormInputBase
                   type="text"
                   name="categoria"
                   id="categoria"
-                  className={styles.formInputBase}
                   placeholder="Ingrese la categoría"
                   value={producto.categoria || ""}
                   onChange={manejarChange}
@@ -110,12 +117,11 @@ const FormularioProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }
               </div>
 
               <div className="col-md-4 col-12">
-                <label className={styles.formLabel}>SubCategoría</label>
-                <input
+                <FormLabel>SubCategoría</FormLabel>
+                <FormInputBase
                   type="text"
                   name="subCategoria"
                   id="subCategoria"
-                  className={styles.formInputBase}
                   placeholder="Ingrese la subcategoría"
                   value={producto.subCategoria || ""}
                   onChange={manejarChange}
@@ -126,12 +132,11 @@ const FormularioProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }
 
             <div className="row mb-3">
               <div className="col-12">
-                <label className={styles.formLabel}>URL de Imagen</label>
-                <input
+                <FormLabel>URL de Imagen</FormLabel>
+                <FormInputBase
                   type="text"
                   name="imagen"
                   id="imagen"
-                  className={styles.formInputBase}
                   placeholder="https://ejemplo.com/imagen.jpg"
                   value={producto.imagen || ""}
                   onChange={manejarChange}
@@ -141,44 +146,32 @@ const FormularioProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }
 
             <div className="row mb-3">
               <div className="col-12">
-                <label className={styles.formLabel}>Descripción del Producto</label>
-                <textarea
+                <FormLabel>Descripción del Producto</FormLabel>
+                <TextArea
                   id="descripcion"
                   name="descripcion"
                   rows="4"
-                  className={styles.formInputBase}
                   placeholder="Escriba la descripción del producto aquí"
                   value={producto.descripcion || ""}
                   onChange={manejarChange}
                   required
-                ></textarea>
+                />
               </div>
             </div>
 
             {/* Botones de acción */}
-            <div className="row mt-3">
-              <div className="col-6">
-                <button 
-                  type="submit" 
-                  className={`${styles.btnBase} ${styles.btnPrimary} w-100`}
-                >
-                  {modo === "agregar" ? "Agregar" : "Actualizar"}
-                </button>
-              </div>
-              <div className="col-6">
-                <button 
-                  type="button" 
-                  onClick={onCerrar}
-                  className={`${styles.btnBase} ${styles.btnSecondary} w-100`}
-                >
-                  Cancelar
-                </button>
-              </div>
-            </div>
+            <ModalActions>
+              <BtnPrimary type="submit">
+                {modo === "agregar" ? "Agregar" : "Actualizar"}
+              </BtnPrimary>
+              <BtnSecondary type="button" onClick={onCerrar}>
+                Cancelar
+              </BtnSecondary>
+            </ModalActions>
           </form>
-        </div>
-      </div>
-    </div>
+        </ModalContent>
+      </ModalContainer>
+    </ModalOverlay>
   );
 };
 

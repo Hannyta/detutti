@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { usuarios } from '../data/usuarios.js';
+import { usuarios } from "../data/usuarios.js";
 
 const AuthContext = createContext();
 
@@ -16,9 +16,9 @@ export const AuthProvider = ({ children }) => {
 
     if (foundUser) {
       const newUser = {
-        email: foundUser.usuario,
+        email: foundUser.usuario.toLowerCase(),
         nombre: foundUser.nombre,
-        rol: foundUser.rol
+        rol: foundUser.rol,
       };
 
       setUser(newUser);
@@ -40,11 +40,19 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = (email, password, nombre) => {
-    const existe = usuarios.find(u => u.usuario === email);
+    const existe = usuarios.find(
+      u => u.usuario.toLowerCase() === email.trim().toLowerCase()
+    );
     if (existe) {
       return { success: false, mensaje: "El usuario ya existe" };
     }
-    const newUser = { email, nombre, rol: "cliente" };
+
+    const newUser = { 
+      email: email.trim().toLowerCase(), 
+      nombre, 
+      rol: "cliente" 
+    };
+
     setUser(newUser);
     localStorage.setItem("user", JSON.stringify(newUser));
     return { success: true, mensaje: `Bienvenido ${nombre}` };

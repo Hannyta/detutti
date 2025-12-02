@@ -1,8 +1,13 @@
-import Boton from '../components/Boton';
-import { useState, useEffect } from 'react';
-import { useAuthContext } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import styles from './Login.module.css';
+import Boton from "../components/Boton";
+import { useState, useEffect } from "react";
+import { useAuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+
+// 👉 Importamos los styled-components
+import { 
+  PageWrapper, LoginContainer, LoginTitle, LoginForm, Recordarme, 
+  ErrorMsg, ForgotPassword, Register 
+} from "../ui/LoginLayout";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -43,10 +48,10 @@ const Login = () => {
   };
 
   return (
-    <div className={styles.pageWrapper}>
-      <div className={styles.loginContainer}>
-        <h2>Iniciar sesión</h2>
-        <form onSubmit={autenticarUsuario} className={styles.loginForm}>
+    <PageWrapper>
+      <LoginContainer>
+        <LoginTitle>Iniciar sesión</LoginTitle>
+        <LoginForm onSubmit={autenticarUsuario}>
           <input 
             type="email"
             aria-label="Correo electrónico"
@@ -63,7 +68,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <div className={styles.recordarme}>
+          <Recordarme>
             <input 
               type="checkbox"
               id="recordarme"
@@ -71,21 +76,25 @@ const Login = () => {
               onChange={(e) => setRecordarme(e.target.checked)}
             />
             <label htmlFor="recordarme"> Recordarme </label>
-          </div>
-          {errorMsg && <p className={styles.error}>{errorMsg}</p>}
-          <Boton texto={loading ? "Ingresando..." : "Iniciar sesión"} tipo="primary" type="submit" />
-        </form>
+          </Recordarme>
+          {errorMsg && <ErrorMsg>{errorMsg}</ErrorMsg>}
+          <Boton 
+            texto={loading ? "Ingresando..." : "Iniciar sesión"} 
+            tipo="primary" 
+            type="submit" 
+          />
+        </LoginForm>
 
-        <div className={styles.forgotPassword}>
+        <ForgotPassword>
           <Boton 
             texto="Olvidé mi contraseña" 
             tipo="secondary" 
             type="button" 
             onClick={() => navigate("/forgot-password")} 
           />
-        </div>
+        </ForgotPassword>
 
-        <div className={styles.register}>
+        <Register>
           <label>¿Aún no tienes una cuenta?</label>
           <Boton 
             texto="Registrarme" 
@@ -93,9 +102,9 @@ const Login = () => {
             type="button"
             onClick={() => navigate("/registrarme")}
           />
-        </div>
-      </div>
-    </div>
+        </Register>
+      </LoginContainer>
+    </PageWrapper>
   );
 };
 

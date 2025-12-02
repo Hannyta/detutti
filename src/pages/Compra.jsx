@@ -1,9 +1,15 @@
-import { useState, useContext } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import Boton from '../components/Boton';
-import styles from './Compra.module.css';
-import { CarritoContext } from '../context/CarritoContext';
-import { formatearPrecio } from '../helpers/formatearPrecio';
+import { useState, useContext } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import Boton from "../components/Boton";
+import { CarritoContext } from "../context/CarritoContext";
+import { formatearPrecio } from "../helpers/formatearPrecio";
+
+// 👉 Importamos los styled-components
+import { 
+  CompraContainer, TituloPagina, CompraResumen, ResumenItem, ResumenInfo, 
+  ResumenTitle, ResumenPrice, CantidadWrapper, BtnQty, QtyDisplay, Subtotal, 
+  CuotasPromo, BloqueMagenta, BloqueAzul, ResumenTotal, CompraForm, MensajeCompra 
+} from "../ui/CompraLayout";
 
 const Compra = ({ productos = [] }) => {
   const { state } = useLocation();
@@ -66,12 +72,12 @@ const Compra = ({ productos = [] }) => {
       alert("El DNI debe ser numérico.");
       return;
     }
-    if (formData.codigoPostal.length < 4) {
-      alert("El código postal es demasiado corto.");
+    if (!/^\d+$/.test(formData.codigoPostal) || formData.codigoPostal.length < 4) {
+      alert("El código postal debe ser numérico y tener al menos 4 dígitos.");
       return;
     }
 
-    if (confirm("¿Confirmás la compra?")) {
+    if (window.confirm("¿Confirmás la compra?")) {
       setMensaje("¡Gracias por tu compra!");
       vaciarCarrito();
       setTimeout(() => navigate("/"), 2000); // redirige después de 2s
@@ -79,72 +85,62 @@ const Compra = ({ productos = [] }) => {
   };
 
   return (
-    <section className={styles.compraContainer} aria-label="Finalizar compra">
-      <h2 className={styles.tituloPagina}>Finalizar compra</h2>
+    <CompraContainer aria-label="Finalizar compra">
+      <TituloPagina>Finalizar compra</TituloPagina>
 
-      <div className={styles.compraResumen}>
+      <CompraResumen>
         <h3>Resumen del pedido:</h3>
 
         {productosCompra.map((p) => (
-          <div className={styles.resumenItem} key={p.id}>
+          <ResumenItem key={p.id}>
             <img src={p.imagen} alt={`Imagen de ${p.nombre}`} />
 
-            <div className={styles.resumenInfo}>
-              <p className={styles.resumenTitle}>{p.nombre}</p>
+            <ResumenInfo>
+              <ResumenTitle>{p.nombre}</ResumenTitle>
 
-              <p className={styles.resumenPrice}>
+              <ResumenPrice>
                 Precio: {formatearPrecio(p.precio)}
-              </p>
+              </ResumenPrice>
 
               {/* CONTROL DE CANTIDAD */}
-              <div className={styles.cantidadWrapper}>
-                <button
-                  className={styles.btnQty}
+              <CantidadWrapper>
+                <BtnQty
                   onClick={() => decrementar(p.id)}
                   disabled={p.cantidad <= 1}
                 >
                   -
-                </button>
+                </BtnQty>
 
-                <span className={styles.qtyDisplay}>
-                  {p.cantidad || 1}
-                </span>
+                <QtyDisplay>{p.cantidad || 1}</QtyDisplay>
 
-                <button
-                  className={styles.btnQty}
-                  onClick={() => incrementar(p.id)}
-                >
-                  +
-                </button>
-              </div>
+                <BtnQty onClick={() => incrementar(p.id)}>+</BtnQty>
+              </CantidadWrapper>
 
               {/* SUBTOTAL */}
-              <p className={styles.subtotal}>
+              <Subtotal>
                 Subtotal:{" "}
                 <strong>
                   {formatearPrecio((p.precio || 0) * (p.cantidad || 1))}
                 </strong>
-              </p>
+              </Subtotal>
 
               {/* CUOTAS */}
               {p.aplicaCuotas && p.cuotas && p.valorCuota && (
-                <div className={styles.cuotasPromo}>
-                  <span className={styles.bloqueMagenta}>{p.cuotas} cuotas</span>
-                  <span className={styles.bloqueAzul}>
+                <CuotasPromo>
+                  <BloqueMagenta>{p.cuotas} cuotas</BloqueMagenta>
+                  <BloqueAzul>
                     sin interés de {formatearPrecio(p.valorCuota)}
-                  </span>
-                </div>
+                  </BloqueAzul>
+                </CuotasPromo>
               )}
-            </div>
-          </div>
+            </ResumenInfo>
+          </ResumenItem>
         ))}
 
-        <strong className={styles.resumenTotal}>
-          Total: {formatearPrecio(total)}
-        </strong>
-      </div>
+        <ResumenTotal>Total: {formatearPrecio(total)}</ResumenTotal>
+      </CompraResumen>
 
-      <form className={styles.compraForm} onSubmit={handleConfirmarCompra}>
+      <CompraForm onSubmit={handleConfirmarCompra}>
         <fieldset>
           <legend>Datos de envío</legend>
 
@@ -206,10 +202,10 @@ const Compra = ({ productos = [] }) => {
         </fieldset>
 
         <Boton texto="Confirmar compra" tipo="primary" />
-      </form>
+      </CompraForm>
 
-      {mensaje && <p className={styles.mensajeCompra}>{mensaje}</p>}
-    </section>
+      {mensaje && <MensajeCompra aria-live="polite">{mensaje}</MensajeCompra>}
+    </CompraContainer>
   );
 };
 

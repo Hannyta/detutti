@@ -1,8 +1,13 @@
-import { useState } from 'react';
-import { useAuthContext } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import Boton from '../components/Boton';
-import styles from './Registro.module.css';
+import { useState } from "react";
+import { useAuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import Boton from "../components/Boton";
+
+// 👉 Importamos los styled-components
+import { 
+  RegistroContainer, RegistroTitle, RegistroForm, 
+  ErrorMsg, SuccessMsg 
+} from "../ui/RegistroLayout";
 
 const Registro = () => {
   const [formData, setFormData] = useState({
@@ -46,9 +51,9 @@ const Registro = () => {
   };
 
   return (
-    <div className={styles.registroContainer}>
-      <h2>Registrarme</h2>
-      <form onSubmit={handleSubmit} className={styles.registroForm}>
+    <RegistroContainer>
+      <RegistroTitle>Registrarme</RegistroTitle>
+      <RegistroForm onSubmit={handleSubmit}>
         <label htmlFor="nombre">Nombre completo</label>
         <input
           id="nombre"
@@ -93,12 +98,12 @@ const Registro = () => {
           required
         />
 
-        {errorMsg && <p className={styles.error}>{errorMsg}</p>}
-        {mensaje && <p className={styles.success}>{mensaje}</p>}
+        {errorMsg && <ErrorMsg>{errorMsg}</ErrorMsg>}
+        {mensaje && <SuccessMsg aria-live="polite">{mensaje}</SuccessMsg>}
 
         <Boton texto="Registrarme" tipo="primary" type="submit" />
-      </form>
-    </div>
+      </RegistroForm>
+    </RegistroContainer>
   );
 };
 

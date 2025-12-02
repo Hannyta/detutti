@@ -1,12 +1,14 @@
-import { useProductosContext } from '../context/ProductosContext';
-import Productos from '../components/Productos';
+import { useProductosContext } from "../context/ProductosContext";
+import Productos from "../components/Productos";
+import { Helmet } from "react-helmet";
+import { InicioMain, TituloSeccion, Mensaje, ErrorBox } from "../ui/InicioLayout";
 
 const Inicio = () => {
   const { productos, cargando, error } = useProductosContext();
 
   if (cargando) {
     return (
-      <div className="text-center mt-4">
+      <div style={{ textAlign: "center", marginTop: "2rem" }}>
         <div className="spinner-border text-primary" role="status">
           <span className="visually-hidden">Cargando...</span>
         </div>
@@ -15,22 +17,23 @@ const Inicio = () => {
   }
 
   if (error) {
-    return (
-      <div className="alert alert-danger mt-4">
-        Ocurrió un error al cargar los productos: {error}
-      </div>
-    );
+    return <ErrorBox aria-live="polite">Ocurrió un error al cargar los productos: {error}</ErrorBox>;
   }
 
   return (
-    <main>
-      <h2 className="tituloSeccion">Productos</h2>
+    <InicioMain>
+      <Helmet>
+        <title>Detutti - Inicio</title>
+        <meta name="description" content="Explora todos nuestros productos disponibles en Detutti." />
+      </Helmet>
+
+      <TituloSeccion>Productos</TituloSeccion>
       {productos.length === 0 ? (
-        <p className="text-center text-muted">No hay productos disponibles</p>
+        <Mensaje>No hay productos disponibles</Mensaje>
       ) : (
         <Productos productos={productos} cargando={cargando} error={error} />
       )}
-    </main>
+    </InicioMain>
   );
 };
 

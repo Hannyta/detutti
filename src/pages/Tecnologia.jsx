@@ -1,4 +1,6 @@
-import Categoria from '../components/Categoria';
+import Categoria from "../components/Categoria";
+import { Helmet } from "react-helmet";
+import { TecnologiaSection, TecnologiaTitle } from "../ui/TecnologiaLayout";
 
 const Tecnologia = () => {
   const subCategorias = [
@@ -9,18 +11,23 @@ const Tecnologia = () => {
   ];
 
   return (
-    <section aria-label="Categorías de tecnología">
-      <h2>Tecnología</h2>
-      {subCategorias.map(sub => (
+    <TecnologiaSection aria-label="Categorías de tecnología">
+      <Helmet>
+        <title>Detutti - Tecnología</title>
+        <meta name="description" content="Explora nuestra selección de tecnología: televisores, audio, notebooks y smartphones." />
+      </Helmet>
+
+      <TecnologiaTitle>Tecnología</TecnologiaTitle>
+      {subCategorias.map((sub) => (
         <div key={sub.api}>
           <Categoria
             nombreCategoria={sub.nombre}
-            categoriaAPI="tecnologia"
+            categoriaAPI="Tecnologia"
             subCategoriaAPI={sub.api}
           />
         </div>
       ))}
-    </section>
+    </TecnologiaSection>
   );
 };
 

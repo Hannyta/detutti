@@ -4,7 +4,13 @@ import { useProductosContext } from "../context/ProductosContext";
 import { CiCirclePlus } from "react-icons/ci";
 import { LuSquarePen } from "react-icons/lu";
 import { FaTrashCan } from "react-icons/fa6";
-import styles from './GestionDeProductos.module.css';
+
+import { 
+  GestionContainer, GestionHeader, GestionTitulo, BtnAgregar, GridProductos, ProductoCard, 
+  ProductoImagen, ProductoNombre, ProductoPrecio, CuotasPromo, BloqueMagenta, BloqueAzul, 
+  Acciones, BtnEditar, BtnEliminar, ModalOverlay, ModalContainer, ModalHeader, ModalTitle, 
+  ModalText, ModalActions, BtnCancel, BtnDelete 
+} from "../ui/GestionDeProductosLayout";
 
 const GestionDeProductos = () => {
   const { productos, eliminarProducto } = useProductosContext();
@@ -55,21 +61,21 @@ const GestionDeProductos = () => {
   };
 
   return (
-    <div className={styles.gestionContainer}>
+    <GestionContainer>
       {/* Header */}
-      <div className={styles.gestionHeader}>
-        <h2 className={styles.gestionTitulo}>Lista de Productos</h2>
-        <button onClick={abrirFormularioAgregar} className={styles.btnAgregar}>
+      <GestionHeader>
+        <GestionTitulo>Lista de Productos</GestionTitulo>
+        <BtnAgregar onClick={abrirFormularioAgregar}>
           <CiCirclePlus /> <span>Agregar Producto</span>
-        </button>
-      </div>
+        </BtnAgregar>
+      </GestionHeader>
 
       {/* Grid de productos */}
-      <div className={styles.gridProductos}>
+      <GridProductos>
         {productos.length === 0 ? (
-          <div className={styles.productoCard}>
+          <ProductoCard>
             <p>No hay productos</p>
-          </div>
+          </ProductoCard>
         ) : (
           productos.map((producto) => {
             const aplicaCuotas = producto.precio >= 20000;
@@ -77,71 +83,64 @@ const GestionDeProductos = () => {
             const valorCuota = producto.precio / cuotas;
 
             return (
-              <div key={producto.id} className={styles.productoCard}>
-                <img 
+              <ProductoCard key={producto.id}>
+                <ProductoImagen 
                   src={producto.imagen} 
                   alt={producto.nombre} 
-                  className={styles.productoImagen} 
                 />
 
-                <div className={styles.productoInfo}>
-                  <h3 className={styles.productoNombre}>{producto.nombre}</h3>
+                <div>
+                  <ProductoNombre>{producto.nombre}</ProductoNombre>
 
-                  <div className={styles.productoPrecioFila}>
-                    <p className={styles.productoPrecio}>
+                  <div>
+                    <ProductoPrecio>
                       ${producto.precio?.toLocaleString('es-AR')}
-                    </p>
+                    </ProductoPrecio>
                     {aplicaCuotas && (
-                      <div className={styles.cuotasPromo}>
-                        <span className={styles.bloqueMagenta}>{cuotas} cuotas</span>
-                        <span className={styles.bloqueAzul}>
+                      <CuotasPromo>
+                        <BloqueMagenta>{cuotas} cuotas</BloqueMagenta>
+                        <BloqueAzul>
                           sin interés de ${valorCuota.toLocaleString('es-AR', { minimumFractionDigits: 2 })}
-                        </span>
-                      </div>
+                        </BloqueAzul>
+                      </CuotasPromo>
                     )}
                   </div>
 
-                  <div className={styles.acciones}>
-                    <button 
-                      onClick={() => abrirFormularioEditar(producto)} 
-                      className={styles.btnEditar}
-                    >
+                  <Acciones>
+                    <BtnEditar onClick={() => abrirFormularioEditar(producto)}>
                       <LuSquarePen /> Editar
-                    </button>
-                    <button 
-                      onClick={() => confirmarEliminacion(producto)} 
-                      className={styles.btnEliminar}
-                    >
+                    </BtnEditar>
+                    <BtnEliminar onClick={() => confirmarEliminacion(producto)}>
                       <FaTrashCan /> Eliminar
-                    </button>
-                  </div>
+                    </BtnEliminar>
+                  </Acciones>
                 </div>
-              </div>
+              </ProductoCard>
             );
           })
         )}
-      </div>
+      </GridProductos>
 
       {/* Modal de confirmación */}
       {productoAEliminar && (
-        <div className={styles.modalOverlay} role="dialog" aria-modal="true" aria-labelledby="modalEliminarTitle">
-          <div className={styles.modalContainer}>
-            <div className={styles.modalHeader}>
-              <div className={styles.modalIcon}><FaTrashCan /></div>
+        <ModalOverlay role="dialog" aria-modal="true" aria-labelledby="modalEliminarTitle">
+          <ModalContainer>
+            <ModalHeader>
+              <FaTrashCan />
               <div>
-                <h3 id="modalEliminarTitle" className={styles.modalTitle}>Confirmar eliminación</h3>
-                <p className={styles.modalText}>Esta acción no se puede deshacer</p>
+                <ModalTitle id="modalEliminarTitle">Confirmar eliminación</ModalTitle>
+                <ModalText>Esta acción no se puede deshacer</ModalText>
               </div>
+            </ModalHeader>
+            <div>
+              <p>¿Estás seguro que querés eliminar <strong>"{productoAEliminar.nombre}"</strong>?</p>
             </div>
-            <div className={styles.modalBody}>
-              <p>¿Estás seguro que querés eliminar <span className="fw-bold">"{productoAEliminar.nombre}"</span>?</p>
-            </div>
-            <div className={styles.modalActions}>
-              <button onClick={() => setProductoAEliminar(null)} className={styles.btnCancel}>Cancelar</button>
-              <button onClick={handleEliminar} className={styles.btnDelete}>Eliminar</button>
-            </div>
-          </div>
-        </div>
+            <ModalActions>
+              <BtnCancel onClick={() => setProductoAEliminar(null)}>Cancelar</BtnCancel>
+              <BtnDelete onClick={handleEliminar}>Eliminar</BtnDelete>
+            </ModalActions>
+          </ModalContainer>
+        </ModalOverlay>
       )}
 
       {/* Formulario modal */}
@@ -152,7 +151,7 @@ const GestionDeProductos = () => {
           onCerrar={cerrarFormulario}
         />
       )}
-    </div>
+    </GestionContainer>
   );
 };
 

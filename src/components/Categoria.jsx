@@ -4,6 +4,7 @@ import { CarritoContext } from '../context/CarritoContext';
 import { useProductosContext } from '../context/ProductosContext';
 import { formatearPrecio } from '../helpers/formatearPrecio';
 import styled from "styled-components";
+import { Helmet } from "react-helmet";
 
 const CategoriaSection = styled.section`
   margin: 3rem auto;
@@ -58,34 +59,54 @@ const Categoria = ({ nombreCategoria, categoriaAPI, subCategoriaAPI }) => {
       (!subCategoriaAPI || p.subCategoria?.toLowerCase() === subCategoriaAPI.toLowerCase())
   );
 
+  // Seleccionamos aleatoriamente algunos productos en oferta
+  const productosConOferta = productosFiltrados
+    .map(p => p.id)
+    .sort(() => 0.5 - Math.random())
+    .slice(0, Math.ceil(productosFiltrados.length * 0.3));
+
   if (cargando) return <Estado>Cargando productos...</Estado>;
   if (error) return <Estado>{error}</Estado>;
 
   return (
     <CategoriaSection>
+      <Helmet>
+        <title>Detutti - {nombreCategoria}</title>
+        <meta name="description" content={`Explora productos de la categoría ${nombreCategoria}`} />
+      </Helmet>
+
       <TitleSection>{nombreCategoria}</TitleSection>
-      <div className="container">
-        <div className="row g-3 g-md-4">
-          {productosFiltrados.map((producto) => {
-            const agregado = carrito.some((p) => p.id === producto.id);
-            return (
-              <div className="col-12 col-sm-6 col-md-4 col-lg-3" key={producto.id}>
-                <TarjetaProducto
-                  id={producto.id}
-                  img={producto.imagen}
-                  nombre={producto.nombre}
-                  precio={formatearPrecio(producto.precio)}
-                  aplicaCuotas={producto.aplicaCuotas}
-                  cuotas={producto.cuotas}
-                  valorCuota={producto.valorCuota}
-                  boton={agregado ? "✅ Agregado" : "Agregar 🛒"}
-                  onClick={() => agregarProducto({ ...producto, cantidad: 1 })}
-                />
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      <GridTarjetas>
+        {productosFiltrados.map((producto) => {
+          const agregado = carrito.some((p) => p.id === producto.id);
+          const enOferta = productosConOferta.includes(producto.id);
+          const precioOriginal = enOferta ? producto.precio : null;
+          const precioConDescuento = enOferta ? producto.precio * 0.85 : producto.precio;
+
+          return (
+            <TarjetaProducto
+              key={producto.id}
+              id={producto.id}
+              img={producto.imagen}
+              nombre={producto.nombre}
+              precio={
+                <>
+                  {enOferta && <p style={{ textDecoration: "line-through", color: "#999" }}>{formatearPrecio(precioOriginal)}</p>}
+                  <p style={{ fontWeight: "bold", color: "#005BAC" }}>{formatearPrecio(precioConDescuento)}</p>
+                </>
+              }
+              aplicaCuotas={producto.aplicaCuotas}
+              cuotas={producto.cuotas}
+              valorCuota={producto.valorCuota}
+              boton={
+                agregado ? "✅ Agregado" : 
+                <button aria-label={`Agregar ${producto.nombre} al carrito`}>Agregar 🛒</button>
+              }
+              onClick={() => agregarProducto({ ...producto, cantidad: 1 })}
+            />
+          );
+        })}
+      </GridTarjetas>
     </CategoriaSection>
   );
 };

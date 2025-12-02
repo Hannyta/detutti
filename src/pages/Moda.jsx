@@ -1,4 +1,6 @@
-import Categoria from '../components/Categoria';
+import Categoria from "../components/Categoria";
+import { Helmet } from "react-helmet";
+import { ModaSection, ModaTitle } from "../ui/ModaLayout";
 
 const Moda = () => {
   const subCategorias = [
@@ -8,9 +10,14 @@ const Moda = () => {
   ];
 
   return (
-    <section aria-label="Categorías de moda">
-      <h2>Moda</h2>
-      {subCategorias.map(sub => (
+    <ModaSection aria-label="Categorías de moda">
+      <Helmet>
+        <title>Detutti - Moda</title>
+        <meta name="description" content="Explora nuestra selección de moda: caballero, dama e infantil." />
+      </Helmet>
+
+      <ModaTitle>Moda</ModaTitle>
+      {subCategorias.map((sub) => (
         <div key={sub.api}>
           <Categoria
             nombreCategoria={sub.nombre}
@@ -19,7 +26,7 @@ const Moda = () => {
           />
         </div>
       ))}
-    </section>
+    </ModaSection>
   );
 };
 

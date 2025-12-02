@@ -1,27 +1,23 @@
-.carritoContainer {
+import styled from "styled-components";
+
+export const CarritoContainer = styled.section`
   width: 100%;
   margin: 0;
   padding: 1rem;
   border-radius: 1px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-}
+`;
 
-.carritoContainer h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  color: #005BAC;
-}
-
-.carritoList {
+export const CarritoList = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
-  gap: 0.6rem; /* separación vertical entre filas */
-}
+  gap: 0.6rem;
+`;
 
-.carritoItem {
+export const CarritoItem = styled.li`
   display: flex;
-  flex-direction: column; /* mejor para mobile */
+  flex-direction: column;
   align-items: center;
   gap: 1rem;
   padding: 1rem;
@@ -29,61 +25,77 @@
   border-radius: 10px;
   box-shadow: 1px 1px 6px rgba(0,0,0,0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  position: relative; /* necesario para deleteTopRight */
-  height: 100%; /* ocupa toda la columna */
-}
+  position: relative;
+  height: 100%;
 
-.carritoItem:hover {
-  transform: scale(1.02);
-  box-shadow: 2px 4px 10px rgba(0,0,0,0.15);
-}
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: 2px 4px 10px rgba(0,0,0,0.15);
+  }
 
-/* IMG */
-.carritoImg {
+  @media (max-width: 600px) {
+    padding: 0.5rem;
+  }
+`;
+
+export const CarritoImg = styled.img`
   width: 100px;
   height: 100px;
   object-fit: contain;
   border-radius: 8px;
   border: 1px solid #ddd;
-}
 
-/* INFO */
-.carritoInfo {
+  @media (max-width: 600px) {
+    width: 50px;
+    height: 50px;
+  }
+`;
+
+export const CarritoInfo = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
 
-.carritoTitle {
+  @media (max-width: 600px) {
+    align-items: center;
+    text-align: center;
+  }
+`;
+
+export const CarritoTitle = styled.p`
   font-size: 0.85rem;
   font-weight: 600;
   color: #005BAC;
   margin-bottom: 0.2rem;
   line-height: 1rem;
-}
 
-.carritoPrice {
+  @media (max-width: 600px) {
+    font-size: 0.8rem;
+    text-align: center;
+  }
+`;
+
+export const CarritoPrice = styled.p`
   margin-bottom: 0.5rem;
   color: #d32f2f;
   font-weight: 700;
-}
 
-/* TOTAL */
-.carritoTotal {
+  @media (max-width: 600px) {
+    font-size: 0.75rem;
+    text-align: center;
+  }
+`;
+
+export const CarritoTotal = styled.div`
   text-align: right;
   font-size: 1.2rem;
   font-weight: bold;
   margin: 1rem 0;
   color: #0a0a42;
-}
+`;
 
-/* BOTONES FINALES */
-.botonesCarrito {
-  display: contents; /* deja que Bootstrap maneje el layout */
-}
-
-.deleteTopRight {
+export const DeleteTopRight = styled.button`
   position: absolute;
   top: 6px;
   right: 6px;
@@ -93,23 +105,22 @@
   color: #d90429;
   font-size: 1.1rem;
   transition: transform 0.2s ease;
-}
 
-.deleteTopRight:hover {
-  transform: scale(1.15);
-}
+  &:hover {
+    transform: scale(1.15);
+  }
+`;
 
-/* CONTROL DE CANTIDAD */
-.cantidadWrapper {
+export const CantidadWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   margin-top: 6px;
   width: 100%;
-}
+`;
 
-.btnQty {
+export const BtnQty = styled.button`
   background-color: #48c0f733;
   border: none;
   width: 26px;
@@ -122,32 +133,31 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
 
-.btnQty:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`;
 
-.qtyDisplay {
+export const QtyDisplay = styled.span`
   font-size: 1rem;
   font-weight: bold;
   min-width: 20px;
   text-align: center;
   color: #333;
-}
+`;
 
-/* PROMO CUOTAS */
-.cuotasPromo {
+export const CuotasPromo = styled.div`
   display: flex;
   align-items: center;
   margin-top: 12px;
   justify-content: center;
   flex-wrap: wrap;
   position: relative;
-}
+`;
 
-.bloqueMagenta {
+export const BloqueMagenta = styled.span`
   background-color: #e74883;
   color: white;
   padding: 4px 8px;
@@ -162,9 +172,9 @@
   position: relative;
   z-index: 2;
   margin-right: -12px;
-}
+`;
 
-.bloqueAzul {
+export const BloqueAzul = styled.span`
   background-color: #209ce4;
   color: white;
   padding: 2px 14px;
@@ -178,31 +188,4 @@
   align-items: center;
   position: relative;
   z-index: 1;
-}
-
-/* RESPONSIVE */
-@media (max-width: 600px) {
-  .carritoItem {
-    padding: 0.5rem;
-  }
-
-  .carritoImg {
-    width: 50px;
-    height: 50px;
-  }
-
-  .carritoTitle {
-    font-size: 0.8rem;
-    text-align: center;
-  }
-
-  .carritoPrice {
-    font-size: 0.75rem;
-    text-align: center;
-  }
-
-  .carritoInfo {
-    align-items: center;
-    text-align: center;
-  }
-}
+`;

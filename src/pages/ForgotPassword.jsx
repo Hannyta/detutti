@@ -1,40 +1,37 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Boton from "../components/Boton";
-import styles from "./ForgotPassword.module.css";
+import { ForgotContainer, ForgotTitle, ForgotForm, PrimaryButton, Mensaje, ErrorMensaje } from "../ui/ForgotLayout";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
-  const [mensaje, setMensaje] = useState("");
-  const navigate = useNavigate();
+  const [mensaje, setMensaje] = useState(null);
+  const [error, setError] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      setMensaje("Formato de correo inválido");
+    if (!email) {
+      setError("Por favor ingresa tu correo electrónico.");
       return;
     }
-    setMensaje(`Se envió un enlace de recuperación a: ${email}`);
-    setTimeout(() => navigate("/"), 2000);
+    // Simulación de envío
+    setMensaje("Se ha enviado un enlace de recuperación a tu correo.");
+    setError(null);
   };
 
   return (
-    <div className={styles.forgotContainer}>
-      <h2>Recuperar contraseña</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Correo electrónico</label>
-        <input 
-          id="email"
-          type="email" 
-          placeholder="Ingresa tu correo" 
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)} 
-          required 
+    <ForgotContainer aria-label="Recuperar contraseña">
+      <ForgotTitle>Recuperar contraseña</ForgotTitle>
+      <ForgotForm onSubmit={handleSubmit}>
+        <input
+          type="email"
+          placeholder="Ingresa tu correo"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
-        <Boton texto="Enviar enlace" tipo="primary" type="submit" />
-      </form>
-      {mensaje && <p className={styles.mensaje}>{mensaje}</p>}
-    </div>
+        <PrimaryButton type="submit">Enviar enlace</PrimaryButton>
+      </ForgotForm>
+      {mensaje && <Mensaje aria-live="polite">{mensaje}</Mensaje>}
+      {error && <ErrorMensaje aria-live="polite">{error}</ErrorMensaje>}
+    </ForgotContainer>
   );
 };
 

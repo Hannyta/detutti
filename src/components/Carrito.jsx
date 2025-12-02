@@ -1,11 +1,17 @@
 import Boton from './Boton';
 import { MdDeleteForever } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
-import styles from './Carrito.module.css';
 import { useContext } from 'react';
 import { CarritoContext } from '../context/CarritoContext';
 import { useAuthContext } from '../context/AuthContext'; 
-import { formatearPrecio } from '../helpers/formatearPrecio'; // 👈 importamos helper
+import { formatearPrecio } from '../helpers/formatearPrecio';
+
+// 👉 Importamos los styled-components
+import { 
+  CarritoContainer, CarritoList, CarritoItem, CarritoImg, CarritoInfo, 
+  CarritoTitle, CarritoPrice, CarritoTotal, DeleteTopRight, CantidadWrapper, 
+  BtnQty, QtyDisplay, CuotasPromo, BloqueMagenta, BloqueAzul 
+} from "./ui/CarritoLayout";
 
 const Carrito = ({ onClose }) => {
   const { carrito: productos, vaciarCarrito, eliminarProducto, actualizarCantidad } = useContext(CarritoContext);
@@ -21,17 +27,17 @@ const Carrito = ({ onClose }) => {
     if (!isAuthenticated) {
       alert('Debes iniciar sesión para realizar la compra.');
       navigate('/login');
-      onClose?.(); // 👈 cerramos aside si redirige a login
+      onClose?.();
       return;
     }
     if (confirm('¿Confirma esta compra?')) {
       navigate('/compra', { state: { productos } });
-      onClose?.(); // 👈 cerramos aside al confirmar compra
+      onClose?.();
     }
   };
 
   return (
-    <section className={styles.carritoContainer}>
+    <CarritoContainer>
       {productos.length === 0 ? (
         <>
           <p>No tienes ningún producto en tu carrito de compras.</p>
@@ -40,83 +46,78 @@ const Carrito = ({ onClose }) => {
             tipo="danger-2"
             onClick={() => {
               navigate('/');
-              onClose?.(); // 👈 cerramos aside al continuar comprando
+              onClose?.();
             }}
           />
         </>
       ) : (
         <>
           {/* Lista de productos con Bootstrap Grid */}
-          <ul className={`row ${styles.carritoList}`} role="list">
+          <CarritoList className="row" role="list">
             {productos.map((producto) => {
               const { id, imagen, nombre, precio, aplicaCuotas, cuotas, valorCuota, cantidad } = producto;
 
               return (
-                <li 
+                <CarritoItem 
                   key={id} 
-                  className={`col-12 col-md-6 col-lg-4 ${styles.carritoItem}`} 
+                  className="col-12 col-md-6 col-lg-4"
                   role="listitem"
                 >
-                  {/* BOTÓN ELIMINAR ARRIBA */}
-                  <button 
-                    className={styles.deleteTopRight}
+                  {/* BOTÓN ELIMINAR */}
+                  <DeleteTopRight
                     onClick={() => eliminarProducto(id)}
                     aria-label="Eliminar producto"
                   >
                     <MdDeleteForever />
-                  </button>
+                  </DeleteTopRight>
 
-                  <img src={imagen} alt={nombre} className={styles.carritoImg}/>
+                  <CarritoImg src={imagen} alt={nombre} />
 
-                  <div className={styles.carritoInfo}>
-                    <p className={styles.carritoTitle}>{nombre}</p>
+                  <CarritoInfo>
+                    <CarritoTitle>{nombre}</CarritoTitle>
 
-                    {/* ✅ Precio unitario con helper */}
-                    <p className={styles.carritoPrice}>
-                      {formatearPrecio(precio)}
-                    </p>
+                    {/* Precio unitario */}
+                    <CarritoPrice>{formatearPrecio(precio)}</CarritoPrice>
 
-                    {/* ✅ Bloque de cuotas */}
+                    {/* Bloque de cuotas */}
                     {aplicaCuotas && (
-                      <div className={styles.cuotasPromo}>
-                        <span className={styles.bloqueMagenta}>{cuotas} cuotas</span>
-                        <span className={styles.bloqueAzul}>
+                      <CuotasPromo>
+                        <BloqueMagenta>{cuotas} cuotas</BloqueMagenta>
+                        <BloqueAzul>
                           sin interés de {formatearPrecio(valorCuota)}
-                        </span>
-                      </div>
+                        </BloqueAzul>
+                      </CuotasPromo>
                     )}
 
-                    {/* CONTROL DE CANTIDAD */}
-                    <div className={styles.cantidadWrapper}>
-                      <button 
-                        className={styles.btnQty}
+                    {/* Control de cantidad */}
+                    <CantidadWrapper>
+                      <BtnQty 
                         onClick={() => actualizarCantidad(id, cantidad - 1)}
                         disabled={cantidad <= 1}
                       >
                         -
-                      </button>
+                      </BtnQty>
 
-                      <span className={styles.qtyDisplay}>{cantidad}</span>
+                      <QtyDisplay>{cantidad}</QtyDisplay>
 
-                      <button 
-                        className={styles.btnQty}
+                      <BtnQty 
                         onClick={() => actualizarCantidad(id, cantidad + 1)}
                       >
                         +
-                      </button>
-                    </div>
-                  </div>
-                </li>
+                      </BtnQty>
+                    </CantidadWrapper>
+                  </CarritoInfo>
+                </CarritoItem>
               );
             })}
-          </ul>
+          </CarritoList>
 
-          {/* ✅ Total con helper */}
-          <div className={styles.carritoTotal}>
+          {/* Total */}
+          <CarritoTotal>
             <strong>Total: {formatearPrecio(total)}</strong>
-          </div>
+          </CarritoTotal>
 
-          {/* Botones con Bootstrap Grid */}
+          {/* Botones finales con Bootstrap Grid */}
           <div className="row mt-3">
             <div className="col-12 col-md-6 mb-2 mb-md-0">
               <Boton
@@ -135,7 +136,7 @@ const Carrito = ({ onClose }) => {
           </div>
         </>
       )}
-    </section>
+    </CarritoContainer>
   );
 };
 

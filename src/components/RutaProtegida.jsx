@@ -5,22 +5,25 @@ const RutaProtegida = ({ children, rolRequerido }) => {
   const { isAuthenticated, user } = useAuthContext();
   const location = useLocation();
 
-  // Si aún no se sabe el estado de autenticación
+  // Estado de carga
   if (isAuthenticated === undefined) {
-    return <p>Cargando...</p>;
+    return <div role="status" aria-busy="true">Verificando sesión...</div>;
   }
 
-  // Si no está autenticado
+  // No autenticado
   if (!isAuthenticated) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // Si se requiere rol y no coincide
-  if (rolRequerido && user?.rol !== rolRequerido) {
-    return <Navigate to="/" replace />;
+  // Validación de rol
+  if (rolRequerido) {
+    const rolesPermitidos = Array.isArray(rolRequerido) ? rolRequerido : [rolRequerido];
+    if (!rolesPermitidos.includes(user?.rol)) {
+      return <Navigate to="/" replace />;
+    }
   }
 
-  // Si pasa todas las validaciones
+  // Autenticado y con rol válido
   return children;
 };
 

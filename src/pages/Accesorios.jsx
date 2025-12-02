@@ -1,4 +1,6 @@
-import Categoria from '../components/Categoria';
+import Categoria from "../components/Categoria";
+import { Helmet } from "react-helmet";
+import { AccesoriosSection, AccesoriosTitle } from "../ui/AccesoriosLayout";
 
 const Accesorios = () => {
   const subCategorias = [
@@ -10,9 +12,17 @@ const Accesorios = () => {
   ];
 
   return (
-    <section aria-label="Categorías de accesorios">
-      <h2>Accesorios</h2>
-      {subCategorias.map(sub => (
+    <AccesoriosSection aria-label="Categorías de accesorios">
+      <Helmet>
+        <title>Detutti - Accesorios</title>
+        <meta 
+          name="description" 
+          content="Explora nuestra selección de accesorios: joyería, deportivos, gorras, mochilas y botellas." 
+        />
+      </Helmet>
+
+      <AccesoriosTitle as="h1">Accesorios</AccesoriosTitle>
+      {subCategorias.map((sub) => (
         <div key={sub.api}>
           <Categoria
             nombreCategoria={sub.nombre}
@@ -21,7 +31,7 @@ const Accesorios = () => {
           />
         </div>
       ))}
-    </section>
+    </AccesoriosSection>
   );
 };
 

@@ -1,25 +1,23 @@
-import { Link } from 'react-router-dom';
-import styles from './Navbar.module.css';
-import { useAuthContext } from '../context/AuthContext';
+import { useAuthContext } from "../context/AuthContext";
+import { Nav, NavList, NavItem } from "../ui/NavbarLayout";
 
 const Navbar = () => {
   const { user } = useAuthContext();
-  const esAdmin = user?.rol === 'admin';
+  const esAdmin = user?.rol === "admin";
 
   return (
-    <nav className={styles.nav}>
-      <ul className={styles.navList}>
-        <li className={styles.navItem}><Link to="/moda">Moda</Link></li>
-        <li className={styles.navItem}><Link to="/tecnologia">Tecnología</Link></li>
-        <li className={styles.navItem}><Link to="/accesorios">Accesorios</Link></li>
+    <Nav>
+      <NavList>
+        <li><NavItem to="/moda">Moda</NavItem></li>
+        <li><NavItem to="/tecnologia">Tecnología</NavItem></li>
+        <li><NavItem to="/accesorios">Accesorios</NavItem></li>
 
         {/* Solo visible si el usuario es admin */}
         {esAdmin && (
-          <li className={styles.navItem}><Link to="/admin">Panel Admin</Link></li>
+          <li><NavItem to="/admin">Panel Admin</NavItem></li>
         )}
-
-      </ul>
-    </nav>
+      </NavList>
+    </Nav>
   );
 };
 

@@ -1,10 +1,17 @@
-import { useContext, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import Boton from '../components/Boton';
-import styles from './ProductoDetalle.module.css';
-import { CarritoContext } from '../context/CarritoContext';
-import { useProductosContext } from '../context/ProductosContext'; 
-import { formatearPrecio } from '../helpers/formatearPrecio'; 
+import { useContext, useState } from "react";
+import { useParams } from "react-router-dom";
+import Boton from "../components/Boton";
+import { CarritoContext } from "../context/CarritoContext";
+import { useProductosContext } from "../context/ProductosContext"; 
+import { formatearPrecio } from "../helpers/formatearPrecio"; 
+
+// 👉 Importamos los styled-components desde DetalleLayout.jsx
+import { 
+  DetalleContainer, Galeria, ImagenPrincipal, InfoProducto, Titulo, 
+  PrecioBox, PrecioFinal, CuotasPromo, BloqueMagenta, BloqueAzul, 
+  Acciones, CantidadSelector, BtnCantidad, Cantidad, Mensaje, 
+  Descripcion, InfoExtra 
+} from "../ui/DetalleLayout";
 
 const ProductoDetalle = () => {
   const { id } = useParams();
@@ -29,62 +36,57 @@ const ProductoDetalle = () => {
   };
 
   return (
-    <div className={styles.detalleContainer}>
-      <div className={styles.galeria}>
-        <img 
+    <DetalleContainer>
+      <Galeria>
+        <ImagenPrincipal 
           src={producto.imagen} 
           alt={`Imagen de ${producto.nombre}`} 
-          className={styles.imagenPrincipal} 
         />
-      </div>
+      </Galeria>
 
-      <div className={styles.infoProducto}>
-        <h2 className={styles.titulo}>{producto.nombre}</h2>
+      <InfoProducto>
+        <Titulo>{producto.nombre}</Titulo>
 
-        <div className={styles.precioBox}>
-          <span className={styles.precioFinal}>
-            {formatearPrecio(producto.precio)}
-          </span>
+        <PrecioBox>
+          <PrecioFinal>{formatearPrecio(producto.precio)}</PrecioFinal>
 
           {producto.aplicaCuotas && producto.cuotas && producto.valorCuota && (
-            <div className={styles.cuotasPromo}>
-              <span className={styles.bloqueMagenta}>
-                {producto.cuotas} cuotas
-              </span>
-              <span className={styles.bloqueAzul}>
+            <CuotasPromo>
+              <BloqueMagenta>{producto.cuotas} cuotas</BloqueMagenta>
+              <BloqueAzul>
                 sin interés de {formatearPrecio(producto.valorCuota)}
-              </span>
-            </div>
+              </BloqueAzul>
+            </CuotasPromo>
           )}
-        </div>
+        </PrecioBox>
 
-        <div className={styles.acciones}>
-          <div className={styles.cantidadSelector}>
-            <button onClick={disminuir} className={styles.btnCantidad} aria-label="Disminuir cantidad">-</button>
-            <span className={styles.cantidad}>{cantidad}</span>
-            <button onClick={aumentar} className={styles.btnCantidad} aria-label="Aumentar cantidad">+</button>
-          </div>
+        <Acciones>
+          <CantidadSelector>
+            <BtnCantidad onClick={disminuir} aria-label="Disminuir cantidad">-</BtnCantidad>
+            <Cantidad>{cantidad}</Cantidad>
+            <BtnCantidad onClick={aumentar} aria-label="Aumentar cantidad">+</BtnCantidad>
+          </CantidadSelector>
 
           <Boton
             texto="Agregar al carrito 🛒"
             onClick={handleAgregar}
             tipo="primary"
           />
-        </div>
+        </Acciones>
 
-        {mensaje && <p className={styles.mensaje}>{mensaje}</p>}
+        {mensaje && <Mensaje aria-live="polite">{mensaje}</Mensaje>}
 
-        <div className={styles.descripcion}>
+        <Descripcion>
           <h4>Descripción del producto</h4>
           <p>{producto.descripcion}</p>
-        </div>
+        </Descripcion>
 
-        <div className={styles.infoExtra}>
+        <InfoExtra>
           <p><strong>Categoría:</strong> {producto.categoria}</p>
           <p><strong>Subcategoría:</strong> {producto.subCategoria}</p>
-        </div>
-      </div>
-    </div>
+        </InfoExtra>
+      </InfoProducto>
+    </DetalleContainer>
   );
 };
 

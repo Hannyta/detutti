@@ -3,6 +3,14 @@ import { useEffect } from "react";
 import Carrito from "./Carrito";
 import styled, { css } from "styled-components";
 
+const Backdrop = styled.div`
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 9998;
+  ${({ isOpen }) => !isOpen && css`display: none;`}
+`;
+
 const AsideCarrito = styled.aside`
   position: fixed;
   top: 0;
@@ -19,11 +27,9 @@ const AsideCarrito = styled.aside`
   display: flex;
   flex-direction: column;
 
-  /* Estado cerrado */
   transform: translateX(100%);
   opacity: 0;
 
-  /* Estado abierto */
   ${({ isOpen }) =>
     isOpen &&
     css`
@@ -33,7 +39,6 @@ const AsideCarrito = styled.aside`
         opacity 0.3s ease;
     `}
 
-  /* Scrollbar */
   &::-webkit-scrollbar {
     width: 6px;
   }
@@ -102,18 +107,21 @@ const CarritoAside = ({ cerrarAside, isOpen }) => {
   }, [isOpen, cerrarAside]);
 
   return (
-    <AsideCarrito isOpen={isOpen} role="dialog" aria-modal="true" aria-labelledby="carritoAsideTitle">
-      <AsideHeader>
-        <AsideTitle id="carritoAsideTitle">Carrito</AsideTitle>
-        <CerrarAside onClick={cerrarAside} aria-label="Cerrar carrito">
-          <IoMdClose />
-        </CerrarAside>
-      </AsideHeader>
+    <>
+      <Backdrop isOpen={isOpen} onClick={cerrarAside} />
+      <AsideCarrito isOpen={isOpen} role="dialog" aria-modal="true" aria-labelledby="carritoAsideTitle">
+        <AsideHeader>
+          <AsideTitle id="carritoAsideTitle">Carrito</AsideTitle>
+          <CerrarAside onClick={cerrarAside} aria-label="Cerrar carrito">
+            <IoMdClose />
+          </CerrarAside>
+        </AsideHeader>
 
-      <AsideContent>
-        <Carrito onClose={cerrarAside} />
-      </AsideContent>
-    </AsideCarrito>
+        <AsideContent>
+          <Carrito onClose={cerrarAside} />
+        </AsideContent>
+      </AsideCarrito>
+    </>
   );
 };
 

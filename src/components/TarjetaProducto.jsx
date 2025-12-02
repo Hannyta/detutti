@@ -11,18 +11,9 @@ const Imagen = styled.img`
   object-fit: contain;
   border-radius: 8px;
 
-  @media (max-width: 900px) {
-    width: 120px;
-    height: 120px;
-  }
-  @media (max-width: 600px) {
-    width: 100px;
-    height: 100px;
-  }
-  @media (max-width: 360px) {
-    width: 80px;
-    height: 80px;
-  }
+  @media (max-width: 900px) { width: 120px; height: 120px; }
+  @media (max-width: 600px) { width: 100px; height: 100px; }
+  @media (max-width: 360px) { width: 80px; height: 80px; }
 `;
 
 const Nombre = styled.h3`
@@ -39,6 +30,13 @@ const Nombre = styled.h3`
   @media (max-width: 360px) {
     font-size: 0.95rem;
   }
+`;
+
+const Precio = styled.p`
+  font-size: 1rem;
+  font-weight: bold;
+  color: ${({ theme }) => theme.colors.primary};
+  margin: 0.5rem 0;
 `;
 
 const CuotasPromo = styled.div`
@@ -104,12 +102,16 @@ const TarjetaProducto = ({
 }) => {
   return (
     <CardLayout>
-      <Link to={`/productos/${id}`} style={{ textDecoration: "none", color: "inherit" }}>
+      <Link 
+        to={`/productos/${id}`} 
+        style={{ textDecoration: "none", color: "inherit" }}
+        aria-label={`Ver detalles de ${nombre}`}
+      >
         <Imagen src={img} alt={`Imagen del producto ${nombre}`} />
         <Nombre>{nombre}</Nombre>
       </Link>
 
-      <p>Precio: {precio}</p>
+      <Precio>Precio: {precio}</Precio>
 
       {aplicaCuotas && cuotas && valorCuota && (
         <CuotasPromo>
