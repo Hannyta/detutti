@@ -66,11 +66,6 @@
   color: #005BAC;
 }
 
-.resumenCantidad {
-  font-size: 0.9rem;
-  color: #333;
-}
-
 .resumenPrice {
   font-size: 1rem;
   font-weight: 600;
@@ -107,6 +102,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.btnQty:hover:not(:disabled) {
+  background-color: #FFD84D;
+  transform: scale(1.05);
+  transition: 0.2s ease;
 }
 
 .btnQty:disabled {
@@ -153,7 +154,7 @@
   align-items: center;
   position: relative;
   z-index: 2;
-  margin-right: -12px
+  margin-right: -12px;
 }
 
 .bloqueAzul {
@@ -213,6 +214,20 @@
   outline: none;
 }
 
+/* ------------------- FEEDBACK ------------------- */
+
+.mensajeCompra {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2e7d32;
+  background: #e8f5e9;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid #c8e6c9;
+}
+
 /* ------------------- RESPONSIVE ------------------- */
 
 @media (max-width: 900px) {
@@ -222,12 +237,14 @@
 
   .resumenTotal {
     text-align: center;
+    font-size: 1.3rem;
   }
 }
 
 @media (max-width: 600px) {
   .compraContainer {
     padding: 10px;
+    gap: 1.5rem;
   }
 
   .compraForm,
@@ -238,5 +255,32 @@
   .resumenItem img {
     width: 70px;
     height: 70px;
+  }
+
+  .resumenTitle {
+    font-size: 0.95rem;
+  }
+
+  .resumenPrice,
+  .subtotal {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .compraForm input,
+  .compraForm select {
+    font-size: 0.9rem;
+    padding: 0.7rem;
+  }
+
+  .btnQty {
+    width: 22px;
+    height: 22px;
+    font-size: 16px;
+  }
+
+  .tituloPagina {
+    font-size: 1.5rem;
   }
 }

@@ -12,33 +12,36 @@ const Productos = ({ productos, error, cargando }) => {
   
   return (
     <ul className={styles.productosContainer}>
-      {productos.map(producto => (
-        <li className={styles.productoItem} key={producto.id}>
-          <TarjetaProducto
-            id={producto.id}
-            img={producto.imagen}
-            nombre={producto.nombre}
-            precio={formatearPrecio(producto.precio)}
-            aplicaCuotas={producto.aplicaCuotas}
-            cuotas={producto.cuotas}
-            valorCuota={producto.valorCuota}
-            boton={carrito.find(p => p.id === producto.id) ? '✅ Agregado' : 'Agregar al carrito 🛒'}
-            onClick={() => {
-              const productoParaCarrito = {
-                id: producto.id,
-                nombre: producto.nombre,
-                imagen: producto.imagen,
-                precio: Number(producto.precio),
-                aplicaCuotas: producto.aplicaCuotas ?? false,
-                cuotas: producto.cuotas ?? null,
-                valorCuota: producto.valorCuota ?? null,
-                cantidad: 1,
-              };
-              agregarProducto(productoParaCarrito);
-            }}
-          />
-        </li>
-      ))}
+      {productos.map(producto => {
+        const enCarrito = carrito.find(p => p.id === producto.id);
+        return (
+          <li className={styles.productoItem} key={producto.id}>
+            <TarjetaProducto
+              id={producto.id}
+              img={producto.imagen}
+              nombre={producto.nombre}
+              precio={formatearPrecio(producto.precio)}
+              aplicaCuotas={producto.aplicaCuotas}
+              cuotas={producto.cuotas}
+              valorCuota={producto.valorCuota}
+              boton={enCarrito ? '✅ Agregado' : 'Agregar al carrito 🛒'}
+              onClick={() => {
+                const productoParaCarrito = {
+                  id: producto.id,
+                  nombre: producto.nombre,
+                  imagen: producto.imagen,
+                  precio: Number(producto.precio),
+                  aplicaCuotas: producto.aplicaCuotas ?? false,
+                  cuotas: producto.cuotas ?? null,
+                  valorCuota: producto.valorCuota ?? null,
+                  cantidad: 1,
+                };
+                agregarProducto(productoParaCarrito);
+              }}
+            />
+          </li>
+        );
+      })}
     </ul>
   );
 };

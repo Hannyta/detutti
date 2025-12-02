@@ -16,11 +16,11 @@ const TarjetaProducto = ({
   return (
     <article className={styles.tarjeta}>
       <Link to={`/productos/${id}`} className={styles.tarjetaLink}>
-        <img src={img} alt={nombre} />
+        <img src={img} alt={`Imagen del producto ${nombre}`} />
         <h3>{nombre}</h3>
       </Link>
 
-      <h4>Precio: {precio}</h4>
+      <p className={styles.precio}>Precio: {precio}</p>
       
       {aplicaCuotas && cuotas && valorCuota && (
         <div className={styles.cuotasPromo}>

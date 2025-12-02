@@ -1,6 +1,6 @@
-import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import { useState, useContext } from 'react';
+import styled, { css } from "styled-components";
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Inicio from './pages/Inicio';
@@ -16,25 +16,30 @@ import RutaProtegida from './components/RutaProtegida';
 import { CarritoContext } from './context/CarritoContext';
 import ForgotPassword from './pages/ForgotPassword';
 import Admin from './pages/Admin';
-import styles from './components/CarritoAside.module.css'; // 👈 para usar overlay
+
+const Overlay = styled.div`
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 9998;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+
+  ${({ isOpen }) =>
+    isOpen &&
+    css`
+      opacity: 1;
+      pointer-events: auto;
+    `}
+`;
 
 function App() {
   const [mostrarAside, setMostrarAside] = useState(false);
   const { carrito } = useContext(CarritoContext);
 
   const toggleAside = () => {
-    setMostrarAside(prev => {
-      const nuevoEstado = !prev;
-      if (!prev) {
-        setTimeout(() => {
-          const carritoAside = document.getElementById('carritoAside');
-          if (carritoAside) {
-            carritoAside.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        }, 100);
-      }
-      return nuevoEstado;
-    });
+    setMostrarAside(prev => !prev);
   };
 
   return (
@@ -44,40 +49,39 @@ function App() {
         onCarritoClick={toggleAside}
       />
 
-      {/* Overlay para cerrar al click fuera */}
       {mostrarAside && (
-        <div 
-          className={`${styles.overlay} ${styles.open}`} 
+        <Overlay 
+          isOpen={mostrarAside}
           onClick={toggleAside}
-        ></div>
+          aria-hidden="true"
+          role="presentation"
+        />
       )}
 
-      {/* Aside siempre montado, controlado por clases */}
       <CarritoAside cerrarAside={toggleAside} isOpen={mostrarAside} />
       
       <main>
-        <section>
-          <Routes>
-            <Route path='/' element={<Inicio />} />
-            <Route path='/productos/:id' element={<ProductoDetalle />} />
-            <Route path='/tecnologia' element={<Tecnologia />} />
-            <Route path='/moda' element={<Moda />} />
-            <Route path='/accesorios' element={<Accesorios />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/registrarme' element={<Registrarme />} />
-            <Route path='/forgot-password' element={<ForgotPassword />} />
-            <Route path='/compra' element={
-              <RutaProtegida>
-                <Compra />
-              </RutaProtegida>
-            } />
-            <Route path='/admin' element={
-              <RutaProtegida rolRequerido="admin">
-                <Admin />
-              </RutaProtegida>
-            } />
-          </Routes>
-        </section>
+        <Routes>
+          <Route path='/' element={<Inicio />} />
+          <Route path='/productos/:id' element={<ProductoDetalle />} />
+          <Route path='/tecnologia' element={<Tecnologia />} />
+          <Route path='/moda' element={<Moda />} />
+          <Route path='/accesorios' element={<Accesorios />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/registrarme' element={<Registrarme />} />
+          <Route path='/forgot-password' element={<ForgotPassword />} />
+          <Route path='/compra' element={
+            <RutaProtegida>
+              <Compra />
+            </RutaProtegida>
+          } />
+          <Route path='/admin' element={
+            <RutaProtegida rolRequerido="admin">
+              <Admin />
+            </RutaProtegida>
+          } />
+          <Route path="*" element={<p>Página no encontrada</p>} />
+        </Routes>
       </main>
       <Footer/>
     </>

@@ -57,20 +57,21 @@
 }
 
 .descripcion p {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: #444;
   line-height: 1.5;
 }
 
 .infoExtra {
   margin-top: 0.5rem;
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   color: #666;
 }
 
 .acciones {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
   margin: 1.5rem 0;
 }
@@ -95,12 +96,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, transform 0.2s ease;
   font-weight: bold;
 }
 
 .btnCantidad:hover {
   background: #e0e0e0;
+  transform: scale(1.05);
 }
 
 .btnCantidad:focus {
@@ -114,21 +116,6 @@
   font-size: 1rem;
   font-weight: 600;
   color: #333;
-}
-
-.acciones {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  margin: 1.5rem 0;
-}
-
-.cantidadSelector,
-.acciones button,
-.acciones .btn {
-  display: flex;
-  align-items: center;
 }
 
 .cuotasPromo {
@@ -154,7 +141,7 @@
   align-items: center;
   position: relative;
   z-index: 2;
-  margin-right: -12px
+  margin-right: -12px;
 }
 
 .bloqueAzul {
@@ -183,6 +170,18 @@
   transform: scale(1.05);
 }
 
+.mensaje {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2e7d32;
+  background: #e8f5e9;
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #c8e6c9;
+}
+
 @media (max-width: 700px) {
   .detalleContainer {
     flex-direction: column;
@@ -191,5 +190,29 @@
 
   .imagenPrincipal {
     max-width: 100%;
+  }
+}
+
+@media (max-width: 400px) {
+  .detalleContainer {
+    padding: 0.5rem;
+  }
+
+  .titulo {
+    font-size: 1.2rem;
+  }
+
+  .precioFinal {
+    font-size: 1.2rem;
+  }
+
+  .btnCantidad {
+    width: 32px;
+    font-size: 1rem;
+  }
+
+  .cantidad {
+    width: 40px;
+    font-size: 0.9rem;
   }
 }

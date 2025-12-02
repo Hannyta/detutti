@@ -5,19 +5,26 @@ import styles from "./ForgotPassword.module.css";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
+  const [mensaje, setMensaje] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(`Se envió un enlace de recuperación a: ${email}`);
-    navigate("/"); // redirige al inicio inmediatamente después del alert
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setMensaje("Formato de correo inválido");
+      return;
+    }
+    setMensaje(`Se envió un enlace de recuperación a: ${email}`);
+    setTimeout(() => navigate("/"), 2000);
   };
 
   return (
     <div className={styles.forgotContainer}>
       <h2>Recuperar contraseña</h2>
       <form onSubmit={handleSubmit}>
+        <label htmlFor="email">Correo electrónico</label>
         <input 
+          id="email"
           type="email" 
           placeholder="Ingresa tu correo" 
           value={email} 
@@ -26,6 +33,7 @@ const ForgotPassword = () => {
         />
         <Boton texto="Enviar enlace" tipo="primary" type="submit" />
       </form>
+      {mensaje && <p className={styles.mensaje}>{mensaje}</p>}
     </div>
   );
 };

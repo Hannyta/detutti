@@ -23,19 +23,14 @@ export const ProductosProvider = ({ children }) => {
     try {
       setCargando(true);
       setError(null);
-
       const respuesta = await fetch(API);
       if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
-
       const datos = await respuesta.json();
-
       const productosConCuotas = datos.map(p => calcularCuotas({
         ...p,
-        precio: Number(p.precio) // 👈 aseguramos número
+        precio: Number(p.precio)
       }));
-
       setProductos(productosConCuotas);
-
     } catch (error) {
       manejarError(error, "Error al cargar los productos", setError);
     } finally {
@@ -47,29 +42,22 @@ export const ProductosProvider = ({ children }) => {
     try {
       setLoadingAgregar(true);
       setError(null);
-
       const respuesta = await fetch(API, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(producto),
       });
-
       if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
-
       const nuevoProducto = await respuesta.json();
-
       const productoConCuotas = calcularCuotas({
         ...nuevoProducto,
         precio: Number(nuevoProducto.precio)
       });
-
       setProductos(prev => [...prev, productoConCuotas]);
-
-      return productoConCuotas;
-
+      return { success: true, producto: productoConCuotas };
     } catch (error) {
       manejarError(error, "Hubo un problema al agregar el producto.", setError);
-      return null;
+      return { success: false };
     } finally {
       setLoadingAgregar(false);
     }
@@ -79,31 +67,24 @@ export const ProductosProvider = ({ children }) => {
     try {
       setLoadingEditar(true);
       setError(null);
-
       const respuesta = await fetch(`${API}/${producto.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(producto),
       });
-
       if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
-
       const productoActualizado = await respuesta.json();
-
       const productoConCuotas = calcularCuotas({
         ...productoActualizado,
         precio: Number(productoActualizado.precio)
       });
-
       setProductos(prev =>
         prev.map(p => p.id === productoConCuotas.id ? productoConCuotas : p)
       );
-
-      return productoConCuotas;
-
+      return { success: true, producto: productoConCuotas };
     } catch (error) {
       manejarError(error, "Hubo un problema al editar el producto.", setError);
-      return null;
+      return { success: false };
     } finally {
       setLoadingEditar(false);
     }
@@ -116,10 +97,10 @@ export const ProductosProvider = ({ children }) => {
       const respuesta = await fetch(`${API}/${id}`, { method: "DELETE" });
       if (!respuesta.ok) throw new Error("Error al eliminar");
       setProductos(prev => prev.filter(p => p.id !== id));
-      return true;
+      return { success: true };
     } catch (error) {
       manejarError(error, "Hubo un problema al eliminar el producto.", setError);
-      return false;
+      return { success: false };
     } finally {
       setLoadingEliminar(false);
     }

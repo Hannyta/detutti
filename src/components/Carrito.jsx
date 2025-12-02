@@ -32,7 +32,6 @@ const Carrito = ({ onClose }) => {
 
   return (
     <section className={styles.carritoContainer}>
-
       {productos.length === 0 ? (
         <>
           <p>No tienes ningún producto en tu carrito de compras.</p>
@@ -47,13 +46,17 @@ const Carrito = ({ onClose }) => {
         </>
       ) : (
         <>
-          <ul className={styles.carritoList}>
+          {/* Lista de productos con Bootstrap Grid */}
+          <ul className={`row ${styles.carritoList}`} role="list">
             {productos.map((producto) => {
               const { id, imagen, nombre, precio, aplicaCuotas, cuotas, valorCuota, cantidad } = producto;
 
               return (
-                <li key={id} className={styles.carritoItem}>
-
+                <li 
+                  key={id} 
+                  className={`col-12 col-md-6 col-lg-4 ${styles.carritoItem}`} 
+                  role="listitem"
+                >
                   {/* BOTÓN ELIMINAR ARRIBA */}
                   <button 
                     className={styles.deleteTopRight}
@@ -102,7 +105,6 @@ const Carrito = ({ onClose }) => {
                         +
                       </button>
                     </div>
-
                   </div>
                 </li>
               );
@@ -114,21 +116,25 @@ const Carrito = ({ onClose }) => {
             <strong>Total: {formatearPrecio(total)}</strong>
           </div>
 
-          <div className={styles.botonesCarrito}>
-            <Boton
-              texto="Vaciar Carrito"
-              tipo="danger-2"
-              onClick={() => confirm('¿Seguro que querés vaciar el carrito?') && vaciarCarrito()}
-            />
-            <Boton
-              texto="Comprar"
-              tipo="primary"
-              onClick={handleCompra}
-            />
+          {/* Botones con Bootstrap Grid */}
+          <div className="row mt-3">
+            <div className="col-12 col-md-6 mb-2 mb-md-0">
+              <Boton
+                texto="Vaciar Carrito"
+                tipo="danger-2"
+                onClick={() => confirm('¿Seguro que querés vaciar el carrito?') && vaciarCarrito()}
+              />
+            </div>
+            <div className="col-12 col-md-6">
+              <Boton
+                texto="Comprar"
+                tipo="primary"
+                onClick={handleCompra}
+              />
+            </div>
           </div>
         </>
       )}
-
     </section>
   );
 };

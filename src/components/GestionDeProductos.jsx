@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FormularioProducto from "./FormularioProducto";
 import { useProductosContext } from "../context/ProductosContext";
 import { CiCirclePlus } from "react-icons/ci";
 import { LuSquarePen } from "react-icons/lu";
 import { FaTrashCan } from "react-icons/fa6";
-
 import styles from './GestionDeProductos.module.css';
 
 const GestionDeProductos = () => {
@@ -13,6 +12,18 @@ const GestionDeProductos = () => {
   const [modoFormulario, setModoFormulario] = useState("agregar");
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
   const [productoAEliminar, setProductoAEliminar] = useState(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setMostrarForm(false);
+        setProductoSeleccionado(null);
+        setProductoAEliminar(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const abrirFormularioAgregar = () => {
     setModoFormulario("agregar");
@@ -38,6 +49,7 @@ const GestionDeProductos = () => {
   const handleEliminar = () => {
     if (productoAEliminar) {
       eliminarProducto(productoAEliminar.id);
+      alert(`Producto "${productoAEliminar.nombre}" eliminado correctamente`);
       setProductoAEliminar(null);
     }
   };
@@ -46,13 +58,13 @@ const GestionDeProductos = () => {
     <div className={styles.gestionContainer}>
       {/* Header */}
       <div className={styles.gestionHeader}>
-        <h2>Lista de Productos</h2>
+        <h2 className={styles.gestionTitulo}>Lista de Productos</h2>
         <button onClick={abrirFormularioAgregar} className={styles.btnAgregar}>
           <CiCirclePlus /> <span>Agregar Producto</span>
         </button>
       </div>
 
-      {/* Lista de productos */}
+      {/* Grid de productos */}
       <div className={styles.gridProductos}>
         {productos.length === 0 ? (
           <div className={styles.productoCard}>
@@ -66,18 +78,15 @@ const GestionDeProductos = () => {
 
             return (
               <div key={producto.id} className={styles.productoCard}>
-                {/* Imagen a la izquierda */}
                 <img 
                   src={producto.imagen} 
                   alt={producto.nombre} 
                   className={styles.productoImagen} 
                 />
 
-                {/* Info a la derecha */}
                 <div className={styles.productoInfo}>
                   <h3 className={styles.productoNombre}>{producto.nombre}</h3>
 
-                  {/* Fila: precio + cuotas */}
                   <div className={styles.productoPrecioFila}>
                     <p className={styles.productoPrecio}>
                       ${producto.precio?.toLocaleString('es-AR')}
@@ -92,7 +101,6 @@ const GestionDeProductos = () => {
                     )}
                   </div>
 
-                  {/* Acciones */}
                   <div className={styles.acciones}>
                     <button 
                       onClick={() => abrirFormularioEditar(producto)} 
@@ -114,45 +122,29 @@ const GestionDeProductos = () => {
         )}
       </div>
 
-      {/* Modal de confirmación de eliminar */}
+      {/* Modal de confirmación */}
       {productoAEliminar && (
-        <div className={styles.modalOverlay}>
+        <div className={styles.modalOverlay} role="dialog" aria-modal="true" aria-labelledby="modalEliminarTitle">
           <div className={styles.modalContainer}>
             <div className={styles.modalHeader}>
-              <div className={styles.modalIcon}>
-                <FaTrashCan />
-              </div>
+              <div className={styles.modalIcon}><FaTrashCan /></div>
               <div>
-                <h3 className={styles.modalTitle}>Confirmar eliminación</h3>
+                <h3 id="modalEliminarTitle" className={styles.modalTitle}>Confirmar eliminación</h3>
                 <p className={styles.modalText}>Esta acción no se puede deshacer</p>
               </div>
             </div>
-
             <div className={styles.modalBody}>
-              <p>
-                ¿Estás seguro que querés eliminar <span className="font-semibold">"{productoAEliminar.nombre}"</span>?
-              </p>
+              <p>¿Estás seguro que querés eliminar <span className="fw-bold">"{productoAEliminar.nombre}"</span>?</p>
             </div>
-
             <div className={styles.modalActions}>
-              <button 
-                onClick={() => setProductoAEliminar(null)} 
-                className={styles.btnCancel}
-              >
-                Cancelar
-              </button>
-              <button 
-                onClick={handleEliminar} 
-                className={styles.btnDelete}
-              >
-                Eliminar
-              </button>
+              <button onClick={() => setProductoAEliminar(null)} className={styles.btnCancel}>Cancelar</button>
+              <button onClick={handleEliminar} className={styles.btnDelete}>Eliminar</button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Modal - Formulario */}
+      {/* Formulario modal */}
       {mostrarForm && (
         <FormularioProducto
           productoInicial={productoSeleccionado || {}}

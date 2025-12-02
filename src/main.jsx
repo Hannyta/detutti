@@ -1,22 +1,37 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
-import { AuthProvider } from './context/AuthContext.jsx'
-import { ProductosProvider } from './context/ProductosContext.jsx'
-import { CarritoProvider } from './context/CarritoContext.jsx'
-import App from './App.jsx'
-import './index.css'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+import theme from './styles/theme.js';
+import GlobalStyle from './styles/GlobalStyle.js';
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
-          <ProductosProvider>
-            <CarritoProvider>
-              <App />
-            </CarritoProvider>
-          </ProductosProvider>
-      </AuthProvider>
-    </BrowserRouter>
-  </StrictMode>
-)
+import { AuthProvider } from './context/AuthContext.jsx';
+import { ProductosProvider } from './context/ProductosContext.jsx';
+import { CarritoProvider } from './context/CarritoContext.jsx';
+import App from './App.jsx';
+
+const AppProviders = ({ children }) => (
+  <AuthProvider>
+    <ProductosProvider>
+      <CarritoProvider>
+        {children}
+      </CarritoProvider>
+    </ProductosProvider>
+  </AuthProvider>
+);
+
+const rootElement = document.getElementById('root');
+if (rootElement) {
+  createRoot(rootElement).render(
+    <StrictMode>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          <AppProviders>
+            <App />
+          </AppProviders>
+        </ThemeProvider>
+      </BrowserRouter>
+    </StrictMode>
+  );
+}

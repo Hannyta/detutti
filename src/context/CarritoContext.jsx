@@ -13,13 +13,17 @@ export const CarritoProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    localStorage.setItem('carrito', JSON.stringify(carrito));
+    if (carrito.length > 0) {
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+    } else {
+      localStorage.removeItem('carrito');
+    }
   }, [carrito]);
 
   const agregarProducto = (producto) => {
     const productoNormalizado = {
       ...producto,
-      precio: Number(producto.precio), // 👈 aseguramos número
+      precio: Number(producto.precio),
     };
 
     setCarrito(prev => {
@@ -38,10 +42,10 @@ export const CarritoProvider = ({ children }) => {
   };
 
   const actualizarCantidad = (id, cantidad) => {
+    if (cantidad < 1) return;
+    if (cantidad > 99) cantidad = 99;
     setCarrito(prev =>
-      cantidad > 0
-        ? prev.map(p => p.id === id ? { ...p, cantidad } : p)
-        : prev.filter(p => p.id !== id)
+      prev.map(p => p.id === id ? { ...p, cantidad } : p)
     );
   };
 
@@ -52,9 +56,14 @@ export const CarritoProvider = ({ children }) => {
     [carrito]
   );
 
+  const totalFormateado = useMemo(
+    () => total.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' }),
+    [total]
+  );
+
   return (
     <CarritoContext.Provider
-      value={{ carrito, agregarProducto, eliminarProducto, actualizarCantidad, vaciarCarrito, total }}
+      value={{ carrito, agregarProducto, eliminarProducto, actualizarCantidad, vaciarCarrito, total, totalFormateado }}
     >
       {children}
     </CarritoContext.Provider>

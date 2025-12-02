@@ -10,7 +10,7 @@
 
 .registroContainer h2 {
   margin-bottom: 1.5rem;
-  color: #333;
+  color: #005BAC;
 }
 
 .registroForm input[type="text"],
@@ -26,17 +26,47 @@
 }
 
 .registroForm input:focus {
-  border-color: #28a745; /* 👈 verde para diferenciar del login */
+  border-color: #28a745;
   outline: none;
 }
 
 .registroForm button {
   width: 100%;
   margin-top: 0.6rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.registroForm button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
 .error {
   color: #d9534f;
   font-size: 0.9rem;
   margin-bottom: 0.6rem;
+}
+
+.success {
+  color: #28a745;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 0.6rem;
+}
+
+/* ------------------- RESPONSIVE ------------------- */
+@media (max-width: 600px) {
+  .registroContainer {
+    margin: 40px auto;
+    padding: 1.5rem;
+  }
+
+  .registroContainer h2 {
+    font-size: 1.5rem;
+  }
+
+  .registroForm input {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
 }

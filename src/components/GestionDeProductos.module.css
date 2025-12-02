@@ -1,23 +1,19 @@
-/* GRID principal */
-.gridProductos {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* Contenedor principal */
+/* ---------------------------- */
+/* CONTENEDOR PRINCIPAL         */
+/* ---------------------------- */
 .gestionContainer {
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 2rem;
+  max-width: 1280px;            /* igual que #root */
+  margin: 40px auto;            /* centrado */
+  padding: 2rem 2rem 120px 2rem;/* igual que main */
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 16px rgba(0,0,0,0.1);
+  box-sizing: border-box;
 }
 
-/* Header */
+/* ---------------------------- */
+/* HEADER                       */
+/* ---------------------------- */
 .gestionHeader {
   display: flex;
   justify-content: space-between;
@@ -50,18 +46,35 @@
   background-color: #0056b3;
 }
 
-/* Tarjeta de producto (horizontal) */
+/* ---------------------------- */
+/* GRID DE PRODUCTOS            */
+/* ---------------------------- */
+.gridProductos {
+  display: grid;
+  grid-template-columns: 2fr;
+  gap: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  justify-items: stretch;
+}
+
+/* ---------------------------- */
+/* TARJETA DE PRODUCTO          */
+/* ---------------------------- */
 .productoCard {
   display: flex;
-  flex-direction: row;
+  flex-direction: row;       /* imagen a la izquierda, info a la derecha */
   align-items: flex-start;
   background: #ffffff;
   border: 1px solid #e0e0e0;
   border-radius: 12px;
   padding: 1.5rem;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  gap: 1.5rem;
+  transition: transform 0.25s cubic-bezier(0.25, 1.25, 0.5, 1), box-shadow 0.25s ease;
+  gap: 1rem;
+  max-width: 100%;
+  min-width: 0;
+  word-wrap: break-word;
 }
 
 .productoCard:hover {
@@ -75,6 +88,7 @@
   height: 120px;
   object-fit: contain;
   border-radius: 8px;
+  flex-shrink: 0; /* evita que se achique */
 }
 
 /* Info */
@@ -82,13 +96,14 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: space-between; /* distribuye nombre, precio/cuotas y acciones */
 }
 
 .productoNombre {
   font-size: 1.1rem;
   font-weight: 600;
   color: #333;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.2rem;
 }
 
 .productoPrecioFila {
@@ -106,10 +121,13 @@
   white-space: nowrap;
 }
 
+/* ---------------------------- */
+/* PROMO CUOTAS                 */
+/* ---------------------------- */
 .cuotasPromo {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
   flex-wrap: nowrap;
   white-space: nowrap;
 }
@@ -117,7 +135,7 @@
 .bloqueMagenta {
   background-color: #e74883;
   color: white;
-  padding: 4px 12px;
+  padding: 4px 10px;
   border-radius: 16px;
   font-weight: 500;
   font-size: 0.9rem;
@@ -126,7 +144,7 @@
   align-items: center;
   position: relative;
   z-index: 2;
-  margin-right: -22px;
+  margin-right: -18px;
 }
 
 .bloqueAzul {
@@ -143,7 +161,9 @@
   z-index: 1;
 }
 
-/* Acciones */
+/* ---------------------------- */
+/* ACCIONES                     */
+/* ---------------------------- */
 .acciones {
   display: flex;
   gap: 0.8rem;
@@ -180,7 +200,9 @@
   background-color: #f5b5b5;
 }
 
-/* Modal de confirmación */
+/* ---------------------------- */
+/* MODAL DE CONFIRMACIÓN        */
+/* ---------------------------- */
 .modalOverlay {
   position: fixed;
   inset: 0;
@@ -201,9 +223,46 @@
   animation: fadeIn 0.3s ease-in-out;
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------------------------- */
+/* RESPONSIVE AJUSTES           */
+/* ---------------------------- */
+
+@media (min-width: 1200px) {
+  .gridProductos {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
   .gridProductos {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .productoCard {
+    flex-direction: column; /* imagen arriba, info abajo */
+    align-items: center;
+    text-align: center;
+  }
+
+  .productoInfo {
+    align-items: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .gestionHeader {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .btnAgregar {
+    align-self: flex-end;
   }
 }
 
@@ -214,5 +273,9 @@
   }
   .cuotasPromo {
     order: 2;        
+  }
+  .btnEditar, .btnEliminar {
+    flex: 1;
+    justify-content: center;
   }
 }

@@ -9,6 +9,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [recordarme, setRecordarme] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const { login } = useAuthContext();
   const navigate = useNavigate();
@@ -21,18 +22,25 @@ const Login = () => {
     }
   }, []);
 
-  const autenticarUsuario = (e) => {
+  const autenticarUsuario = async (e) => {
     e.preventDefault();
 
-    const resultado = login(email, password, recordarme);
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setErrorMsg("Formato de correo inválido");
+      return;
+    }
+
+    setLoading(true);
+    const resultado = await login(email, password, recordarme);
+    setLoading(false);
 
     if (resultado?.success) {
       setErrorMsg("");
       navigate("/");
-      } else {
+    } else {
       setErrorMsg(resultado?.mensaje || "Credenciales incorrectas");
-      }
-    };
+    }
+  };
 
   return (
     <div className={styles.pageWrapper}>
@@ -41,6 +49,7 @@ const Login = () => {
         <form onSubmit={autenticarUsuario} className={styles.loginForm}>
           <input 
             type="email"
+            aria-label="Correo electrónico"
             placeholder="Correo electrónico"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -48,6 +57,7 @@ const Login = () => {
           />
           <input 
             type="password"
+            aria-label="Contraseña"
             placeholder="Contraseña"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -63,7 +73,7 @@ const Login = () => {
             <label htmlFor="recordarme"> Recordarme </label>
           </div>
           {errorMsg && <p className={styles.error}>{errorMsg}</p>}
-          <Boton texto="Iniciar sesión" tipo="primary" type="submit" />
+          <Boton texto={loading ? "Ingresando..." : "Iniciar sesión"} tipo="primary" type="submit" />
         </form>
 
         <div className={styles.forgotPassword}>
@@ -75,8 +85,8 @@ const Login = () => {
           />
         </div>
 
-        <div className={styles.register} >
-          <label>¿Aun no tienes una cuenta?</label>
+        <div className={styles.register}>
+          <label>¿Aún no tienes una cuenta?</label>
           <Boton 
             texto="Registrarme" 
             tipo="primary" 
@@ -87,6 +97,6 @@ const Login = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Login;

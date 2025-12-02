@@ -1,31 +1,25 @@
 import Categoria from '../components/Categoria';
 
 const Moda = () => {
+  const subCategorias = [
+    { nombre: "Moda de Caballero", api: "Hombre" },
+    { nombre: "Moda de Dama", api: "Mujer" },
+    { nombre: "Moda Infantil", api: "Infantil" },
+  ];
+
   return (
-    <>
+    <section aria-label="Categorías de moda">
       <h2>Moda</h2>
-      <div>
-        <Categoria
-          nombreCategoria="Moda de Caballero"
-          categoriaAPI="Moda"
-          subCategoriaAPI="Hombre"
-        />
-      </div>
-      <div>
-        <Categoria
-          nombreCategoria="Moda de Dama"
-          categoriaAPI="Moda"
-          subCategoriaAPI="Mujer"
-        />
-      </div>
-      <div>
-        <Categoria
-          nombreCategoria="Moda Infantil"
-          categoriaAPI="Moda"
-          subCategoriaAPI="Infantil"
-        />
-      </div>
-    </>
+      {subCategorias.map(sub => (
+        <div key={sub.api}>
+          <Categoria
+            nombreCategoria={sub.nombre}
+            categoriaAPI="Moda"
+            subCategoriaAPI={sub.api}
+          />
+        </div>
+      ))}
+    </section>
   );
 };
 
