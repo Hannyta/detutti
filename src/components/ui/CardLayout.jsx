@@ -1,4 +1,3 @@
-// src/components/ui/CardLayout.jsx
 import styled from "styled-components";
 
 const CardLayout = styled.div`

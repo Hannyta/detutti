@@ -16,23 +16,7 @@ import RutaProtegida from './components/RutaProtegida';
 import { CarritoContext } from './context/CarritoContext';
 import ForgotPassword from './pages/ForgotPassword';
 import Admin from './pages/Admin';
-
-const Overlay = styled.div`
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  z-index: 9998;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-
-  ${({ isOpen }) =>
-    isOpen &&
-    css`
-      opacity: 1;
-      pointer-events: auto;
-    `}
-`;
+import Overlay from "./components/ui/Overlay";
 
 function App() {
   const [mostrarAside, setMostrarAside] = useState(false);

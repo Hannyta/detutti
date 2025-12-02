@@ -64,25 +64,28 @@ const Categoria = ({ nombreCategoria, categoriaAPI, subCategoriaAPI }) => {
   return (
     <CategoriaSection>
       <TitleSection>{nombreCategoria}</TitleSection>
-      <GridTarjetas>
-        {productosFiltrados.map((producto) => {
-          const agregado = carrito.some((p) => p.id === producto.id);
-          return (
-            <TarjetaProducto
-              key={producto.id}
-              id={producto.id}
-              img={producto.imagen}
-              nombre={producto.nombre}
-              precio={formatearPrecio(producto.precio)}
-              aplicaCuotas={producto.aplicaCuotas}
-              cuotas={producto.cuotas}
-              valorCuota={producto.valorCuota}
-              boton={agregado ? '✅ Agregado' : 'Agregar 🛒'}
-              onClick={() => agregarProducto({ ...producto, cantidad: 1 })}
-            />
-          );
-        })}
-      </GridTarjetas>
+      <div className="container">
+        <div className="row g-3 g-md-4">
+          {productosFiltrados.map((producto) => {
+            const agregado = carrito.some((p) => p.id === producto.id);
+            return (
+              <div className="col-12 col-sm-6 col-md-4 col-lg-3" key={producto.id}>
+                <TarjetaProducto
+                  id={producto.id}
+                  img={producto.imagen}
+                  nombre={producto.nombre}
+                  precio={formatearPrecio(producto.precio)}
+                  aplicaCuotas={producto.aplicaCuotas}
+                  cuotas={producto.cuotas}
+                  valorCuota={producto.valorCuota}
+                  boton={agregado ? "✅ Agregado" : "Agregar 🛒"}
+                  onClick={() => agregarProducto({ ...producto, cantidad: 1 })}
+                />
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </CategoriaSection>
   );
 };

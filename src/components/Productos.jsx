@@ -1,48 +1,31 @@
-import TarjetaProducto from './TarjetaProducto';
-import styles from './Productos.module.css';
-import { useContext } from 'react';
-import { CarritoContext } from '../context/CarritoContext';
-import { formatearPrecio } from '../helpers/formatearPrecio';
+import { ProductosContainer, ProductoItem, PrecioActual, PrecioOriginal } from "./ui/ProductosLayout";
+import TarjetaProducto from "./TarjetaProducto";
+import { useContext } from "react";
+import { CarritoContext } from "../context/CarritoContext";
+import { formatearPrecio } from "../helpers/formatearPrecio";
 
 const Productos = ({ productos, error, cargando }) => {
   const { carrito, agregarProducto } = useContext(CarritoContext);
 
   if (cargando) return <p>Cargando Productos...</p>;
   if (error) return <p>{error}</p>;
-  
+
   return (
-    <ul className={styles.productosContainer}>
+    <ProductosContainer>
       {productos.map(producto => {
         const enCarrito = carrito.find(p => p.id === producto.id);
         return (
-          <li className={styles.productoItem} key={producto.id}>
+          <ProductoItem key={producto.id}>
             <TarjetaProducto
-              id={producto.id}
-              img={producto.imagen}
-              nombre={producto.nombre}
-              precio={formatearPrecio(producto.precio)}
-              aplicaCuotas={producto.aplicaCuotas}
-              cuotas={producto.cuotas}
-              valorCuota={producto.valorCuota}
-              boton={enCarrito ? '✅ Agregado' : 'Agregar al carrito 🛒'}
-              onClick={() => {
-                const productoParaCarrito = {
-                  id: producto.id,
-                  nombre: producto.nombre,
-                  imagen: producto.imagen,
-                  precio: Number(producto.precio),
-                  aplicaCuotas: producto.aplicaCuotas ?? false,
-                  cuotas: producto.cuotas ?? null,
-                  valorCuota: producto.valorCuota ?? null,
-                  cantidad: 1,
-                };
-                agregarProducto(productoParaCarrito);
-              }}
+              {...producto}
+              precio={<PrecioActual>{formatearPrecio(producto.precio)}</PrecioActual>}
+              boton={enCarrito ? "✅ Agregado" : "Agregar al carrito 🛒"}
+              onClick={() => agregarProducto({ ...producto, cantidad: 1 })}
             />
-          </li>
+          </ProductoItem>
         );
       })}
-    </ul>
+    </ProductosContainer>
   );
 };
 
