@@ -5,7 +5,6 @@ const fadeIn = keyframes`
   to { opacity: 1; transform: translateY(0); }
 `;
 
-/* CONTENEDOR DEL GRID */
 export const ProductosContainer = styled.ul`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -24,7 +23,6 @@ export const ProductosContainer = styled.ul`
   }
 `;
 
-/* TARJETA INDIVIDUAL */
 export const ProductoItem = styled.li`
   list-style: none !important;
   background: #fff;
@@ -42,22 +40,41 @@ export const ProductoItem = styled.li`
   animation: ${fadeIn} 0.35s ease forwards;
 `;
 
-/* PRECIO REGULAR (TACHADO) */
 export const PrecioOriginal = styled.p`
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: #999;
   text-decoration: line-through;
   margin: 2px 0;
 `;
 
-/* PRECIO ACTUAL (DESTACADO) */
 export const PrecioActual = styled.p`
-  font-size: 1.25rem;
+  font-size: 1rem;
   color: ${({ theme }) => theme.colors.primary};
   font-weight: bold;
-  margin: 4px 0 8px;
+  margin: 4px 0 2px;
 
   @media (max-width: 480px) {
     font-size: 1.1rem;
   }
+`;
+
+export const PorcentajeDescuento = styled.p`
+  font-size: 0.7rem;
+  color: #e74883;
+  font-weight: 600;
+  margin: 2px 0;
+`;
+
+export const EtiquetaDescuento = styled.div`
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: #e74883;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 4px;
+  z-index: 2;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 `;

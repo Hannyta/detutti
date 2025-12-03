@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 const CardLayout = styled.div`
+  position: relative; /* 🔑 Necesario para posicionar la etiqueta */
   width: 100%;
-  /* max-width: 280px;  <-- eliminado para que se expanda */
   margin: 0 auto;
   display: flex;
   flex-direction: column;

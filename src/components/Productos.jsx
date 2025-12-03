@@ -1,8 +1,7 @@
-import { ProductoItem, PrecioActual, PrecioOriginal } from '../ui/ProductosLayout';
+import { ProductoItem } from '../ui/ProductosLayout';
 import TarjetaProducto from './TarjetaProducto';
 import { useContext } from 'react';
 import { CarritoContext } from '../context/CarritoContext';
-import { formatearPrecio } from '../helpers/formatearPrecio';
 import { FaShoppingCart } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { Helmet } from 'react-helmet-async';
@@ -46,18 +45,12 @@ const Productos = ({ productos, error, cargando }) => {
                 <ProductoItem className="w-100 h-100">
                   <TarjetaProducto
                     {...producto}
-                    precio={
-                      <>
-                        {enOferta && (
-                          <PrecioOriginal>
-                            {formatearPrecio(precioOriginal)}
-                          </PrecioOriginal>
-                        )}
-                        <PrecioActual>
-                          {formatearPrecio(precioConDescuento)}
-                        </PrecioActual>
-                      </>
-                    }
+                    enOferta={enOferta}
+                    precioOriginal={precioOriginal}
+                    precioConDescuento={precioConDescuento}
+                    aplicaCuotas={producto.aplicaCuotas}
+                    cuotas={producto.cuotas}
+                    valorCuota={producto.valorCuota}
                     boton={
                       enCarrito ? (
                         "✅ Agregado"
