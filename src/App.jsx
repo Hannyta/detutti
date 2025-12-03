@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { useState, useContext } from 'react';
 import styled from 'styled-components';
-import { Helmet } from 'react-helmet';
+import { HelmetProvider, Helmet } from 'react-helmet-async';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Inicio from './pages/Inicio';
@@ -35,52 +35,54 @@ function App() {
 
   return (
     <>
-      <Helmet>
-        <title>Detutti - Tienda Online</title>
-        <meta name="description" content="Explora productos de moda, tecnología y accesorios en Detutti." />
-      </Helmet>
+      <HelmetProvider>    
+        <Helmet>
+          <title>Detutti - Tienda Online</title>
+          <meta name="description" content="Explora productos de moda, tecnología y accesorios en Detutti." />
+        </Helmet>
 
-      <Header 
-        contadorCarrito={carrito.length}
-        onCarritoClick={toggleAside}
-      />
-
-      {mostrarAside && (
-        <Overlay 
-          isOpen={mostrarAside}
-          onClick={toggleAside}
-          aria-hidden="true"
-          role="presentation"
+        <Header 
+          contadorCarrito={carrito.length}
+          onCarritoClick={toggleAside}
         />
-      )}
 
-      <CarritoAside cerrarAside={toggleAside} isOpen={mostrarAside} />
-      
-      <MainWrapper aria-label="Contenido principal">
-        <Routes>
-          <Route path="/" element={<Inicio />} />
-          <Route path="/productos/:id" element={<ProductoDetalle />} />
-          <Route path="/tecnologia" element={<Tecnologia />} />
-          <Route path="/moda" element={<Moda />} />
-          <Route path="/accesorios" element={<Accesorios />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/registrarme" element={<Registrarme />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/compra" element={
-            <RutaProtegida>
-              <Compra />
-            </RutaProtegida>
-          } />
-          <Route path="/admin" element={
-            <RutaProtegida rolRequerido="admin">
-              <Admin />
-            </RutaProtegida>
-          } />
-          <Route path="*" element={<section role="alert"><p>Página no encontrada</p></section>} />
-        </Routes>
-      </MainWrapper>
+        {mostrarAside && (
+          <Overlay 
+            isOpen={mostrarAside}
+            onClick={toggleAside}
+            aria-hidden="true"
+            role="presentation"
+          />
+        )}
 
-      <Footer />
+        <CarritoAside cerrarAside={toggleAside} isOpen={mostrarAside} />
+        
+        <MainWrapper aria-label="Contenido principal">
+          <Routes>
+            <Route path="/" element={<Inicio />} />
+            <Route path="/productos/:id" element={<ProductoDetalle />} />
+            <Route path="/tecnologia" element={<Tecnologia />} />
+            <Route path="/moda" element={<Moda />} />
+            <Route path="/accesorios" element={<Accesorios />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/registrarme" element={<Registrarme />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/compra" element={
+              <RutaProtegida>
+                <Compra />
+              </RutaProtegida>
+            } />
+            <Route path="/admin" element={
+              <RutaProtegida rolRequerido="admin">
+                <Admin />
+              </RutaProtegida>
+            } />
+            <Route path="*" element={<section role="alert"><p>Página no encontrada</p></section>} />
+          </Routes>
+        </MainWrapper>
+
+        <Footer />
+      </HelmetProvider>  
     </>
   );
 }

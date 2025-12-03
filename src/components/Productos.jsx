@@ -5,7 +5,8 @@ import { CarritoContext } from '../context/CarritoContext';
 import { formatearPrecio } from '../helpers/formatearPrecio';
 import { FaShoppingCart } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
+import Boton from '../ui/Boton'; // Importamos tu Boton estilizado
 
 const Productos = ({ productos, error, cargando }) => {
   const { carrito, agregarProducto } = useContext(CarritoContext);
@@ -15,9 +16,9 @@ const Productos = ({ productos, error, cargando }) => {
 
   // Seleccionamos aleatoriamente algunos productos para aplicar el 15% de descuento
   const productosConOferta = productos
-    .map(p => p.id) // tomamos los IDs
-    .sort(() => 0.5 - Math.random()) // mezclamos aleatoriamente
-    .slice(0, Math.ceil(productos.length * 0.3)); // 30% de los productos en oferta
+    .map(p => p.id)
+    .sort(() => 0.5 - Math.random())
+    .slice(0, Math.ceil(productos.length * 0.3));
 
   return (
     <>
@@ -34,7 +35,6 @@ const Productos = ({ productos, error, cargando }) => {
             {productos.map(producto => {
               const enCarrito = carrito.find(p => p.id === producto.id);
 
-              // Verificamos si este producto está en oferta
               const enOferta = productosConOferta.includes(producto.id);
               const precioOriginal = enOferta ? producto.precio : null;
               const precioConDescuento = enOferta ? producto.precio * 0.85 : producto.precio;
@@ -56,15 +56,14 @@ const Productos = ({ productos, error, cargando }) => {
                         enCarrito ? (
                           "✅ Agregado"
                         ) : (
-                          <button
-                            aria-label={`Agregar ${producto.nombre} al carrito`} // ARIA
+                          <Boton
+                            texto={<><FaShoppingCart /> Agregar al carrito</>}
                             onClick={() => {
                               agregarProducto({ ...producto, cantidad: 1 });
-                              toast.success(`${producto.nombre} agregado al carrito!`); // Toastify
+                              toast.success(`${producto.nombre} agregado al carrito!`);
                             }}
-                          >
-                            <FaShoppingCart /> Agregar al carrito
-                          </button>
+                            aria-label={`Agregar ${producto.nombre} al carrito`}
+                          />
                         )
                       }
                     />

@@ -1,5 +1,5 @@
 import Categoria from '../components/Categoria';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { TecnologiaSection, TecnologiaTitle } from '../ui/TecnologiaLayout';
 
 const Tecnologia = () => {

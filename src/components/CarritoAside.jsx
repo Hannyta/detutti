@@ -8,7 +8,7 @@ const Backdrop = styled.div`
   inset: 0;
   background: rgba(0,0,0,0.4);
   z-index: 9998;
-  ${({ isOpen }) => !isOpen && css`display: none;`}
+  ${({ $isOpen }) => !$isOpen && css`display: none;`}
 `;
 
 const AsideCarrito = styled.aside`
@@ -30,8 +30,8 @@ const AsideCarrito = styled.aside`
   transform: translateX(100%);
   opacity: 0;
 
-  ${({ isOpen }) =>
-    isOpen &&
+  ${({ $isOpen }) =>
+    $isOpen &&
     css`
       transform: translateX(0);
       opacity: 1;
@@ -108,8 +108,8 @@ const CarritoAside = ({ cerrarAside, isOpen }) => {
 
   return (
     <>
-      <Backdrop isOpen={isOpen} onClick={cerrarAside} />
-      <AsideCarrito isOpen={isOpen} role="dialog" aria-modal="true" aria-labelledby="carritoAsideTitle">
+      <Backdrop $isOpen={isOpen} onClick={cerrarAside} />
+      <AsideCarrito $isOpen={isOpen} role="dialog" aria-modal="true" aria-labelledby="carritoAsideTitle">
         <AsideHeader>
           <AsideTitle id="carritoAsideTitle">Carrito</AsideTitle>
           <CerrarAside onClick={cerrarAside} aria-label="Cerrar carrito">

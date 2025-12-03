@@ -3,6 +3,17 @@ import Boton from '../ui/Boton';
 import CardLayout from '../ui/CardLayout';
 import styled from 'styled-components';
 
+// Creamos un styled-component a partir de Link
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  display: block;
+
+  &:hover h3 {
+    color: ${({ theme }) => theme.colors.primary};
+  }
+`;
+
 const Imagen = styled.img`
   width: 150px;
   height: 150px;
@@ -23,16 +34,13 @@ const Nombre = styled.h3`
   color: ${({ theme }) => theme.colors.text};
   transition: color 0.2s ease;
 
-  ${Link}:hover & {
-    color: ${({ theme }) => theme.colors.primary};
-  }
-
   @media (max-width: 360px) {
     font-size: 0.95rem;
   }
 `;
 
-const Precio = styled.p`
+// ✅ Usamos div en lugar de p para evitar <p> dentro de <p>
+const Precio = styled.div`
   font-size: 1rem;
   font-weight: bold;
   color: ${({ theme }) => theme.colors.primary};
@@ -102,16 +110,15 @@ const TarjetaProducto = ({
 }) => {
   return (
     <CardLayout>
-      <Link 
+      <StyledLink 
         to={`/productos/${id}`} 
-        style={{ textDecoration: "none", color: "inherit" }}
         aria-label={`Ver detalles de ${nombre}`}
       >
         <Imagen src={img} alt={`Imagen del producto ${nombre}`} />
         <Nombre>{nombre}</Nombre>
-      </Link>
+      </StyledLink>
 
-      <Precio>Precio: {precio}</Precio>
+      <Precio>{precio}</Precio>
 
       {aplicaCuotas && cuotas && valorCuota && (
         <CuotasPromo>
@@ -122,10 +129,11 @@ const TarjetaProducto = ({
         </CuotasPromo>
       )}
 
+      {/* ✅ Boton renderiza un único <button>, texto es contenido */}
       <Boton 
         texto={boton} 
         onClick={onClick} 
-        aria-label={`Agregar ${nombre} al carrito`} 
+        ariaLabel={`Agregar ${nombre} al carrito`} 
       />
     </CardLayout>
   );

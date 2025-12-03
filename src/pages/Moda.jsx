@@ -1,5 +1,5 @@
 import Categoria from '../components/Categoria';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { ModaSection, ModaTitle } from '../ui/ModaLayout';
 
 const Moda = () => {

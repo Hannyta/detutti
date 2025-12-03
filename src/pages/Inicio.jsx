@@ -1,6 +1,6 @@
 import { useProductosContext } from '../context/ProductosContext';
 import Productos from '../components/Productos';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { InicioMain, TituloSeccion, Mensaje, ErrorBox } from '../ui/InicioLayout';
 
 const Inicio = () => {
