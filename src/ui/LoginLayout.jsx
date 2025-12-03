@@ -25,51 +25,21 @@ export const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  h2 {
-    margin-bottom: 1.5rem;
-    color: #333;
-
-    @media (max-width: 600px) {
-      font-size: 1.5rem;
-    }
-  }
-
-  button {
-    width: 100%;
-    margin-top: 0.4rem;
-    padding: 0.6rem;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    }
-
-    &.primary {
-      background-color: #007bff;
-      color: #fff;
-
-      &:hover {
-        background-color: #0056b3;
-      }
-    }
-
-    &.secondary {
-      background-color: #f1f1f1;
-      color: #333;
-
-      &:hover {
-        background-color: #ddd;
-      }
-    }
-  }
-
   @media (max-width: 600px) {
     margin: 40px auto;
     padding: 1.5rem;
+  }
+`;
+
+/* 🔑 Aquí está el LoginTitle que faltaba */
+export const LoginTitle = styled.h2`
+  margin-bottom: 1.5rem;
+  color: #333;
+  font-size: 2rem;
+  font-weight: bold;
+
+  @media (max-width: 600px) {
+    font-size: 1.5rem;
   }
 `;
 

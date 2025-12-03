@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
-import Boton from "./ui/Boton";
-import CardLayout from "./ui/CardLayout";
-import styled from "styled-components";
+import { Link } from 'react-router-dom';
+import Boton from '../ui/Boton';
+import CardLayout from '../ui/CardLayout';
+import styled from 'styled-components';
 
 const Imagen = styled.img`
   width: 150px;

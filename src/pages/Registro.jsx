@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { useAuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
-import Boton from "../components/Boton";
+import { useState } from 'react';
+import { useAuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import Boton from '../ui/Boton';
 
 // 👉 Importamos los styled-components
 import { 
   RegistroContainer, RegistroTitle, RegistroForm, 
   ErrorMsg, SuccessMsg 
-} from "../ui/RegistroLayout";
+} from '../ui/RegistroLayout';
 
 const Registro = () => {
   const [formData, setFormData] = useState({

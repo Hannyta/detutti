@@ -1,7 +1,7 @@
-import { useProductosContext } from "../context/ProductosContext";
-import Productos from "../components/Productos";
-import { Helmet } from "react-helmet";
-import { InicioMain, TituloSeccion, Mensaje, ErrorBox } from "../ui/InicioLayout";
+import { useProductosContext } from '../context/ProductosContext';
+import Productos from '../components/Productos';
+import { Helmet } from 'react-helmet';
+import { InicioMain, TituloSeccion, Mensaje, ErrorBox } from '../ui/InicioLayout';
 
 const Inicio = () => {
   const { productos, cargando, error } = useProductosContext();

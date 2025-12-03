@@ -1,5 +1,5 @@
-import { useAuthContext } from "../context/AuthContext";
-import { Nav, NavList, NavItem } from "../ui/NavbarLayout";
+import { useAuthContext } from '../context/AuthContext';
+import { Nav, NavList, NavItem } from '../ui/NavbarLayout';
 
 const Navbar = () => {
   const { user } = useAuthContext();

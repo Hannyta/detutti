@@ -1,6 +1,6 @@
-import Categoria from "../components/Categoria";
-import { Helmet } from "react-helmet";
-import { TecnologiaSection, TecnologiaTitle } from "../ui/TecnologiaLayout";
+import Categoria from '../components/Categoria';
+import { Helmet } from 'react-helmet';
+import { TecnologiaSection, TecnologiaTitle } from '../ui/TecnologiaLayout';
 
 const Tecnologia = () => {
   const subCategorias = [

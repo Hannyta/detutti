@@ -1,4 +1,4 @@
-import Boton from './Boton';
+import Boton from '../ui/Boton';
 import { MdDeleteForever } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
@@ -6,12 +6,11 @@ import { CarritoContext } from '../context/CarritoContext';
 import { useAuthContext } from '../context/AuthContext'; 
 import { formatearPrecio } from '../helpers/formatearPrecio';
 
-// 👉 Importamos los styled-components
 import { 
   CarritoContainer, CarritoList, CarritoItem, CarritoImg, CarritoInfo, 
   CarritoTitle, CarritoPrice, CarritoTotal, DeleteTopRight, CantidadWrapper, 
   BtnQty, QtyDisplay, CuotasPromo, BloqueMagenta, BloqueAzul 
-} from "./ui/CarritoLayout";
+} from '../ui/CarritoLayout';
 
 const Carrito = ({ onClose }) => {
   const { carrito: productos, vaciarCarrito, eliminarProducto, actualizarCantidad } = useContext(CarritoContext);

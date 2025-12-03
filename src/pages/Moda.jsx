@@ -1,6 +1,6 @@
-import Categoria from "../components/Categoria";
-import { Helmet } from "react-helmet";
-import { ModaSection, ModaTitle } from "../ui/ModaLayout";
+import Categoria from '../components/Categoria';
+import { Helmet } from 'react-helmet';
+import { ModaSection, ModaTitle } from '../ui/ModaLayout';
 
 const Moda = () => {
   const subCategorias = [

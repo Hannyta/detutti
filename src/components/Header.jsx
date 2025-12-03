@@ -3,9 +3,9 @@ import logo from '../assets/Logo.png';
 import { Link } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
 import { FaUserLarge } from 'react-icons/fa6';
-import { MdLogout } from "react-icons/md";
+import { MdLogout } from 'react-icons/md';
 import { useAuthContext } from '../context/AuthContext';
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from 'styled-components';
 
 const bounce = keyframes`
   0% { transform: scale(1); }

@@ -1,5 +1,5 @@
-import GestionDeProductos from "../components/GestionDeProductos";
-import { AdminPage, AdminTitle } from "../ui/AdminLayout";
+import GestionDeProductos from '../components/GestionDeProductos';
+import { AdminPage, AdminTitle } from '../ui/AdminLayout';
 
 const Admin = () => {
   return (

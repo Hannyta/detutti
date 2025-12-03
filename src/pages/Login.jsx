@@ -1,13 +1,12 @@
-import Boton from "../components/Boton";
-import { useState, useEffect } from "react";
-import { useAuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import Boton from '../ui/Boton';
+import { useState, useEffect } from 'react';
+import { useAuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
-// 👉 Importamos los styled-components
 import { 
   PageWrapper, LoginContainer, LoginTitle, LoginForm, Recordarme, 
   ErrorMsg, ForgotPassword, Register 
-} from "../ui/LoginLayout";
+} from '../ui/LoginLayout';
 
 const Login = () => {
   const [email, setEmail] = useState("");

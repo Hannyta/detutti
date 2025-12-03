@@ -1,7 +1,7 @@
-import { IoMdClose } from "react-icons/io";
-import { useEffect } from "react";
-import Carrito from "./Carrito";
-import styled, { css } from "styled-components";
+import { IoMdClose } from 'react-icons/io';
+import { useEffect } from 'react';
+import Carrito from './Carrito';
+import styled, { css } from 'styled-components';
 
 const Backdrop = styled.div`
   position: fixed;

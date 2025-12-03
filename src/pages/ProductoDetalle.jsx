@@ -1,17 +1,16 @@
-import { useContext, useState } from "react";
-import { useParams } from "react-router-dom";
-import Boton from "../components/Boton";
-import { CarritoContext } from "../context/CarritoContext";
-import { useProductosContext } from "../context/ProductosContext"; 
-import { formatearPrecio } from "../helpers/formatearPrecio"; 
+import { useContext, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import Boton from '../ui/Boton';
+import { CarritoContext } from '../context/CarritoContext';
+import { useProductosContext } from '../context/ProductosContext'; 
+import { formatearPrecio } from '../helpers/formatearPrecio'; 
 
-// 👉 Importamos los styled-components desde DetalleLayout.jsx
 import { 
   DetalleContainer, Galeria, ImagenPrincipal, InfoProducto, Titulo, 
   PrecioBox, PrecioFinal, CuotasPromo, BloqueMagenta, BloqueAzul, 
   Acciones, CantidadSelector, BtnCantidad, Cantidad, Mensaje, 
   Descripcion, InfoExtra 
-} from "../ui/DetalleLayout";
+} from '../ui/DetalleLayout';
 
 const ProductoDetalle = () => {
   const { id } = useParams();

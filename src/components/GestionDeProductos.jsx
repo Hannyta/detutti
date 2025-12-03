@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
-import FormularioProducto from "./FormularioProducto";
-import { useProductosContext } from "../context/ProductosContext";
-import { CiCirclePlus } from "react-icons/ci";
-import { LuSquarePen } from "react-icons/lu";
-import { FaTrashCan } from "react-icons/fa6";
+import { useState, useEffect } from 'react';
+import FormularioProducto from './FormularioProducto';
+import { useProductosContext } from '../context/ProductosContext';
+import { CiCirclePlus } from 'react-icons/ci';
+import { LuSquarePen } from 'react-icons/lu';
+import { FaTrashCan } from 'react-icons/fa6';
 
 import { 
   GestionContainer, GestionHeader, GestionTitulo, BtnAgregar, GridProductos, ProductoCard, 
   ProductoImagen, ProductoNombre, ProductoPrecio, CuotasPromo, BloqueMagenta, BloqueAzul, 
   Acciones, BtnEditar, BtnEliminar, ModalOverlay, ModalContainer, ModalHeader, ModalTitle, 
   ModalText, ModalActions, BtnCancel, BtnDelete 
-} from "../ui/GestionDeProductosLayout";
+} from '../ui/GestionDeProductosLayout';
 
 const GestionDeProductos = () => {
   const { productos, eliminarProducto } = useProductosContext();

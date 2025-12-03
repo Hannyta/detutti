@@ -1,15 +1,15 @@
-import { useState, useContext } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import Boton from "../components/Boton";
-import { CarritoContext } from "../context/CarritoContext";
-import { formatearPrecio } from "../helpers/formatearPrecio";
+import { useState, useContext } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Boton from '../ui/Boton';
+import { CarritoContext } from '../context/CarritoContext';
+import { formatearPrecio } from '../helpers/formatearPrecio';
 
 // 👉 Importamos los styled-components
 import { 
   CompraContainer, TituloPagina, CompraResumen, ResumenItem, ResumenInfo, 
   ResumenTitle, ResumenPrice, CantidadWrapper, BtnQty, QtyDisplay, Subtotal, 
   CuotasPromo, BloqueMagenta, BloqueAzul, ResumenTotal, CompraForm, MensajeCompra 
-} from "../ui/CompraLayout";
+} from '../ui/CompraLayout';
 
 const Compra = ({ productos = [] }) => {
   const { state } = useLocation();

@@ -1,11 +1,11 @@
-import { ProductosContainer, ProductoItem, PrecioActual, PrecioOriginal } from "./ui/ProductosLayout";
-import TarjetaProducto from "./TarjetaProducto";
-import { useContext } from "react";
-import { CarritoContext } from "../context/CarritoContext";
-import { formatearPrecio } from "../helpers/formatearPrecio";
-import { FaShoppingCart } from "react-icons/fa";
-import { toast } from "react-toastify";
-import { Helmet } from "react-helmet";
+import { ProductosContainer, ProductoItem, PrecioActual, PrecioOriginal } from '../ui/ProductosLayout';
+import TarjetaProducto from './TarjetaProducto';
+import { useContext } from 'react';
+import { CarritoContext } from '../context/CarritoContext';
+import { formatearPrecio } from '../helpers/formatearPrecio';
+import { FaShoppingCart } from 'react-icons/fa';
+import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet';
 
 const Productos = ({ productos, error, cargando }) => {
   const { carrito, agregarProducto } = useContext(CarritoContext);

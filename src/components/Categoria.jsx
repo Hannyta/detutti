@@ -3,8 +3,8 @@ import TarjetaProducto from '../components/TarjetaProducto';
 import { CarritoContext } from '../context/CarritoContext';
 import { useProductosContext } from '../context/ProductosContext';
 import { formatearPrecio } from '../helpers/formatearPrecio';
-import styled from "styled-components";
-import { Helmet } from "react-helmet";
+import styled from 'styled-components';
+import { Helmet } from 'react-helmet';
 
 const CategoriaSection = styled.section`
   margin: 3rem auto;

@@ -1,21 +1,19 @@
-import { useState, useEffect, useRef } from "react";
-import { useProductosContext } from "../context/ProductosContext";
-import { IoClose } from "react-icons/io5";
-import { NumericFormat } from "react-number-format";
+import { useState, useEffect, useRef } from 'react';
+import { useProductosContext } from '../context/ProductosContext';
+import { IoClose } from 'react-icons/io5';
+import { NumericFormat } from 'react-number-format';
 
-// 👉 Importamos los styled-components
 import { 
   ModalOverlay, ModalContainer, ModalContent, ModalHeader, ModalHeaderTitle, 
   CloseButton, TituloAzul, FormLabel, FormInputBase, TextArea, 
   ModalActions, BtnPrimary, BtnSecondary 
-} from "./ui/FormularioProductoLayout";
+} from '../ui/FormularioProductoLayout';
 
 const FormularioProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }) => {
   const [producto, setProducto] = useState(productoInicial);
   const { agregarProducto, editarProducto } = useProductosContext();
   const nombreRef = useRef(null);
 
-  // 👇 Foco inicial en el campo "Nombre"
   useEffect(() => {
     nombreRef.current?.focus();
   }, []);

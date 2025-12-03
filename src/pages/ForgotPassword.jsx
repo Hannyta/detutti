@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { ForgotContainer, ForgotTitle, ForgotForm, PrimaryButton, Mensaje, ErrorMensaje } from "../ui/ForgotLayout";
+import { useState } from 'react';
+import { ForgotContainer, ForgotTitle, ForgotForm, PrimaryButton, Mensaje, ErrorMensaje } from '../ui/ForgotLayout';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
