@@ -129,12 +129,13 @@ const TarjetaProducto = ({
         </CuotasPromo>
       )}
 
-      {/* ✅ Boton renderiza un único <button>, texto es contenido */}
+      {/* ✅ Boton ahora usa children en lugar de texto */}
       <Boton 
-        texto={boton} 
         onClick={onClick} 
         ariaLabel={`Agregar ${nombre} al carrito`} 
-      />
+      >
+        {boton}
+      </Boton>
     </CardLayout>
   );
 };
