@@ -48,7 +48,7 @@ function App() {
 
         {mostrarAside && (
           <Overlay 
-            isOpen={mostrarAside}
+            $isOpen={mostrarAside}
             onClick={toggleAside}
             aria-hidden="true"
             role="presentation"

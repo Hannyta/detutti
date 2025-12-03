@@ -3,7 +3,6 @@ import Boton from '../ui/Boton';
 import CardLayout from '../ui/CardLayout';
 import styled from 'styled-components';
 
-// Creamos un styled-component a partir de Link
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: inherit;
@@ -39,7 +38,6 @@ const Nombre = styled.h3`
   }
 `;
 
-// ✅ Usamos div en lugar de p para evitar <p> dentro de <p>
 const Precio = styled.div`
   font-size: 1rem;
   font-weight: bold;
@@ -99,7 +97,7 @@ const BloqueAzul = styled.span`
 
 const TarjetaProducto = ({ 
   id, 
-  img, 
+  imagen, 
   nombre, 
   precio, 
   aplicaCuotas, 
@@ -114,7 +112,7 @@ const TarjetaProducto = ({
         to={`/productos/${id}`} 
         aria-label={`Ver detalles de ${nombre}`}
       >
-        <Imagen src={img} alt={`Imagen del producto ${nombre}`} />
+        <Imagen src={imagen} alt={`Imagen del producto ${nombre}`} />
         <Nombre>{nombre}</Nombre>
       </StyledLink>
 

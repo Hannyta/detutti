@@ -85,10 +85,15 @@ export const Descripcion = styled.div`
   }
 `;
 
-export const InfoExtra = styled.p`
+/* ✅ Cambiado de styled.p a styled.div */
+export const InfoExtra = styled.div`
   margin-top: 0.5rem;
   font-size: 0.8rem;
   color: #666;
+
+  p {
+    margin: 0.3rem 0;
+  }
 `;
 
 export const Acciones = styled.div`

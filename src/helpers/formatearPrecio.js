@@ -6,6 +6,7 @@ export const formatearPrecio = (valor) => {
   return new Intl.NumberFormat("es-AR", {
     style: "currency",
     currency: "ARS",
-    minimumFractionDigits: 0, // 👈 sin decimales
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0, // fuerza a no mostrar decimales
   }).format(numero);
 };

@@ -87,7 +87,7 @@ const Categoria = ({ nombreCategoria, categoriaAPI, subCategoriaAPI }) => {
             <TarjetaProducto
               key={producto.id}
               id={producto.id}
-              img={producto.imagen}
+              imagen={producto.imagen}
               nombre={producto.nombre}
               precio={
                 <>

@@ -5,12 +5,22 @@ const StyledButton = styled.button`
     $tipo === "primary" ? theme.colors.primary : theme.colors.secondary};
   color: white;
   border: none;
-  border-radius: 6px;
-  padding: 0.6rem 1.2rem;
-  font-size: 1rem;
+  border-radius: 18px;
+  padding: 0.14rem 0.60rem;
+  font-size: 0.75rem;
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 34px;
+  line-height: 1.2;
+  text-align: center;
+  width: auto;
+  white-space: nowrap;
+  margin: 0 auto;
 
   &:hover {
     background-color: ${({ $tipo, theme }) =>
@@ -23,7 +33,7 @@ const StyledButton = styled.button`
   }
 `;
 
-const Boton = ({ texto, onClick, ariaLabel, tipo = "primary", disabled = false }) => {
+const Boton = ({ children, onClick, ariaLabel, tipo = "primary", disabled = false }) => {
   return (
     <StyledButton
       $tipo={tipo}
@@ -32,7 +42,7 @@ const Boton = ({ texto, onClick, ariaLabel, tipo = "primary", disabled = false }
       disabled={disabled}
       type="button"
     >
-      {texto}
+      {children}
     </StyledButton>
   );
 };

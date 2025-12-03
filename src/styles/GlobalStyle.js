@@ -50,9 +50,8 @@ const GlobalStyle = createGlobalStyle`
       color: ${({ theme }) => theme.colors.secondary};
     }
 
-    &:focus {
-      outline: 2px solid ${({ theme }) => theme.colors.focus};
-      outline-offset: 2px;
+    &:focus-visible {
+      outline: none;
     }
   }
 
@@ -65,9 +64,8 @@ const GlobalStyle = createGlobalStyle`
       transform: translateY(-1px);
     }
 
-    &:focus,
     &:focus-visible {
-      outline: 4px auto -webkit-focus-ring-color;
+      outline: none;
     }
   }
 
