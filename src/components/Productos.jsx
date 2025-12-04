@@ -5,7 +5,8 @@ import { CarritoContext } from '../context/CarritoContext';
 import { FaShoppingCart } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { Helmet } from 'react-helmet-async';
-import Boton from '../ui/Boton'; 
+import Boton from '../ui/Boton';
+import { mapProductoToProps } from '../helpers/mapProductoToProps';
 
 const Productos = ({ productos, error, cargando }) => {
   const { carrito, agregarProducto } = useContext(CarritoContext);
@@ -33,9 +34,7 @@ const Productos = ({ productos, error, cargando }) => {
         <div className="row g-2">
           {productos.map(producto => {
             const enCarrito = carrito.find(p => p.id === producto.id);
-            const enOferta = productosConOferta.includes(producto.id);
-            const precioOriginal = enOferta ? producto.precio : null;
-            const precioConDescuento = enOferta ? producto.precio * 0.85 : producto.precio;
+            const productoProps = mapProductoToProps(producto, productosConOferta);
 
             return (
               <div 
@@ -44,13 +43,7 @@ const Productos = ({ productos, error, cargando }) => {
               >
                 <ProductoItem className="w-100 h-100">
                   <TarjetaProducto
-                    {...producto}
-                    enOferta={enOferta}
-                    precioOriginal={precioOriginal}
-                    precioConDescuento={precioConDescuento}
-                    aplicaCuotas={producto.aplicaCuotas}
-                    cuotas={producto.cuotas}
-                    valorCuota={producto.valorCuota}
+                    {...productoProps}
                     boton={
                       enCarrito ? (
                         "✅ Agregado"

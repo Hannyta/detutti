@@ -2,9 +2,13 @@ import { useContext } from 'react';
 import TarjetaProducto from '../components/TarjetaProducto';
 import { CarritoContext } from '../context/CarritoContext';
 import { useProductosContext } from '../context/ProductosContext';
-import { formatearPrecio } from '../helpers/formatearPrecio';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet-async';
+import Boton from '../ui/Boton';
+import { FaShoppingCart } from 'react-icons/fa';
+import { toast } from 'react-toastify';
+import { ProductoItem } from '../ui/ProductosLayout';
+import { mapProductoToProps } from '../helpers/mapProductoToProps'; // 👈 nuevo helper
 
 const CategoriaSection = styled.section`
   margin: 3rem auto;
@@ -30,7 +34,7 @@ const GridTarjetas = styled.div`
   }
 
   @media (min-width: 1024px) {
-    gap: 1.5rem;
+    gap: 0.5rem;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
@@ -59,7 +63,6 @@ const Categoria = ({ nombreCategoria, categoriaAPI, subCategoriaAPI }) => {
       (!subCategoriaAPI || p.subCategoria?.toLowerCase() === subCategoriaAPI.toLowerCase())
   );
 
-  // Seleccionamos aleatoriamente algunos productos en oferta
   const productosConOferta = productosFiltrados
     .map(p => p.id)
     .sort(() => 0.5 - Math.random())
@@ -79,31 +82,38 @@ const Categoria = ({ nombreCategoria, categoriaAPI, subCategoriaAPI }) => {
       <GridTarjetas>
         {productosFiltrados.map((producto) => {
           const agregado = carrito.some((p) => p.id === producto.id);
-          const enOferta = productosConOferta.includes(producto.id);
-          const precioOriginal = enOferta ? producto.precio : null;
-          const precioConDescuento = enOferta ? producto.precio * 0.85 : producto.precio;
+          const productoProps = mapProductoToProps(producto, productosConOferta);
 
           return (
-            <TarjetaProducto
-              key={producto.id}
-              id={producto.id}
-              imagen={producto.imagen}
-              nombre={producto.nombre}
-              precio={
-                <>
-                  {enOferta && <p style={{ textDecoration: "line-through", color: "#999" }}>{formatearPrecio(precioOriginal)}</p>}
-                  <p style={{ fontWeight: "bold", color: "#005BAC" }}>{formatearPrecio(precioConDescuento)}</p>
-                </>
-              }
-              aplicaCuotas={producto.aplicaCuotas}
-              cuotas={producto.cuotas}
-              valorCuota={producto.valorCuota}
-              boton={
-                agregado ? "✅ Agregado" : 
-                <button aria-label={`Agregar ${producto.nombre} al carrito`}>Agregar 🛒</button>
-              }
-              onClick={() => agregarProducto({ ...producto, cantidad: 1 })}
-            />
+            <ProductoItem key={producto.id} className="w-100 h-100">
+              <TarjetaProducto
+                {...productoProps}
+                boton={
+                  agregado ? (
+                    "✅ Agregado"
+                  ) : (
+                    <Boton
+                      onClick={() => {
+                        agregarProducto({ ...producto, cantidad: 1 });
+                        toast.success(`${producto.nombre} agregado al carrito!`, {
+                          position: "bottom-right",
+                          autoClose: 2000,
+                          hideProgressBar: true,
+                          closeOnClick: true,
+                          pauseOnHover: false,
+                          draggable: false,
+                          style: { backgroundColor: "#209ce4", color: "#fff", fontWeight: 600 }
+                        });
+                      }}
+                      aria-label={`Agregar ${producto.nombre} al carrito`}
+                    >
+                      <FaShoppingCart size={16} />
+                      <span>Agregar al carrito</span>
+                    </Boton>
+                  )
+                }
+              />
+            </ProductoItem>
           );
         })}
       </GridTarjetas>
@@ -111,4 +121,4 @@ const Categoria = ({ nombreCategoria, categoriaAPI, subCategoriaAPI }) => {
   );
 };
 
-export default Categoria;
+export default Categoria
