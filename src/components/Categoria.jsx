@@ -8,7 +8,7 @@ import Boton from '../ui/Boton';
 import { FaShoppingCart } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { ProductoItem } from '../ui/ProductosLayout';
-import { mapProductoToProps } from '../helpers/mapProductoToProps'; // 👈 nuevo helper
+import { mapProductoToProps } from '../helpers/mapProductoToProps';
 
 const CategoriaSection = styled.section`
   margin: 3rem auto;
@@ -30,7 +30,7 @@ const GridTarjetas = styled.div`
   padding: 0;
 
   @media (min-width: 1500px) {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 
   @media (min-width: 1024px) {

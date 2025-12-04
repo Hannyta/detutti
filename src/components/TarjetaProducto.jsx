@@ -58,8 +58,8 @@ const CuotasPromo = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  white-space: nowrap;
-  margin: 12px 0 16px;
+  white-space: normal;
+  margin: 8px 0 16px;
   animation: fadeIn 0.3s ease-in-out;
 
   @keyframes fadeIn {
@@ -74,18 +74,17 @@ const BloqueMagenta = styled.span`
   padding: 4px 12px;
   border-radius: 16px;
   font-weight: 500;
-  font-size: 0.75rem;
-  margin-right: -12px;
-  height: 26px;
-  display: incline-flex;
+  font-size: clamp(0.65rem, 1vw, 0.75rem);
+  margin-right: -10px;
+  min-height: 26px;
+  display: inline-flex;
   align-items: center;
   position: relative;
   z-index: 2;
 
-  @media (min-width: 1224px), (max-width: 400px) {
-    font-size: 0.75rem;
+  @media (max-width: 700px) {
+    font-size: 0.65rem;
     padding: 2px 8px;
-    height: 24px;
     margin-right: -8px;
   }
 `;
@@ -93,19 +92,19 @@ const BloqueMagenta = styled.span`
 const BloqueAzul = styled.span`
   background-color: #209ce4;
   color: white;
-  padding: 2px 16px;
+  padding: 2px 12px;
   border-radius: 8px;
   font-weight: 600;
-  font-size: 0.65rem;
-  height: 18px;
-  display: incline-flex;
+  font-size: clamp(0.55rem, 1vw, 0.65rem);
+  min-height: 20px;
+  display: inline-flex;
   align-items: center;
   position: relative;
   z-index: 1;
 
-  @media (min-width: 1224px), (max-width: 400px) {
-    font-size: 0.65rem;
-    padding: 2px 10px;
+  @media (max-width: 700px) {
+    font-size: 0.6rem;
+    padding: 2px 8px;
   }
 `;
 
