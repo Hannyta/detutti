@@ -1,6 +1,6 @@
+import { useEffect, useState, useContext } from 'react';
 import { ProductoItem } from '../ui/ProductosLayout';
 import TarjetaProducto from './TarjetaProducto';
-import { useContext } from 'react';
 import { CarritoContext } from '../context/CarritoContext';
 import { FaShoppingCart } from 'react-icons/fa';
 import { toast } from 'react-toastify';
@@ -10,15 +10,27 @@ import { mapProductoToProps } from '../helpers/mapProductoToProps';
 
 const Productos = ({ productos, error, cargando }) => {
   const { carrito, agregarProducto } = useContext(CarritoContext);
+  const [productosConOferta, setProductosConOferta] = useState([]);
+
+  useEffect(() => {
+    // 1. Leer de localStorage
+    const guardados = JSON.parse(localStorage.getItem("productosConOferta"));
+    if (guardados && guardados.length > 0) {
+      setProductosConOferta(guardados);
+    } else {
+      // 2. Generar aleatorio solo la primera vez
+      const seleccionAleatoria = productos
+        .map(p => p.id)
+        .sort(() => 0.5 - Math.random())
+        .slice(0, Math.ceil(productos.length * 0.3));
+
+      setProductosConOferta(seleccionAleatoria);
+      localStorage.setItem("productosConOferta", JSON.stringify(seleccionAleatoria));
+    }
+  }, [productos]);
 
   if (cargando) return <p>Cargando Productos...</p>;
   if (error) return <p>{error}</p>;
-
-  // Selecciona un 30% de productos al azar para mostrar en oferta
-  const productosConOferta = productos
-    .map(p => p.id)
-    .sort(() => 0.5 - Math.random())
-    .slice(0, Math.ceil(productos.length * 0.3));
 
   return (
     <>
