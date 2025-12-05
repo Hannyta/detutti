@@ -18,6 +18,10 @@ import { CarritoContext } from './context/CarritoContext';
 import ForgotPassword from './pages/ForgotPassword';
 import Admin from './pages/Admin';
 import Overlay from './ui/Overlay';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
 
 const MainWrapper = styled.main`
   min-height: 80vh;
@@ -82,6 +86,7 @@ function App() {
         </MainWrapper>
 
         <Footer />
+        <ToastContainer position="top-right" />
       </HelmetProvider>  
     </>
   );

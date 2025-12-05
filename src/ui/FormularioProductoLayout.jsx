@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import Boton from "../ui/Boton";
 
 const fadeIn = keyframes`
   from { opacity: 0; transform: translateY(-20px); }
@@ -9,35 +10,27 @@ export const ModalOverlay = styled.div`
   position: fixed;
   inset: 0;
   background-color: rgba(0,0,0,0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   z-index: 50;
-
-  @media (max-width: 600px) {
-    align-items: flex-start;
-  }
-
-  @media (min-width: 601px) {
-    align-items: center;
-  }
 `;
 
 export const ModalContainer = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   max-width: 500px;
   width: 100%;
   background: #fff;
   padding: 2rem;
   border-radius: 10px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.15);
-  text-align: left;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.2);
   animation: ${fadeIn} 0.35s cubic-bezier(0.25, 1.25, 0.5, 1);
-  position: relative;
   z-index: 1000;
 
   @media (max-width: 600px) {
-    margin-top: 70px;
-    max-height: calc(100vh - 70px);
+    top: 80px;
+    transform: translateX(-50%);
+    max-height: calc(100vh - 100px);
     overflow-y: auto;
   }
 `;
@@ -51,6 +44,8 @@ export const ModalHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1rem;
 `;
 
 export const ModalHeaderTitle = styled.h3`
@@ -78,11 +73,11 @@ export const TituloAzul = styled.span`
   margin-bottom: 0.4rem;
 `;
 
+/* ✅ Etiquetas y campos */
 export const FormLabel = styled.label`
   font-weight: 600;
   margin-bottom: 0.4rem;
   color: #444;
-  text-align: left;
   display: block;
 `;
 
@@ -91,8 +86,6 @@ export const FormInputBase = styled.input`
   padding: 0.6rem;
   border-radius: 6px;
   border: 1px solid #ccc;
-  box-sizing: border-box;
-  transition: border-color 0.3s ease;
   font-size: 1rem;
 
   &:focus {
@@ -106,8 +99,6 @@ export const TextArea = styled.textarea`
   padding: 0.6rem;
   border-radius: 6px;
   border: 1px solid #ccc;
-  box-sizing: border-box;
-  transition: border-color 0.3s ease;
   font-size: 1rem;
 
   &:focus {
@@ -116,36 +107,20 @@ export const TextArea = styled.textarea`
   }
 `;
 
+/* ✅ Contenedor de botones */
 export const ModalActions = styled.div`
   display: flex;
   gap: 1rem;
   margin-top: 1rem;
 `;
 
-export const BtnBase = styled.button`
+/* ✅ Botones premium basados en tu componente global */
+export const ModalBtnPrimary = styled(Boton)`
   flex: 1;
-  padding: 0.6rem;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
+  justify-content: center;
 `;
 
-export const BtnPrimary = styled(BtnBase)`
-  background-color: #007bff;
-  color: #fff;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
-
-export const BtnSecondary = styled(BtnBase)`
-  background-color: #f1f1f1;
-  color: #333;
-
-  &:hover {
-    background-color: #ddd;
-  }
+export const ModalBtnSecondary = styled(Boton)`
+  flex: 1;
+  justify-content: center;
 `;

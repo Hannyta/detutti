@@ -13,12 +13,10 @@ const Productos = ({ productos, error, cargando }) => {
   const [productosConOferta, setProductosConOferta] = useState([]);
 
   useEffect(() => {
-    // 1. Leer de localStorage
     const guardados = JSON.parse(localStorage.getItem("productosConOferta"));
     if (guardados && guardados.length > 0) {
       setProductosConOferta(guardados);
     } else {
-      // 2. Generar aleatorio solo la primera vez
       const seleccionAleatoria = productos
         .map(p => p.id)
         .sort(() => 0.5 - Math.random())
@@ -62,19 +60,17 @@ const Productos = ({ productos, error, cargando }) => {
                       ) : (
                         <Boton
                           onClick={() => {
-                            // 🔹 Normalizamos el producto con oferta antes de agregarlo
                             const productoNormalizado = mapProductoToProps(producto, productosConOferta);
                             agregarProducto(productoNormalizado, productosConOferta);
 
                             toast.success(`${producto.nombre} agregado al carrito!`, {
-                              position: "bottom-right",
-                              autoClose: 2000,
+                              autoClose: 500,
                               hideProgressBar: true,
                               closeOnClick: true,
                               pauseOnHover: false,
                               draggable: false,
                               style: { 
-                                backgroundColor: "#209ce4", 
+                                backgroundColor: "#005cacb2", 
                                 color: "#fff", 
                                 fontWeight: 600 
                               }

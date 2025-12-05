@@ -7,8 +7,22 @@ export const TecnologiaSection = styled.section`
 `;
 
 export const TecnologiaTitle = styled.h2`
-  font-size: 1.8rem;
+  font-size: clamp(1.8rem, 2.5vw, 2.2rem);
   color: ${({ theme }) => theme.colors.primary};
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   text-align: center;
+  font-weight: 700;
+  font-family: ${({ theme }) => theme.fonts.heading};
+  letter-spacing: 0.5px;
+  position: relative;
+
+  &::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: ${({ theme }) => theme.colors.primary};
+    margin: 0.6rem auto 0;
+    border-radius: 2px;
+  }
 `;

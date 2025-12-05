@@ -10,28 +10,33 @@ export const AuthProvider = ({ children }) => {
   });
 
   const login = (email, password, recordarme) => {
-    const foundUser = usuarios.find(
-      u => u.usuario.toLowerCase() === email.trim().toLowerCase() && u.password === password
-    );
+  const foundUser = usuarios.find(
+    u => u.usuario.toLowerCase() === email.trim().toLowerCase() && u.password === password
+  );
 
-    if (foundUser) {
-      const newUser = {
-        email: foundUser.usuario.toLowerCase(),
-        nombre: foundUser.nombre,
-        rol: foundUser.rol,
-      };
+  if (!foundUser) {
+    return { success: false, mensaje: "Usuario o contraseña incorrectos" };
+  }
 
-      setUser(newUser);
-
-      if (recordarme) {
-        localStorage.setItem("user", JSON.stringify(newUser));
-      }
-
-      return { success: true, mensaje: `Bienvenido ${foundUser.nombre}` };
-    } else {
-      return { success: false, mensaje: "Usuario o contraseña incorrectos" };
-    }
+  const newUser = {
+    email: foundUser.usuario.toLowerCase(),
+    nombre: foundUser.nombre,
+    rol: foundUser.rol,
   };
+
+  setUser(newUser);
+
+  if (recordarme) {
+    localStorage.setItem("user", JSON.stringify(newUser));
+  }
+
+  return { 
+    success: true, 
+    mensaje: `Bienvenido ${foundUser.nombre}`,
+    nombre: foundUser.nombre,
+    user: newUser
+  };
+};
 
   const logout = () => {
     setUser(null);

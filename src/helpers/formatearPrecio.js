@@ -7,6 +7,6 @@ export const formatearPrecio = (valor) => {
     style: "currency",
     currency: "ARS",
     minimumFractionDigits: 0,
-    maximumFractionDigits: 0, // fuerza a no mostrar decimales
+    maximumFractionDigits: 0, 
   }).format(numero);
 };

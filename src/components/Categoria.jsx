@@ -57,16 +57,22 @@ const Categoria = ({ nombreCategoria, categoriaAPI, subCategoriaAPI }) => {
   const { carrito, agregarProducto } = useContext(CarritoContext);
   const { productos, cargando, error } = useProductosContext();
 
+  // Filtrar productos por categoría y subcategoría
   const productosFiltrados = productos.filter(
     (p) =>
       p.categoria?.toLowerCase() === categoriaAPI.toLowerCase() &&
-      (!subCategoriaAPI || p.subCategoria?.toLowerCase() === subCategoriaAPI.toLowerCase())
+      (!subCategoriaAPI ||
+        p.subCategoria?.toLowerCase() === subCategoriaAPI.toLowerCase())
   );
 
+  // Leer ofertas guardadas desde localStorage
+  const ofertasGuardadas =
+    JSON.parse(localStorage.getItem("productosConOferta")) || [];
+
+  // Filtrar solo las ofertas que aplican a esta categoría
   const productosConOferta = productosFiltrados
-    .map(p => p.id)
-    .sort(() => 0.5 - Math.random())
-    .slice(0, Math.ceil(productosFiltrados.length * 0.3));
+    .filter((p) => ofertasGuardadas.includes(p.id))
+    .map((p) => p.id);
 
   if (cargando) return <Estado>Cargando productos...</Estado>;
   if (error) return <Estado>{error}</Estado>;
@@ -75,14 +81,21 @@ const Categoria = ({ nombreCategoria, categoriaAPI, subCategoriaAPI }) => {
     <CategoriaSection>
       <Helmet>
         <title>Detutti - {nombreCategoria}</title>
-        <meta name="description" content={`Explora productos de la categoría ${nombreCategoria}`} />
+        <meta
+          name="description"
+          content={`Explora productos de la categoría ${nombreCategoria}`}
+        />
       </Helmet>
 
       <TitleSection>{nombreCategoria}</TitleSection>
+
       <GridTarjetas>
         {productosFiltrados.map((producto) => {
           const agregado = carrito.some((p) => p.id === producto.id);
-          const productoProps = mapProductoToProps(producto, productosConOferta);
+          const productoProps = mapProductoToProps(
+            producto,
+            productosConOferta
+          );
 
           return (
             <ProductoItem key={producto.id} className="w-100 h-100">
@@ -94,16 +107,23 @@ const Categoria = ({ nombreCategoria, categoriaAPI, subCategoriaAPI }) => {
                   ) : (
                     <Boton
                       onClick={() => {
-                        agregarProducto({ ...producto, cantidad: 1 });
-                        toast.success(`${producto.nombre} agregado al carrito!`, {
-                          position: "bottom-right",
-                          autoClose: 2000,
-                          hideProgressBar: true,
-                          closeOnClick: true,
-                          pauseOnHover: false,
-                          draggable: false,
-                          style: { backgroundColor: "#209ce4", color: "#fff", fontWeight: 600 }
-                        });
+                        agregarProducto(productoProps, productosConOferta);
+
+                        toast.success(
+                          `${producto.nombre} agregado al carrito!`,
+                          {
+                            autoClose: 500,
+                            hideProgressBar: true,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            draggable: false,
+                            style: {
+                              backgroundColor: "#005cacb2",
+                              color: "#fff",
+                              fontWeight: 600,
+                            },
+                          }
+                        );
                       }}
                       aria-label={`Agregar ${producto.nombre} al carrito`}
                     >
@@ -121,4 +141,4 @@ const Categoria = ({ nombreCategoria, categoriaAPI, subCategoriaAPI }) => {
   );
 };
 
-export default Categoria
+export default Categoria;

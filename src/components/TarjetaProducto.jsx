@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import Boton from '../ui/Boton';
 import CardLayout from '../ui/CardLayout';
 import styled from 'styled-components';
 import { formatearPrecio } from '../helpers/formatearPrecio';

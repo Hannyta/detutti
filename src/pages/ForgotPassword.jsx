@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { ForgotContainer, ForgotTitle, ForgotForm, PrimaryButton, Mensaje, ErrorMensaje } from '../ui/ForgotLayout';
+import { ForgotContainer, ForgotTitle, ForgotForm, Mensaje, ErrorMensaje } from '../ui/ForgotLayout';
+import Boton from '../ui/Boton';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -20,6 +21,7 @@ const ForgotPassword = () => {
   return (
     <ForgotContainer aria-label="Recuperar contraseña">
       <ForgotTitle>Recuperar contraseña</ForgotTitle>
+
       <ForgotForm onSubmit={handleSubmit}>
         <input
           type="email"
@@ -27,8 +29,12 @@ const ForgotPassword = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <PrimaryButton type="submit">Enviar enlace</PrimaryButton>
+
+        <Boton tipo="primary" type="submit" style={{ marginTop: "1rem" }}>
+          Enviar enlace
+        </Boton>
       </ForgotForm>
+
       {mensaje && <Mensaje aria-live="polite">{mensaje}</Mensaje>}
       {error && <ErrorMensaje aria-live="polite">{error}</ErrorMensaje>}
     </ForgotContainer>

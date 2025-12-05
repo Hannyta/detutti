@@ -3,32 +3,74 @@ import { MdDeleteForever } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { CarritoContext } from '../context/CarritoContext';
-import { useAuthContext } from '../context/AuthContext'; 
+import { useAuthContext } from '../context/AuthContext';
 import { formatearPrecio } from '../helpers/formatearPrecio';
+import { toast } from 'react-toastify';
 
-import { 
-  CarritoContainer, CarritoList, CarritoItem, CarritoImg, CarritoInfo, 
-  CarritoTitle, CarritoPrice, CarritoTotal, DeleteTopRight, CantidadWrapper, 
+import {
+  CarritoContainer, CarritoList, CarritoItem, CarritoImg, CarritoInfo,
+  CarritoTitle, CarritoPrice, CarritoTotal, DeleteTopRight, CantidadWrapper,
   BtnQty, QtyDisplay, CuotasPromo, BloqueMagenta, BloqueAzul, BotonesFinales,
-  EtiquetaDescuentoCarrito, ImagenWrapper // 🔹 nuevos estilos
+  EtiquetaDescuentoCarrito, ImagenWrapper
 } from '../ui/CarritoLayout';
 
 const Carrito = ({ onClose }) => {
   const { carrito, vaciarCarrito, eliminarProducto, actualizarCantidad, totalFormateado } = useContext(CarritoContext);
-  const { isAuthenticated } = useAuthContext(); 
+  const { isAuthenticated } = useAuthContext();
   const navigate = useNavigate();
 
   const handleCompra = () => {
     if (!isAuthenticated) {
-      alert('Debes iniciar sesión para realizar la compra.');
+      toast.error("Debes iniciar sesión para realizar la compra.", {
+        autoClose: 500,
+        hideProgressBar: true,
+        style: { backgroundColor: "#d32f2f", color: "#fff", fontWeight: 600 }
+      });
+
       navigate('/login');
       onClose?.();
       return;
     }
-    if (confirm('¿Confirma esta compra?')) {
-      navigate('/compra', { state: { productos: carrito } });
-      onClose?.();
-    }
+
+    toast((t) => (
+      <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+        <span>¿Confirmás esta compra?</span>
+
+        <div style={{ display: "flex", gap: "8px" }}>
+          <button
+            onClick={() => {
+              toast.dismiss(t.id);
+              navigate('/compra', { state: { productos: carrito } });
+              onClose?.();
+            }}
+            style={{
+              padding: "6px 12px",
+              background: "#4caf50",
+              color: "white",
+              borderRadius: "4px"
+            }}
+          >
+            Sí
+          </button>
+
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            style={{
+              padding: "6px 12px",
+              background: "#d32f2f",
+              color: "white",
+              borderRadius: "4px"
+            }}
+          >
+            No
+          </button>
+        </div>
+      </div>
+    ), {
+      autoClose: false,
+      closeOnClick: false,
+      draggable: false
+    });
   };
 
   return (
@@ -49,13 +91,19 @@ const Carrito = ({ onClose }) => {
               return (
                 <CarritoItem key={id} role="listitem">
                   <DeleteTopRight
-                    onClick={() => eliminarProducto(id)}
+                    onClick={() => {
+                      eliminarProducto(id);
+                      toast.info(`${nombre} eliminado del carrito`, {
+                        autoClose: 1500,
+                        hideProgressBar: true,
+                        style: { backgroundColor: "#555", color: "#fff" }
+                      });
+                    }}
                     aria-label="Eliminar producto"
                   >
                     <MdDeleteForever />
                   </DeleteTopRight>
 
-                  {/* 🔹 Imagen con badge */}
                   <ImagenWrapper>
                     {enOferta && <EtiquetaDescuentoCarrito>15% OFF</EtiquetaDescuentoCarrito>}
                     <CarritoImg src={imagen} alt={nombre} />
@@ -64,7 +112,6 @@ const Carrito = ({ onClose }) => {
                   <CarritoInfo>
                     <CarritoTitle>{nombre}</CarritoTitle>
 
-                    {/* 🔹 Precio con descuento si aplica */}
                     <CarritoPrice>
                       {enOferta && (
                         <span style={{ textDecoration: "line-through", color: "#888", marginRight: "8px" }}>
@@ -76,7 +123,6 @@ const Carrito = ({ onClose }) => {
                       </span>
                     </CarritoPrice>
 
-                    {/* Bloque de cuotas */}
                     {aplicaCuotas && (
                       <CuotasPromo>
                         <BloqueMagenta>{cuotas} cuotas</BloqueMagenta>
@@ -86,9 +132,8 @@ const Carrito = ({ onClose }) => {
                       </CuotasPromo>
                     )}
 
-                    {/* Control de cantidad */}
                     <CantidadWrapper>
-                      <BtnQty 
+                      <BtnQty
                         onClick={() => actualizarCantidad(id, cantidad - 1)}
                         disabled={cantidad <= 1}
                       >
@@ -97,7 +142,7 @@ const Carrito = ({ onClose }) => {
 
                       <QtyDisplay>{cantidad}</QtyDisplay>
 
-                      <BtnQty 
+                      <BtnQty
                         onClick={() => actualizarCantidad(id, cantidad + 1)}
                       >
                         +
@@ -109,16 +154,61 @@ const Carrito = ({ onClose }) => {
             })}
           </CarritoList>
 
-          {/* 🔹 Total */}
           <CarritoTotal>
             <strong>Total: {totalFormateado}</strong>
           </CarritoTotal>
 
-          {/* 🔹 Botones finales centrados */}
           <BotonesFinales>
-            <Boton tipo="secondary" onClick={() => confirm('¿Seguro que querés vaciar el carrito?') && vaciarCarrito()}>
+            <Boton
+              tipo="secondary"
+              onClick={() =>
+                toast((t) => (
+                  <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                    <span>¿Seguro que querés vaciar el carrito?</span>
+
+                    <div style={{ display: "flex", gap: "8px" }}>
+                      <button
+                        onClick={() => {
+                          vaciarCarrito();
+                          toast.dismiss(t.id);
+                          toast.success("Productos eliminados", {
+                            autoClose: 1500,
+                            hideProgressBar: true
+                          });
+                        }}
+                        style={{
+                          padding: "6px 12px",
+                          background: "#4caf50",
+                          color: "white",
+                          borderRadius: "4px"
+                        }}
+                      >
+                        Sí
+                      </button>
+
+                      <button
+                        onClick={() => toast.dismiss(t.id)}
+                        style={{
+                          padding: "6px 12px",
+                          background: "#d32f2f",
+                          color: "white",
+                          borderRadius: "4px"
+                        }}
+                      >
+                        No
+                      </button>
+                    </div>
+                  </div>
+                ), {
+                  autoClose: false,
+                  closeOnClick: false,
+                  draggable: false
+                })
+              }
+            >
               Vaciar Carrito
             </Boton>
+
             <Boton tipo="primary" onClick={handleCompra}>
               Comprar
             </Boton>

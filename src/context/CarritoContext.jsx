@@ -21,7 +21,6 @@ export const CarritoProvider = ({ children }) => {
     }
   }, [carrito]);
 
-  // 🔹 Agregar producto con normalización de cuotas y descuentos
   const agregarProducto = (producto, productosConOferta = []) => {
     const productoNormalizado = mapProductoToProps(producto, productosConOferta);
 
@@ -52,7 +51,6 @@ export const CarritoProvider = ({ children }) => {
 
   const vaciarCarrito = () => setCarrito([]);
 
-  // 🔹 Total con descuento aplicado si corresponde
   const total = useMemo(
     () => carrito.reduce((acc, p) => {
       const precioFinal = p.enOferta ? p.precioConDescuento : p.precio;
@@ -62,7 +60,13 @@ export const CarritoProvider = ({ children }) => {
   );
 
   const totalFormateado = useMemo(
-    () => total.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' }),
+    () =>
+      total.toLocaleString("es-AR", {
+        style: "currency",
+        currency: "ARS",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      }),
     [total]
   );
 

@@ -5,11 +5,16 @@ import { CiCirclePlus } from 'react-icons/ci';
 import { LuSquarePen } from 'react-icons/lu';
 import { FaTrashCan } from 'react-icons/fa6';
 
+import Boton from '../ui/Boton';
+
 import { 
-  GestionContainer, GestionHeader, GestionTitulo, BtnAgregar, GridProductos, ProductoCard, 
-  ProductoImagen, ProductoNombre, ProductoPrecio, CuotasPromo, BloqueMagenta, BloqueAzul, 
-  Acciones, BtnEditar, BtnEliminar, ModalOverlay, ModalContainer, ModalHeader, ModalTitle, 
-  ModalText, ModalActions, BtnCancel, BtnDelete 
+  GestionContainer, GestionHeader, GestionTitulo,
+  BtnAgregarWrapper, BtnAgregar,
+  GridProductos, ProductoCard,
+  ProductoImagen, ProductoNombre, ProductoPrecio,
+  CuotasPromo, BloqueMagenta, BloqueAzul,
+  Acciones, ModalOverlay, ModalContainer, ModalHeader,
+  ModalTitle, ModalText, ModalActions
 } from '../ui/GestionDeProductosLayout';
 
 const GestionDeProductos = () => {
@@ -62,15 +67,16 @@ const GestionDeProductos = () => {
 
   return (
     <GestionContainer>
-      {/* Header */}
       <GestionHeader>
         <GestionTitulo>Lista de Productos</GestionTitulo>
-        <BtnAgregar onClick={abrirFormularioAgregar}>
-          <CiCirclePlus /> <span>Agregar Producto</span>
-        </BtnAgregar>
+
+        <BtnAgregarWrapper>
+          <BtnAgregar onClick={abrirFormularioAgregar}>
+            <CiCirclePlus /> <span>Agregar Producto</span>
+          </BtnAgregar>
+        </BtnAgregarWrapper>
       </GestionHeader>
 
-      {/* Grid de productos */}
       <GridProductos>
         {productos.length === 0 ? (
           <ProductoCard>
@@ -96,6 +102,7 @@ const GestionDeProductos = () => {
                     <ProductoPrecio>
                       ${producto.precio?.toLocaleString('es-AR')}
                     </ProductoPrecio>
+
                     {aplicaCuotas && (
                       <CuotasPromo>
                         <BloqueMagenta>{cuotas} cuotas</BloqueMagenta>
@@ -107,12 +114,17 @@ const GestionDeProductos = () => {
                   </div>
 
                   <Acciones>
-                    <BtnEditar onClick={() => abrirFormularioEditar(producto)}>
+                    <Boton tipo="secondary" onClick={() => abrirFormularioEditar(producto)}>
                       <LuSquarePen /> Editar
-                    </BtnEditar>
-                    <BtnEliminar onClick={() => confirmarEliminacion(producto)}>
+                    </Boton>
+
+                    <Boton 
+                      tipo="danger"
+                      style={{ backgroundColor: "#c51838ff", color: "#fff" }}
+                      onClick={() => confirmarEliminacion(producto)}
+                    >
                       <FaTrashCan /> Eliminar
-                    </BtnEliminar>
+                    </Boton>
                   </Acciones>
                 </div>
               </ProductoCard>
@@ -121,7 +133,6 @@ const GestionDeProductos = () => {
         )}
       </GridProductos>
 
-      {/* Modal de confirmación */}
       {productoAEliminar && (
         <ModalOverlay role="dialog" aria-modal="true" aria-labelledby="modalEliminarTitle">
           <ModalContainer>
@@ -132,18 +143,26 @@ const GestionDeProductos = () => {
                 <ModalText>Esta acción no se puede deshacer</ModalText>
               </div>
             </ModalHeader>
-            <div>
-              <p>¿Estás seguro que querés eliminar <strong>"{productoAEliminar.nombre}"</strong>?</p>
-            </div>
+
+            <p>¿Estás seguro que querés eliminar <strong>"{productoAEliminar.nombre}"</strong>?</p>
+
             <ModalActions>
-              <BtnCancel onClick={() => setProductoAEliminar(null)}>Cancelar</BtnCancel>
-              <BtnDelete onClick={handleEliminar}>Eliminar</BtnDelete>
+              <Boton tipo="secondary" onClick={() => setProductoAEliminar(null)}>
+                Cancelar
+              </Boton>
+
+              <Boton 
+                tipo="danger"
+                style={{ backgroundColor: "#d90429", color: "#fff" }}
+                onClick={handleEliminar}
+              >
+                Eliminar
+              </Boton>
             </ModalActions>
           </ModalContainer>
         </ModalOverlay>
       )}
 
-      {/* Formulario modal */}
       {mostrarForm && (
         <FormularioProducto
           productoInicial={productoSeleccionado || {}}

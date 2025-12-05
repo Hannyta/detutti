@@ -202,7 +202,6 @@ export const BotonesFinales = styled.div`
   flex-wrap: wrap;
   margin-top: 1.5rem;
 
-  /* 🔹 fuerza a que los botones tengan el mismo ancho */
   & > button {
     flex: 1;
     max-width: 160px; // opcional, limita el ancho máximo

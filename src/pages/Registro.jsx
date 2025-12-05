@@ -3,7 +3,6 @@ import { useAuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import Boton from '../ui/Boton';
 
-// 👉 Importamos los styled-components
 import { 
   RegistroContainer, RegistroTitle, RegistroForm, 
   ErrorMsg, SuccessMsg 
@@ -19,40 +18,67 @@ const Registro = () => {
 
   const [errorMsg, setErrorMsg] = useState("");
   const [mensaje, setMensaje] = useState("");
-  const { register } = useAuthContext(); 
+  const [loading, setLoading] = useState(false);
+
+  const { register } = useAuthContext();
   const navigate = useNavigate();
 
+  const { nombre, email, password, confirmarPassword } = formData;
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const validateForm = () => {
+    if (!nombre || !email || !password || !confirmarPassword) {
+      return "Por favor completa todos los campos.";
+    }
+
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      return "Formato de correo inválido.";
+    }
+
+    if (password !== confirmarPassword) {
+      return "Las contraseñas no coinciden.";
+    }
+
+    return null;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.nombre || !formData.email || !formData.password || !formData.confirmarPassword) {
-      setErrorMsg("Por favor completa todos los campos.");
+    const error = validateForm();
+    if (error) {
+      setErrorMsg(error);
       return;
     }
 
-    if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      setErrorMsg("Formato de correo inválido.");
-      return;
-    }
-
-    if (formData.password !== formData.confirmarPassword) {
-      setErrorMsg("Las contraseñas no coinciden.");
-      return;
-    }
-
-    register(formData.email, formData.password, formData.nombre);
+    setLoading(true);
     setErrorMsg("");
-    setMensaje("Registro exitoso 🎉");
-    setTimeout(() => navigate("/"), 2000);
+
+    try {
+      await register(email, password, nombre);
+      setMensaje("Registro exitoso 🎉");
+
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
+
+    } catch (err) {
+      setErrorMsg("Hubo un error al registrarte.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <RegistroContainer>
       <RegistroTitle>Registrarme</RegistroTitle>
+
       <RegistroForm onSubmit={handleSubmit}>
         <label htmlFor="nombre">Nombre completo</label>
         <input
@@ -60,9 +86,9 @@ const Registro = () => {
           type="text"
           name="nombre"
           placeholder="Nombre completo"
-          value={formData.nombre}
+          value={nombre}
           onChange={handleChange}
-          required
+          aria-invalid={!!errorMsg}
         />
 
         <label htmlFor="email">Correo electrónico</label>
@@ -71,9 +97,9 @@ const Registro = () => {
           type="email"
           name="email"
           placeholder="Correo electrónico"
-          value={formData.email}
+          value={email}
           onChange={handleChange}
-          required
+          aria-invalid={!!errorMsg}
         />
 
         <label htmlFor="password">Contraseña</label>
@@ -82,9 +108,9 @@ const Registro = () => {
           type="password"
           name="password"
           placeholder="Contraseña"
-          value={formData.password}
+          value={password}
           onChange={handleChange}
-          required
+          aria-invalid={!!errorMsg}
         />
 
         <label htmlFor="confirmarPassword">Confirmar contraseña</label>
@@ -93,15 +119,21 @@ const Registro = () => {
           type="password"
           name="confirmarPassword"
           placeholder="Confirmar contraseña"
-          value={formData.confirmarPassword}
+          value={confirmarPassword}
           onChange={handleChange}
-          required
+          aria-invalid={!!errorMsg}
         />
 
         {errorMsg && <ErrorMsg>{errorMsg}</ErrorMsg>}
         {mensaje && <SuccessMsg aria-live="polite">{mensaje}</SuccessMsg>}
 
-        <Boton texto="Registrarme" tipo="primary" type="submit" />
+        <Boton 
+          tipo="primary" 
+          type="submit"
+          disabled={loading}
+        >
+          {loading ? "Registrando..." : "Registrarme"}
+        </Boton>
       </RegistroForm>
     </RegistroContainer>
   );

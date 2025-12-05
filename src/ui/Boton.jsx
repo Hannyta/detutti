@@ -16,7 +16,7 @@ const StyledButton = styled.button`
   justify-content: center;
   gap: 0.4rem;
   min-height: 34px;
-  min-windth: 100px;
+  min-width: 100px;
   line-height: 1.2;
   text-align: center;
   width: auto;
@@ -33,22 +33,21 @@ const StyledButton = styled.button`
     cursor: not-allowed;
   }
 
-  /* 🔹 Ajuste para mobile */
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    width: 100%;   // ocupa todo el ancho en pantallas pequeñas
-    margin: 0;     // elimina el centrado automático
+    width: 100%;
+    margin: 0;
   }
 `;
 
-
-const Boton = ({ children, onClick, ariaLabel, tipo = "primary", disabled = false }) => {
+const Boton = ({ children, onClick, ariaLabel, tipo = "primary", disabled = false, type = "button", ...rest }) => {
   return (
     <StyledButton
       $tipo={tipo}
       onClick={onClick}
       aria-label={ariaLabel}
       disabled={disabled}
-      type="button"
+      type={type}
+      {...rest}
     >
       {children}
     </StyledButton>

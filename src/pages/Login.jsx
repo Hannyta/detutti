@@ -2,17 +2,21 @@ import Boton from '../ui/Boton';
 import { useState, useEffect } from 'react';
 import { useAuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-import { 
-  PageWrapper, LoginContainer, LoginTitle, LoginForm, Recordarme, 
-  ErrorMsg, ForgotPassword, Register 
+import {
+  LoginWrapper,
+  LoginBox,
+  LoginSide,
+  LoginDivider,
+  Recordarme,
+  BotonesRow
 } from '../ui/LoginLayout';
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [recordarme, setRecordarme] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
 
   const { login } = useAuthContext();
@@ -23,87 +27,126 @@ const Login = () => {
     if (savedUser) {
       const parsed = JSON.parse(savedUser);
       setEmail(parsed.email);
+      setRecordarme(true);
     }
   }, []);
 
   const autenticarUsuario = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      setErrorMsg("Formato de correo inválido");
-      return;
-    }
+  if (!/\S+@\S+\.\S+/.test(email)) {
+    toast.error("Formato de correo inválido", { autoClose: 1200 });
+    return;
+  }
 
-    setLoading(true);
-    const resultado = await login(email, password, recordarme);
-    setLoading(false);
+  setLoading(true);
+  const resultado = await login(email, password, recordarme);
+  setLoading(false);
 
-    if (resultado?.success) {
-      setErrorMsg("");
-      navigate("/");
+  if (resultado?.success) {
+    const nombre =
+      resultado?.nombre ||
+      resultado?.user?.nombre ||
+      resultado?.data?.nombre ||
+      resultado?.data?.user?.nombre ||
+      resultado?.nombreUsuario ||
+      "";
+
+
+    toast.success(`Bienvenido, ${nombre}`, {
+      autoClose: 1200 
+    });
+
+    if (recordarme) {
+      localStorage.setItem("user", JSON.stringify({ email }));
     } else {
-      setErrorMsg(resultado?.mensaje || "Credenciales incorrectas");
+      localStorage.removeItem("user");
     }
-  };
 
+    navigate("/");
+  } else {
+    toast.error(resultado?.mensaje || "Credenciales incorrectas", {
+      autoClose: 1500,
+    });
+  }
+};
   return (
-    <PageWrapper>
-      <LoginContainer>
-        <LoginTitle>Iniciar sesión</LoginTitle>
-        <LoginForm onSubmit={autenticarUsuario}>
-          <input 
-            type="email"
-            aria-label="Correo electrónico"
-            placeholder="Correo electrónico"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <input 
-            type="password"
-            aria-label="Contraseña"
-            placeholder="Contraseña"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <Recordarme>
-            <input 
-              type="checkbox"
-              id="recordarme"
-              checked={recordarme}
-              onChange={(e) => setRecordarme(e.target.checked)}
+    <LoginWrapper>
+      <LoginBox>
+
+        {/* LADO IZQUIERDO - LOGIN */}
+        <LoginSide>
+          <h2>Clientes registrados</h2>
+          <p>Iniciá sesión para acceder a tu cuenta</p>
+
+          <form onSubmit={autenticarUsuario}>
+            <input
+              type="email"
+              placeholder="Correo electrónico"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
-            <label htmlFor="recordarme"> Recordarme </label>
-          </Recordarme>
-          {errorMsg && <ErrorMsg>{errorMsg}</ErrorMsg>}
-          <Boton 
-            texto={loading ? "Ingresando..." : "Iniciar sesión"} 
-            tipo="primary" 
-            type="submit" 
-          />
-        </LoginForm>
 
-        <ForgotPassword>
-          <Boton 
-            texto="Olvidé mi contraseña" 
-            tipo="secondary" 
-            type="button" 
-            onClick={() => navigate("/forgot-password")} 
-          />
-        </ForgotPassword>
+            <input
+              type="password"
+              placeholder="Contraseña"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
 
-        <Register>
-          <label>¿Aún no tienes una cuenta?</label>
-          <Boton 
-            texto="Registrarme" 
-            tipo="primary" 
+            <Recordarme>
+              <input
+                type="checkbox"
+                id="recordarme"
+                checked={recordarme}
+                onChange={(e) => setRecordarme(e.target.checked)}
+              />
+              <label htmlFor="recordarme">Recordarme</label>
+            </Recordarme>
+
+            <BotonesRow>
+              <Boton 
+                tipo="primary"   
+                type="submit" 
+                disabled={loading}>
+                  {loading ? "Ingresando..." : "Iniciar sesión"}
+              </Boton>
+
+              <Boton
+                tipo="secondary"
+                type="button"
+                onClick={() => navigate("/forgot-password")}
+              >
+                Restablecer contraseña
+              </Boton>
+            </BotonesRow>
+            
+          </form>
+        </LoginSide>
+
+        <LoginDivider />
+
+        {/* LADO DERECHO - REGISTRO */}
+        <LoginSide>
+          <h2>Nuevos clientes</h2>
+          <p>
+            Crear una cuenta tiene muchos beneficios: seguimiento de pedidos,
+            múltiples direcciones y más.
+          </p>
+
+          <Boton
+            tipo="primary"
             type="button"
             onClick={() => navigate("/registrarme")}
-          />
-        </Register>
-      </LoginContainer>
-    </PageWrapper>
+          >
+            Crear una cuenta
+          </Boton>
+        </LoginSide>
+
+      </LoginBox>
+    </LoginWrapper>
   );
 };
 

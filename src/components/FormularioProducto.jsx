@@ -6,7 +6,7 @@ import { NumericFormat } from 'react-number-format';
 import { 
   ModalOverlay, ModalContainer, ModalContent, ModalHeader, ModalHeaderTitle, 
   CloseButton, TituloAzul, FormLabel, FormInputBase, TextArea, 
-  ModalActions, BtnPrimary, BtnSecondary 
+  ModalActions, ModalBtnPrimary, ModalBtnSecondary 
 } from '../ui/FormularioProductoLayout';
 
 const FormularioProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }) => {
@@ -159,12 +159,13 @@ const FormularioProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }
 
             {/* Botones de acción */}
             <ModalActions>
-              <BtnPrimary type="submit">
+              <ModalBtnPrimary tipo="primary" type="submit">
                 {modo === "agregar" ? "Agregar" : "Actualizar"}
-              </BtnPrimary>
-              <BtnSecondary type="button" onClick={onCerrar}>
+              </ModalBtnPrimary>
+
+              <ModalBtnSecondary tipo="secondary" type="button" onClick={onCerrar}>
                 Cancelar
-              </BtnSecondary>
+              </ModalBtnSecondary>
             </ModalActions>
           </form>
         </ModalContent>
