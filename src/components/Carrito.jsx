@@ -9,18 +9,14 @@ import { formatearPrecio } from '../helpers/formatearPrecio';
 import { 
   CarritoContainer, CarritoList, CarritoItem, CarritoImg, CarritoInfo, 
   CarritoTitle, CarritoPrice, CarritoTotal, DeleteTopRight, CantidadWrapper, 
-  BtnQty, QtyDisplay, CuotasPromo, BloqueMagenta, BloqueAzul 
+  BtnQty, QtyDisplay, CuotasPromo, BloqueMagenta, BloqueAzul, BotonesFinales,
+  EtiquetaDescuentoCarrito, ImagenWrapper // 🔹 nuevos estilos
 } from '../ui/CarritoLayout';
 
 const Carrito = ({ onClose }) => {
-  const { carrito: productos, vaciarCarrito, eliminarProducto, actualizarCantidad } = useContext(CarritoContext);
+  const { carrito, vaciarCarrito, eliminarProducto, actualizarCantidad, totalFormateado } = useContext(CarritoContext);
   const { isAuthenticated } = useAuthContext(); 
   const navigate = useNavigate();
-
-  const total = productos.reduce(
-    (acc, producto) => acc + (Number(producto.precio) || 0) * producto.cantidad,
-    0
-  );
 
   const handleCompra = () => {
     if (!isAuthenticated) {
@@ -30,39 +26,28 @@ const Carrito = ({ onClose }) => {
       return;
     }
     if (confirm('¿Confirma esta compra?')) {
-      navigate('/compra', { state: { productos } });
+      navigate('/compra', { state: { productos: carrito } });
       onClose?.();
     }
   };
 
   return (
     <CarritoContainer>
-      {productos.length === 0 ? (
+      {carrito.length === 0 ? (
         <>
           <p>No tienes ningún producto en tu carrito de compras.</p>
-          <Boton 
-            texto="Continuar comprando"
-            tipo="danger-2"
-            onClick={() => {
-              navigate('/');
-              onClose?.();
-            }}
-          />
+          <Boton tipo="primary" onClick={() => { navigate('/'); onClose?.(); }}>
+            Continuar comprando
+          </Boton>
         </>
       ) : (
         <>
-          {/* Lista de productos con Bootstrap Grid */}
-          <CarritoList className="row" role="list">
-            {productos.map((producto) => {
-              const { id, imagen, nombre, precio, aplicaCuotas, cuotas, valorCuota, cantidad } = producto;
+          <CarritoList role="list">
+            {carrito.map((producto) => {
+              const { id, imagen, nombre, aplicaCuotas, cuotas, valorCuota, cantidad, enOferta, precioOriginal, precioConDescuento, precio } = producto;
 
               return (
-                <CarritoItem 
-                  key={id} 
-                  className="col-12 col-md-6 col-lg-4"
-                  role="listitem"
-                >
-                  {/* BOTÓN ELIMINAR */}
+                <CarritoItem key={id} role="listitem">
                   <DeleteTopRight
                     onClick={() => eliminarProducto(id)}
                     aria-label="Eliminar producto"
@@ -70,13 +55,26 @@ const Carrito = ({ onClose }) => {
                     <MdDeleteForever />
                   </DeleteTopRight>
 
-                  <CarritoImg src={imagen} alt={nombre} />
+                  {/* 🔹 Imagen con badge */}
+                  <ImagenWrapper>
+                    {enOferta && <EtiquetaDescuentoCarrito>15% OFF</EtiquetaDescuentoCarrito>}
+                    <CarritoImg src={imagen} alt={nombre} />
+                  </ImagenWrapper>
 
                   <CarritoInfo>
                     <CarritoTitle>{nombre}</CarritoTitle>
 
-                    {/* Precio unitario */}
-                    <CarritoPrice>{formatearPrecio(precio)}</CarritoPrice>
+                    {/* 🔹 Precio con descuento si aplica */}
+                    <CarritoPrice>
+                      {enOferta && (
+                        <span style={{ textDecoration: "line-through", color: "#888", marginRight: "8px" }}>
+                          {formatearPrecio(precioOriginal)}
+                        </span>
+                      )}
+                      <span style={{ color: "#d32f2f", fontWeight: "700" }}>
+                        {formatearPrecio(enOferta ? precioConDescuento : precio)}
+                      </span>
+                    </CarritoPrice>
 
                     {/* Bloque de cuotas */}
                     {aplicaCuotas && (
@@ -111,28 +109,20 @@ const Carrito = ({ onClose }) => {
             })}
           </CarritoList>
 
-          {/* Total */}
+          {/* 🔹 Total */}
           <CarritoTotal>
-            <strong>Total: {formatearPrecio(total)}</strong>
+            <strong>Total: {totalFormateado}</strong>
           </CarritoTotal>
 
-          {/* Botones finales con Bootstrap Grid */}
-          <div className="row mt-3">
-            <div className="col-12 col-md-6 mb-2 mb-md-0">
-              <Boton
-                texto="Vaciar Carrito"
-                tipo="danger-2"
-                onClick={() => confirm('¿Seguro que querés vaciar el carrito?') && vaciarCarrito()}
-              />
-            </div>
-            <div className="col-12 col-md-6">
-              <Boton
-                texto="Comprar"
-                tipo="primary"
-                onClick={handleCompra}
-              />
-            </div>
-          </div>
+          {/* 🔹 Botones finales centrados */}
+          <BotonesFinales>
+            <Boton tipo="secondary" onClick={() => confirm('¿Seguro que querés vaciar el carrito?') && vaciarCarrito()}>
+              Vaciar Carrito
+            </Boton>
+            <Boton tipo="primary" onClick={handleCompra}>
+              Comprar
+            </Boton>
+          </BotonesFinales>
         </>
       )}
     </CarritoContainer>

@@ -62,7 +62,10 @@ const Productos = ({ productos, error, cargando }) => {
                       ) : (
                         <Boton
                           onClick={() => {
-                            agregarProducto({ ...producto, cantidad: 1 });
+                            // 🔹 Normalizamos el producto con oferta antes de agregarlo
+                            const productoNormalizado = mapProductoToProps(producto, productosConOferta);
+                            agregarProducto(productoNormalizado, productosConOferta);
+
                             toast.success(`${producto.nombre} agregado al carrito!`, {
                               position: "bottom-right",
                               autoClose: 2000,

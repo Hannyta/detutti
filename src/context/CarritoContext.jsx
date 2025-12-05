@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useMemo } from 'react';
+import { mapProductoToProps } from '../helpers/mapProductoToProps';
 
 export const CarritoContext = createContext();
 
@@ -20,17 +21,17 @@ export const CarritoProvider = ({ children }) => {
     }
   }, [carrito]);
 
-  const agregarProducto = (producto) => {
-    const productoNormalizado = {
-      ...producto,
-      precio: Number(producto.precio),
-    };
+  // 🔹 Agregar producto con normalización de cuotas y descuentos
+  const agregarProducto = (producto, productosConOferta = []) => {
+    const productoNormalizado = mapProductoToProps(producto, productosConOferta);
 
     setCarrito(prev => {
       const existe = prev.find(p => p.id === productoNormalizado.id);
       if (existe) {
         return prev.map(p =>
-          p.id === productoNormalizado.id ? { ...p, cantidad: p.cantidad + 1 } : p
+          p.id === productoNormalizado.id
+            ? { ...p, cantidad: p.cantidad + 1 }
+            : p
         );
       }
       return [...prev, { ...productoNormalizado, cantidad: 1 }];
@@ -51,8 +52,12 @@ export const CarritoProvider = ({ children }) => {
 
   const vaciarCarrito = () => setCarrito([]);
 
+  // 🔹 Total con descuento aplicado si corresponde
   const total = useMemo(
-    () => carrito.reduce((acc, p) => acc + (Number(p.precio) || 0) * p.cantidad, 0),
+    () => carrito.reduce((acc, p) => {
+      const precioFinal = p.enOferta ? p.precioConDescuento : p.precio;
+      return acc + (precioFinal || 0) * p.cantidad;
+    }, 0),
     [carrito]
   );
 
@@ -63,7 +68,15 @@ export const CarritoProvider = ({ children }) => {
 
   return (
     <CarritoContext.Provider
-      value={{ carrito, agregarProducto, eliminarProducto, actualizarCantidad, vaciarCarrito, total, totalFormateado }}
+      value={{
+        carrito,
+        agregarProducto,
+        eliminarProducto,
+        actualizarCantidad,
+        vaciarCarrito,
+        total,
+        totalFormateado
+      }}
     >
       {children}
     </CarritoContext.Provider>

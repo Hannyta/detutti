@@ -6,7 +6,7 @@ const StyledButton = styled.button`
   color: white;
   border: none;
   border-radius: 18px;
-  padding: 0.14rem 0.60rem;
+  padding: 0.5rem 1rem;
   font-size: 0.75rem;
   font-weight: 600;
   cursor: pointer;
@@ -16,6 +16,7 @@ const StyledButton = styled.button`
   justify-content: center;
   gap: 0.4rem;
   min-height: 34px;
+  min-windth: 100px;
   line-height: 1.2;
   text-align: center;
   width: auto;
@@ -31,7 +32,14 @@ const StyledButton = styled.button`
     background-color: #ccc;
     cursor: not-allowed;
   }
+
+  /* 🔹 Ajuste para mobile */
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 100%;   // ocupa todo el ancho en pantallas pequeñas
+    margin: 0;     // elimina el centrado automático
+  }
 `;
+
 
 const Boton = ({ children, onClick, ariaLabel, tipo = "primary", disabled = false }) => {
   return (
