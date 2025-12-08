@@ -111,22 +111,19 @@ const TarjetaProducto = ({
   id,
   imagen,
   nombre,
-  precioOriginal,
-  precioConDescuento,
-  enOferta,
+  precio,
+  descuento,
   aplicaCuotas,
   cuotas,
   valorCuota,
   boton
 }) => {
-  const porcentaje = enOferta
-    ? Math.round(100 - (precioConDescuento / precioOriginal) * 100)
-    : null;
 
+  const precioConDescuento = precio - (precio * (descuento / 100));
   return (
     <CardLayout>
-      {enOferta && (
-        <EtiquetaDescuento>{porcentaje}% OFF</EtiquetaDescuento>
+      {descuento > 0 && (
+        <EtiquetaDescuento>{descuento}% OFF</EtiquetaDescuento>
       )}
 
       <StyledLink
@@ -137,11 +134,11 @@ const TarjetaProducto = ({
         <Nombre>{nombre}</Nombre>
       </StyledLink>
 
-      {enOferta ? (
+      {descuento ? (
         <PreciosRow>
           <PrecioActual>{formatearPrecio(precioConDescuento)}</PrecioActual>
-          <PrecioOriginal>{formatearPrecio(precioOriginal)}</PrecioOriginal>
-          <PorcentajeDescuento>{porcentaje}% OFF</PorcentajeDescuento>
+          <PrecioOriginal>{formatearPrecio(precio)}</PrecioOriginal>
+          <PorcentajeDescuento>{descuento}% OFF</PorcentajeDescuento>
         </PreciosRow>
       ) : (
         <PreciosRow>

@@ -126,6 +126,19 @@ const FormularioProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }
                   required
                 />
               </div>
+
+              <div className="col-md-4 col-12">
+                <FormLabel>Descuento</FormLabel>
+                <FormInputBase
+                  type="number"
+                  name="descuento"
+                  id="descuento"
+                  placeholder="Ingrese el porcentaje de descuento"
+                  value={producto.descuento || ""}
+                  onChange={manejarChange}
+                  required
+                />
+              </div>
             </div>
 
             <div className="row mb-3">
