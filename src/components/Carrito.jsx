@@ -1,4 +1,5 @@
 import Boton from '../ui/Boton';
+import Precio from './Precio';
 import { MdDeleteForever } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
@@ -86,7 +87,7 @@ const Carrito = ({ onClose }) => {
         <>
           <CarritoList role="list">
             {carrito.map((producto) => {
-              const { id, imagen, nombre, aplicaCuotas, cuotas, valorCuota, cantidad, enOferta, precioOriginal, precioConDescuento, precio } = producto;
+              const { id, imagen, nombre, aplicaCuotas, cuotas, valorCuota, cantidad, precio, descuento } = producto;
 
               return (
                 <CarritoItem key={id} role="listitem">
@@ -105,23 +106,13 @@ const Carrito = ({ onClose }) => {
                   </DeleteTopRight>
 
                   <ImagenWrapper>
-                    {enOferta && <EtiquetaDescuentoCarrito>15% OFF</EtiquetaDescuentoCarrito>}
+                    {descuento > 0 && <EtiquetaDescuentoCarrito>{descuento}% OFF</EtiquetaDescuentoCarrito>}
                     <CarritoImg src={imagen} alt={nombre} />
                   </ImagenWrapper>
 
                   <CarritoInfo>
                     <CarritoTitle>{nombre}</CarritoTitle>
-
-                    <CarritoPrice>
-                      {enOferta && (
-                        <span style={{ textDecoration: "line-through", color: "#888", marginRight: "8px" }}>
-                          {formatearPrecio(precioOriginal)}
-                        </span>
-                      )}
-                      <span style={{ color: "#d32f2f", fontWeight: "700" }}>
-                        {formatearPrecio(enOferta ? precioConDescuento : precio)}
-                      </span>
-                    </CarritoPrice>
+                    <Precio precio={precio} descuento={descuento} />
 
                     {aplicaCuotas && (
                       <CuotasPromo>

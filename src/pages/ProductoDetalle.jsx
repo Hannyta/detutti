@@ -1,13 +1,16 @@
 import { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Boton from '../ui/Boton';
+import styled from 'styled-components';
+import { EtiquetaDescuento } from '../ui/ProductosLayout';
+import Precio from '../components/Precio';
 import { CarritoContext } from '../context/CarritoContext';
 import { useProductosContext } from '../context/ProductosContext'; 
 import { formatearPrecio } from '../helpers/formatearPrecio'; 
 
 import { 
   DetalleContainer, Galeria, ImagenPrincipal, InfoProducto, Titulo, 
-  PrecioBox, PrecioFinal, CuotasPromo, BloqueMagenta, BloqueAzul, 
+  PrecioBox, CuotasPromo, BloqueMagenta, BloqueAzul, 
   Acciones, CantidadSelector, BtnCantidad, Cantidad, Mensaje, 
   Descripcion, InfoExtra 
 } from '../ui/DetalleLayout';
@@ -34,20 +37,37 @@ const ProductoDetalle = () => {
     setTimeout(() => setMensaje(""), 2000);
   };
 
+  const ImagenWrapper = styled.div`
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+  `;
+
+  const EtiquetaDescuentoDetalle = styled(EtiquetaDescuento)`
+    right: 8px;
+    left: auto;
+  `;
+
   return (
     <DetalleContainer>
       <Galeria>
-        <ImagenPrincipal 
-          src={producto.imagen} 
-          alt={`Imagen de ${producto.nombre}`} 
-        />
+        <ImagenWrapper>
+          {producto.descuento > 0 && (
+            <EtiquetaDescuentoDetalle>{producto.descuento}% OFF</EtiquetaDescuentoDetalle>
+          )}
+          <ImagenPrincipal 
+            src={producto.imagen} 
+            alt={`Imagen de ${producto.nombre}`} 
+          />
+        </ImagenWrapper>
       </Galeria>
 
       <InfoProducto>
         <Titulo>{producto.nombre}</Titulo>
 
         <PrecioBox>
-          <PrecioFinal>{formatearPrecio(producto.precio)}</PrecioFinal>
+          <Precio precio={producto.precio} descuento={producto.descuento} size="medium" />
 
           {producto.aplicaCuotas && producto.cuotas && producto.valorCuota && (
             <CuotasPromo>
@@ -66,11 +86,9 @@ const ProductoDetalle = () => {
             <BtnCantidad onClick={aumentar} aria-label="Aumentar cantidad">+</BtnCantidad>
           </CantidadSelector>
 
-          <Boton
-            texto="Agregar al carrito 🛒"
-            onClick={handleAgregar}
-            tipo="primary"
-          />
+          <Boton onClick={handleAgregar} tipo="primary">
+            Agregar al carrito 🛒
+          </Boton>
         </Acciones>
 
         {mensaje && <Mensaje aria-live="polite">{mensaje}</Mensaje>}

@@ -1,13 +1,10 @@
 import { Link } from 'react-router-dom';
 import CardLayout from '../ui/CardLayout';
 import styled from 'styled-components';
-import { formatearPrecio } from '../helpers/formatearPrecio';
 import {
-  PrecioActual,
-  PrecioOriginal,
-  PorcentajeDescuento,
   EtiquetaDescuento
 } from '../ui/ProductosLayout';
+import Precio from './Precio';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -43,14 +40,6 @@ const Nombre = styled.h3`
   @media (max-width: 360px) {
     font-size: 0.95rem;
   }
-`;
-
-const PreciosRow = styled.div`
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-  justify-content: flex-start;
-  margin-top: 0.5rem;
 `;
 
 const CuotasPromo = styled.div`
@@ -134,17 +123,7 @@ const TarjetaProducto = ({
         <Nombre>{nombre}</Nombre>
       </StyledLink>
 
-      {descuento ? (
-        <PreciosRow>
-          <PrecioActual>{formatearPrecio(precioConDescuento)}</PrecioActual>
-          <PrecioOriginal>{formatearPrecio(precio)}</PrecioOriginal>
-          <PorcentajeDescuento>{descuento}% OFF</PorcentajeDescuento>
-        </PreciosRow>
-      ) : (
-        <PreciosRow>
-          <PrecioActual>{formatearPrecio(precioConDescuento)}</PrecioActual>
-        </PreciosRow>
-      )}
+      <Precio precio={precio} descuento={descuento} />
 
       {aplicaCuotas && cuotas && valorCuota && (
         <CuotasPromo>

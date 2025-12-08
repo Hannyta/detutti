@@ -59,16 +59,6 @@ export const PrecioBox = styled.div`
   margin: 1rem 0;
 `;
 
-export const PrecioFinal = styled.p`
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #d32f2f;
-
-  @media (max-width: 400px) {
-    font-size: 1.2rem;
-  }
-`;
-
 export const Descripcion = styled.div`
   margin-top: 2rem;
 
@@ -85,7 +75,7 @@ export const Descripcion = styled.div`
   }
 `;
 
-/* ✅ Cambiado de styled.p a styled.div */
+
 export const InfoExtra = styled.div`
   margin-top: 0.5rem;
   font-size: 0.8rem;

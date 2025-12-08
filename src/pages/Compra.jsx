@@ -1,14 +1,15 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Boton from '../ui/Boton';
+import Precio from '../components/Precio';
 import { CarritoContext } from '../context/CarritoContext';
 import { formatearPrecio } from '../helpers/formatearPrecio';
+import { toast } from 'react-toastify';
 
-// 👉 Importamos los styled-components
-import { 
-  CompraContainer, TituloPagina, CompraResumen, ResumenItem, ResumenInfo, 
-  ResumenTitle, ResumenPrice, CantidadWrapper, BtnQty, QtyDisplay, Subtotal, 
-  CuotasPromo, BloqueMagenta, BloqueAzul, ResumenTotal, CompraForm, MensajeCompra 
+import {
+  CompraContainer, TituloPagina, CompraResumen, ResumenItem, ResumenInfo,
+  ResumenTitle, ResumenPrice, CantidadWrapper, BtnQty, QtyDisplay, Subtotal,
+  CuotasPromo, BloqueMagenta, BloqueAzul, ResumenTotal, CompraForm
 } from '../ui/CompraLayout';
 
 const Compra = ({ productos = [] }) => {
@@ -16,7 +17,6 @@ const Compra = ({ productos = [] }) => {
   const navigate = useNavigate();
   const { vaciarCarrito } = useContext(CarritoContext);
 
-  // Copia editable de productos
   const [productosCompra, setProductosCompra] = useState(
     state?.productos || productos
   );
@@ -29,59 +29,56 @@ const Compra = ({ productos = [] }) => {
     metodoPago: "tarjeta",
   });
 
-  const [mensaje, setMensaje] = useState(null);
-
-  // 📌 CONTROL DE CANTIDADES
-  const incrementar = (id) => {
-    setProductosCompra((prev) =>
-      prev.map((p) =>
-        p.id === id ? { ...p, cantidad: (p.cantidad || 1) + 1 } : p
-      )
-    );
-  };
-
-  const decrementar = (id) => {
-    setProductosCompra((prev) =>
-      prev.map((p) =>
-        p.id === id && p.cantidad > 1
-          ? { ...p, cantidad: p.cantidad - 1 }
+  // ✅ Unificar incrementar/decrementar
+  const actualizarCantidad = (id, delta) => {
+    setProductosCompra(prev =>
+      prev.map(p =>
+        p.id === id
+          ? { ...p, cantidad: Math.max((p.cantidad || 1) + delta, 1) }
           : p
       )
     );
   };
 
-  // 📌 TOTAL AUTOMÁTICO
-  const total = productosCompra.reduce(
-    (acc, p) => acc + (Number(p.precio) || 0) * (p.cantidad || 1),
-    0
+  // ✅ Memorizar total con descuento aplicado
+  const total = useMemo(() =>
+    productosCompra.reduce((acc, p) => {
+      const precioBase = Number(p.precio) || 0;
+      const precioConDescuento = precioBase - (precioBase * (p.descuento || 0) / 100);
+      return acc + precioConDescuento * (p.cantidad || 1);
+    }, 0),
+    [productosCompra]
   );
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleConfirmarCompra = (e) => {
-    e.preventDefault();
-
-    // Validaciones básicas
+  // ✅ Validación
+  const validarForm = () => {
     if (!formData.nombre || !formData.dni || !formData.direccion || !formData.codigoPostal) {
-      alert("Por favor completa todos los campos.");
-      return;
+      return "Por favor completa todos los campos.";
     }
     if (!/^\d+$/.test(formData.dni)) {
-      alert("El DNI debe ser numérico.");
-      return;
+      return "El DNI debe ser numérico.";
     }
     if (!/^\d+$/.test(formData.codigoPostal) || formData.codigoPostal.length < 4) {
-      alert("El código postal debe ser numérico y tener al menos 4 dígitos.");
+      return "El código postal debe ser numérico y tener al menos 4 dígitos.";
+    }
+    return null;
+  };
+
+  const handleConfirmarCompra = (e) => {
+    e.preventDefault();
+    const error = validarForm();
+    if (error) {
+      toast.error(error);
       return;
     }
 
-    if (window.confirm("¿Confirmás la compra?")) {
-      setMensaje("¡Gracias por tu compra!");
-      vaciarCarrito();
-      setTimeout(() => navigate("/"), 2000); // redirige después de 2s
-    }
+    toast.success("¡Gracias por tu compra! Tus productos llegarán pronto 🚚✨");
+    vaciarCarrito();
+    setTimeout(() => navigate("/"), 2000);
   };
 
   return (
@@ -91,58 +88,63 @@ const Compra = ({ productos = [] }) => {
       <CompraResumen>
         <h3>Resumen del pedido:</h3>
 
-        {productosCompra.map((p) => (
-          <ResumenItem key={p.id}>
-            <img src={p.imagen} alt={`Imagen de ${p.nombre}`} />
+        {productosCompra.map((p) => {
+          const precioBase = Number(p.precio) || 0;
+          const precioConDescuento = precioBase - (precioBase * (p.descuento || 0) / 100);
+          const subtotal = precioConDescuento * (p.cantidad || 1);
 
-            <ResumenInfo>
-              <ResumenTitle>{p.nombre}</ResumenTitle>
+          return (
+            <ResumenItem key={p.id}>
+              <img src={p.imagen} alt={`Imagen de ${p.nombre}`} />
 
-              <ResumenPrice>
-                Precio: {formatearPrecio(p.precio)}
-              </ResumenPrice>
+              <ResumenInfo>
+                <ResumenTitle>{p.nombre}</ResumenTitle>
 
-              {/* CONTROL DE CANTIDAD */}
-              <CantidadWrapper>
-                <BtnQty
-                  onClick={() => decrementar(p.id)}
-                  disabled={p.cantidad <= 1}
-                >
-                  -
-                </BtnQty>
+                <ResumenPrice>
+                  <Precio precio={p.precio} descuento={p.descuento} />
+                </ResumenPrice>
 
-                <QtyDisplay>{p.cantidad || 1}</QtyDisplay>
+                {/* CONTROL DE CANTIDAD */}
+                <CantidadWrapper>
+                  <BtnQty
+                    onClick={() => actualizarCantidad(p.id, -1)}
+                    disabled={p.cantidad <= 1}
+                    aria-disabled={p.cantidad <= 1}
+                  >
+                    -
+                  </BtnQty>
 
-                <BtnQty onClick={() => incrementar(p.id)}>+</BtnQty>
-              </CantidadWrapper>
+                  <QtyDisplay>{p.cantidad || 1}</QtyDisplay>
 
-              {/* SUBTOTAL */}
-              <Subtotal>
-                Subtotal:{" "}
-                <strong>
-                  {formatearPrecio((p.precio || 0) * (p.cantidad || 1))}
-                </strong>
-              </Subtotal>
+                  <BtnQty onClick={() => actualizarCantidad(p.id, +1)}>+</BtnQty>
+                </CantidadWrapper>
 
-              {/* CUOTAS */}
-              {p.aplicaCuotas && p.cuotas && p.valorCuota && (
-                <CuotasPromo>
-                  <BloqueMagenta>{p.cuotas} cuotas</BloqueMagenta>
-                  <BloqueAzul>
-                    sin interés de {formatearPrecio(p.valorCuota)}
-                  </BloqueAzul>
-                </CuotasPromo>
-              )}
-            </ResumenInfo>
-          </ResumenItem>
-        ))}
+                {/* SUBTOTAL */}
+                <Subtotal>
+                  Subtotal:{" "}
+                  <strong>{formatearPrecio(subtotal)}</strong>
+                </Subtotal>
+
+                {/* CUOTAS */}
+                {p.aplicaCuotas && p.cuotas && p.valorCuota && (
+                  <CuotasPromo>
+                    <BloqueMagenta>{p.cuotas} cuotas</BloqueMagenta>
+                    <BloqueAzul>
+                      sin interés de {formatearPrecio(p.valorCuota)}
+                    </BloqueAzul>
+                  </CuotasPromo>
+                )}
+              </ResumenInfo>
+            </ResumenItem>
+          );
+        })}
 
         <ResumenTotal>Total: {formatearPrecio(total)}</ResumenTotal>
       </CompraResumen>
 
       <CompraForm onSubmit={handleConfirmarCompra}>
         <fieldset>
-          <legend>Datos de envío</legend>
+          <legend>Datos de envío:</legend>
 
           <label htmlFor="nombre">Nombre completo</label>
           <input
@@ -195,16 +197,16 @@ const Compra = ({ productos = [] }) => {
             value={formData.metodoPago}
             onChange={handleChange}
           >
-            <option value="tarjeta">Tarjeta</option>
-            <option value="efectivo">Efectivo</option>
-            <option value="transferencia">Transferencia</option>
+            <option value="tarjeta">💳 Tarjeta</option>
+            <option value="efectivo">💵 Efectivo</option>
+            <option value="transferencia">📩 Transferencia</option>
           </select>
         </fieldset>
 
-        <Boton texto="Confirmar compra" tipo="primary" />
+        <Boton type="submit" tipo="primary">
+          Finalizar Compra
+        </Boton>
       </CompraForm>
-
-      {mensaje && <MensajeCompra aria-live="polite">{mensaje}</MensajeCompra>}
     </CompraContainer>
   );
 };
