@@ -68,6 +68,27 @@ export const ProductoImagen = styled.img`
   margin-bottom: 1rem;
 `;
 
+export const ImagenWrapper = styled.div`
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin-bottom: 1rem;
+`;
+
+export const EtiquetaDescuento = styled.span`
+  position: absolute;
+  top: 4px;
+  right: 0;
+  transform: translateX(30%);
+  background-color: #e74883;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+`;
+
 export const ProductoNombre = styled.h3`
   font-size: 1.1rem;
   font-weight: 700;
@@ -85,6 +106,7 @@ export const ProductoPrecio = styled.p`
 export const CuotasPromo = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center; 
   flex-wrap: wrap;
   white-space: normal;
   margin: 8px 0 16px;

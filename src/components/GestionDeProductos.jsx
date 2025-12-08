@@ -4,15 +4,15 @@ import { useProductosContext } from '../context/ProductosContext';
 import { CiCirclePlus } from 'react-icons/ci';
 import { LuSquarePen } from 'react-icons/lu';
 import { FaTrashCan } from 'react-icons/fa6';
-
+import Precio from './Precio';
 import Boton from '../ui/Boton';
 
 import { 
   GestionContainer, GestionHeader, GestionTitulo,
   BtnAgregarWrapper, BtnAgregar,
   GridProductos, ProductoCard,
-  ProductoImagen, ProductoNombre, ProductoPrecio,
-  CuotasPromo, BloqueMagenta, BloqueAzul,
+  ImagenWrapper, ProductoImagen, EtiquetaDescuento,
+  ProductoNombre, CuotasPromo, BloqueMagenta, BloqueAzul,
   Acciones, ModalOverlay, ModalContainer, ModalHeader,
   ModalTitle, ModalText, ModalActions
 } from '../ui/GestionDeProductosLayout';
@@ -84,30 +84,36 @@ const GestionDeProductos = () => {
           </ProductoCard>
         ) : (
           productos.map((producto) => {
-            const aplicaCuotas = producto.precio >= 20000;
-            const cuotas = 6;
-            const valorCuota = producto.precio / cuotas;
+            const aplicaCuotas = producto.cuotas && producto.cuotas > 0;
 
             return (
               <ProductoCard key={producto.id}>
-                <ProductoImagen 
-                  src={producto.imagen} 
-                  alt={producto.nombre} 
-                />
+                <ImagenWrapper>
+                  <ProductoImagen 
+                    src={producto.imagen} 
+                    alt={producto.nombre} 
+                  />
+                  {producto.descuento > 0 && (
+                    <EtiquetaDescuento>{producto.descuento}% OFF</EtiquetaDescuento>
+                  )}
+                </ImagenWrapper>
 
                 <div>
                   <ProductoNombre>{producto.nombre}</ProductoNombre>
 
                   <div>
-                    <ProductoPrecio>
-                      ${producto.precio?.toLocaleString('es-AR')}
-                    </ProductoPrecio>
+                    <Precio 
+                      precio={producto.precio} 
+                      descuento={producto.descuento || 0} 
+                      size="medium" 
+                    />
 
                     {aplicaCuotas && (
                       <CuotasPromo>
-                        <BloqueMagenta>{cuotas} cuotas</BloqueMagenta>
+                        <BloqueMagenta>{producto.cuotas} cuotas</BloqueMagenta>
                         <BloqueAzul>
-                          sin interés de ${valorCuota.toLocaleString('es-AR', { minimumFractionDigits: 2 })}
+                          sin interés de $
+                          {producto.valorCuota?.toLocaleString('es-AR', { minimumFractionDigits: 2 })}
                         </BloqueAzul>
                       </CuotasPromo>
                     )}
