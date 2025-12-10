@@ -20,6 +20,7 @@ import Admin from './pages/Admin';
 import Overlay from './ui/Overlay';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Ofertas from './pages/Ofertas';
 
 
 
@@ -68,6 +69,7 @@ function App() {
             <Route path="/tecnologia" element={<Tecnologia />} />
             <Route path="/moda" element={<Moda />} />
             <Route path="/accesorios" element={<Accesorios />} />
+            <Route path="/ofertas" element={<Ofertas />} />
             <Route path="/login" element={<Login />} />
             <Route path="/registrarme" element={<Registrarme />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />

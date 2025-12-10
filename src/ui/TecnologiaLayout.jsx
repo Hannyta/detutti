@@ -19,9 +19,13 @@ export const TecnologiaTitle = styled.h2`
   &::after {
     content: "";
     display: block;
-    width: 60px;
-    height: 3px;
-    background-color: ${({ theme }) => theme.colors.primary};
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(
+      90deg,
+      ${({ theme }) => theme.colors.primary},
+      #ff4d6d
+    );
     margin: 0.6rem auto 0;
     border-radius: 2px;
   }

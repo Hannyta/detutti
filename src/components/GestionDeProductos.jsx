@@ -6,6 +6,7 @@ import { LuSquarePen } from 'react-icons/lu';
 import { FaTrashCan } from 'react-icons/fa6';
 import Precio from './Precio';
 import Boton from '../ui/Boton';
+import Paginador from "../components/Paginador";
 
 import { 
   GestionContainer, GestionHeader, GestionTitulo,
@@ -19,10 +20,28 @@ import {
 
 const GestionDeProductos = () => {
   const { productos, eliminarProducto } = useProductosContext();
+
   const [mostrarForm, setMostrarForm] = useState(false);
   const [modoFormulario, setModoFormulario] = useState("agregar");
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
   const [productoAEliminar, setProductoAEliminar] = useState(null);
+
+  // Paginación
+  const [paginaActual, setPaginaActual] = useState(1);
+  const productosPorPagina = 12;
+
+  const totalPaginas = Math.ceil(productos.length / productosPorPagina);
+  const indiceInicial = (paginaActual - 1) * productosPorPagina;
+  const indiceFinal = indiceInicial + productosPorPagina;
+
+  const productosPaginados = productos.slice(indiceInicial, indiceFinal);
+
+  // Resetear página cuando cambia la cantidad de productos (agregar/eliminar)
+  useEffect(() => {
+    if (paginaActual > totalPaginas) {
+      setPaginaActual(1);
+    }
+  }, [productos, totalPaginas]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -83,7 +102,7 @@ const GestionDeProductos = () => {
             <p>No hay productos</p>
           </ProductoCard>
         ) : (
-          productos.map((producto) => {
+          productosPaginados.map((producto) => {
             const aplicaCuotas = producto.cuotas && producto.cuotas > 0;
 
             return (
@@ -138,6 +157,15 @@ const GestionDeProductos = () => {
           })
         )}
       </GridProductos>
+
+      {/* Paginador */}
+      {totalPaginas > 1 && (
+        <Paginador
+          paginaActual={paginaActual}
+          totalPaginas={totalPaginas}
+          cambiarPagina={setPaginaActual}
+        />
+      )}
 
       {productoAEliminar && (
         <ModalOverlay role="dialog" aria-modal="true" aria-labelledby="modalEliminarTitle">

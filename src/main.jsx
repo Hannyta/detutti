@@ -10,12 +10,17 @@ import { ProductosProvider } from './context/ProductosContext.jsx';
 import { CarritoProvider } from './context/CarritoContext.jsx';
 import App from './App.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { SearchProvider } from './context/SearchContext.jsx';
 
 const AppProviders = ({ children }) => (
   <AuthProvider>
-    <ProductosProvider>
-      <CarritoProvider>{children}</CarritoProvider>
-    </ProductosProvider>
+    <SearchProvider>
+      <ProductosProvider>
+        <CarritoProvider>
+          {children}
+        </CarritoProvider>
+      </ProductosProvider>
+    </SearchProvider>
   </AuthProvider>
 );
 

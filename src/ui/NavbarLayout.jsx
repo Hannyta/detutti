@@ -5,11 +5,16 @@ export const Nav = styled.nav`
   background-color: #1e8fff11;
   padding: 0.5rem 1.2rem;
   border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   @media (max-width: 700px) {
     width: 100%;
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 `;
 
@@ -26,6 +31,18 @@ export const NavList = styled.ul`
     gap: 0.1rem;
     align-items: center;
   }
+`;
+
+export const Badge = styled.span`
+  background-color: #e74883;
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 6px;
+  margin-left: 4px;
+  display: inline-block;
+  line-height: 1;
 `;
 
 export const NavItem = styled(Link)`

@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-export const ModaSection = styled.section`
+export const OfertasSection = styled.section`
   margin: 2rem auto;
   max-width: 1200px;
   padding: 1rem;
 `;
 
-export const ModaTitle = styled.h2`
+export const OfertasTitle = styled.h2`
   font-size: clamp(1.8rem, 2.5vw, 2.2rem);
   color: ${({ theme }) => theme.colors.primary};
   margin-bottom: 2rem;

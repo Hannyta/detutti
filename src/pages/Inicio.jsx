@@ -1,10 +1,17 @@
+import { useState } from "react";
 import { useProductosContext } from '../context/ProductosContext';
+import { useSearch } from "../context/SearchContext";
 import Productos from '../components/Productos';
+import Paginador from "../components/Paginador";
 import { Helmet } from 'react-helmet-async';
 import { InicioMain, TituloSeccion, Mensaje, ErrorBox } from '../ui/InicioLayout';
 
 const Inicio = () => {
   const { productos, cargando, error } = useProductosContext();
+  const { busqueda } = useSearch();
+
+  const [paginaActual, setPaginaActual] = useState(1);
+  const productosPorPagina = 12;
 
   if (cargando) {
     return (
@@ -17,21 +24,61 @@ const Inicio = () => {
   }
 
   if (error) {
-    return <ErrorBox aria-live="polite">Ocurrió un error al cargar los productos: {error}</ErrorBox>;
+    return (
+      <ErrorBox aria-live="polite">
+        Ocurrió un error al cargar los productos: {error}
+      </ErrorBox>
+    );
   }
+
+  // ✅ Filtrar por búsqueda
+  const productosFiltrados = productos.filter((p) =>
+    p.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
+    p.categoria?.toLowerCase().includes(busqueda.toLowerCase()) ||
+    p.subCategoria?.toLowerCase().includes(busqueda.toLowerCase())
+  );
+
+  //  Calcular paginación
+  const totalPaginas = Math.ceil(productosFiltrados.length / productosPorPagina);
+  const indiceInicial = (paginaActual - 1) * productosPorPagina;
+  const indiceFinal = indiceInicial + productosPorPagina;
+
+  const productosPaginados = productosFiltrados.slice(indiceInicial, indiceFinal);
+
+  //  Resetear a página 1 cuando cambia la búsqueda
+  useState(() => {
+    setPaginaActual(1);
+  }, [busqueda]);
 
   return (
     <InicioMain>
       <Helmet>
         <title>Detutti - Inicio</title>
-        <meta name="description" content="Explora todos nuestros productos disponibles en Detutti." />
+        <meta
+          name="description"
+          content="Explora todos nuestros productos disponibles en Detutti."
+        />
       </Helmet>
 
       <TituloSeccion>Productos</TituloSeccion>
-      {productos.length === 0 ? (
-        <Mensaje>No hay productos disponibles</Mensaje>
+
+      {productosFiltrados.length === 0 ? (
+        <Mensaje>No se encontraron productos</Mensaje>
       ) : (
-        <Productos productos={productos} cargando={cargando} error={error} />
+        <>
+          <Productos
+            productos={productosPaginados}
+            cargando={cargando}
+            error={error}
+          />
+
+          {/* Paginador */}
+          <Paginador
+            paginaActual={paginaActual}
+            totalPaginas={totalPaginas}
+            cambiarPagina={setPaginaActual}
+          />
+        </>
       )}
     </InicioMain>
   );

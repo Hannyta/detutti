@@ -1,5 +1,5 @@
 import { useAuthContext } from '../context/AuthContext';
-import { Nav, NavList, NavItem } from '../ui/NavbarLayout';
+import { Nav, NavList, NavItem, Badge } from '../ui/NavbarLayout';
 
 const Navbar = () => {
   const { user } = useAuthContext();
@@ -11,6 +11,8 @@ const Navbar = () => {
         <li><NavItem to="/moda">Moda</NavItem></li>
         <li><NavItem to="/tecnologia">Tecnología</NavItem></li>
         <li><NavItem to="/accesorios">Accesorios</NavItem></li>
+
+        <li><NavItem to="/ofertas">Ofertas<Badge>%</Badge></NavItem></li>
 
         {/* Solo visible si el usuario es admin */}
         {esAdmin && (

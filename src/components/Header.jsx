@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
 import { FaUserLarge } from 'react-icons/fa6';
 import { MdLogout } from 'react-icons/md';
+import BarraBusqueda from './BarraBusqueda';
 import { useAuthContext } from '../context/AuthContext';
 import styled, { keyframes } from 'styled-components';
 
@@ -28,8 +29,9 @@ const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
   padding: 0 1.5rem;
-  height: 90px;
+  height: 70px;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     flex-direction: column;
@@ -144,17 +146,17 @@ const Header = ({ contadorCarrito, onCarritoClick }) => {
   return (
     <StyledHeader aria-labelledby="siteLogo">
       <HeaderContainer>
-        {/* Logo */}
+
         <LogoContainer>
           <Link to="/" id="siteLogo">
             <LogoPrincipal src={logo} alt="Logo Detutti" />
           </Link>
         </LogoContainer>
 
-        {/* Navbar */}
         <Navbar user={user} />
 
-        {/* Iconos */}
+        <BarraBusqueda />
+
         <HeaderIcon>
           {user ? (
             <>
@@ -173,7 +175,6 @@ const Header = ({ contadorCarrito, onCarritoClick }) => {
             </Link>
           )}
 
-          {/* Carrito */}
           <HeaderCarrito onClick={onCarritoClick} role="button" aria-label="Ver carrito">
             <IconoCarrito title="Ver carrito" />
             {contadorCarrito > 0 && (
@@ -181,9 +182,10 @@ const Header = ({ contadorCarrito, onCarritoClick }) => {
             )}
           </HeaderCarrito>
         </HeaderIcon>
+
       </HeaderContainer>
     </StyledHeader>
   );
 };
 
-export default Header
+export default Header;
