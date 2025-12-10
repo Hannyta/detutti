@@ -1,7 +1,7 @@
 const theme = {
   colors: {
     primary: "#005BAC",   // azul marca
-    secondary: "#0aa8bd", // celeste acento
+    secondary: "#0aa8bd",
     text: "#333",
     background: "#fff",
     focus: "#0aa8bd",

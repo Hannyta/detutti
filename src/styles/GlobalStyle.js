@@ -26,7 +26,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    padding-top: 90px; /* Para que no tape el header */
+    padding-top: 90px;
     min-width: 320px;
     min-height: 100vh;
     color: ${({ theme }) => theme.colors.text};

@@ -5,6 +5,7 @@ import Productos from '../components/Productos';
 import Paginador from "../components/Paginador";
 import { Helmet } from 'react-helmet-async';
 import { InicioMain, TituloSeccion, Mensaje, ErrorBox } from '../ui/InicioLayout';
+import Carrusel from "../components/Carrusel";
 
 const Inicio = () => {
   const { productos, cargando, error } = useProductosContext();
@@ -60,7 +61,7 @@ const Inicio = () => {
           content="Explora todos nuestros productos disponibles en Detutti."
         />
       </Helmet>
-
+      <Carrusel/>
       <TituloSeccion>Productos</TituloSeccion>
 
       {productosFiltrados.length === 0 ? (
