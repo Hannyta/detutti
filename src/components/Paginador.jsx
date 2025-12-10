@@ -12,8 +12,8 @@ const BotonPagina = styled.button`
   padding: 0.2rem 0.4rem;
   border-radius: 8px;
   border: 1px solid #d0d7ff;
-  background: ${({ active }) => (active ? "#1e8fff" : "white")};
-  color: ${({ active }) => (active ? "white" : "#003166")};
+  background: ${({ $active }) => ($active ? "#1e8fff" : "white")};
+  color: ${({ $active }) => ($active ? "white" : "#003166")};
   cursor: pointer;
   font-weight: 400;
   transition: 0.2s;
@@ -21,6 +21,11 @@ const BotonPagina = styled.button`
   &:hover {
     background: #1e8fff;
     color: white;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
   }
 `;
 
@@ -39,7 +44,7 @@ const Paginador = ({ paginaActual, totalPaginas, cambiarPagina }) => {
       {paginas.map((num) => (
         <BotonPagina
           key={num}
-          active={num === paginaActual}
+          $active={num === paginaActual}
           onClick={() => cambiarPagina(num)}
         >
           {num}

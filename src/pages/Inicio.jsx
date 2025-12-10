@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useProductosContext } from '../context/ProductosContext';
 import { useSearch } from "../context/SearchContext";
 import Productos from '../components/Productos';
@@ -13,6 +13,26 @@ const Inicio = () => {
   const [paginaActual, setPaginaActual] = useState(1);
   const productosPorPagina = 12;
 
+  // Resetear página cuando cambia la búsqueda
+  useEffect(() => {
+    setPaginaActual(1);
+  }, [busqueda]);
+
+  // Filtrar por búsqueda
+  const productosFiltrados = productos.filter((p) =>
+    p.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
+    p.categoria?.toLowerCase().includes(busqueda.toLowerCase()) ||
+    p.subCategoria?.toLowerCase().includes(busqueda.toLowerCase())
+  );
+
+  // Calcular paginación
+  const totalPaginas = Math.ceil(productosFiltrados.length / productosPorPagina);
+  const indiceInicial = (paginaActual - 1) * productosPorPagina;
+  const indiceFinal = indiceInicial + productosPorPagina;
+
+  const productosPaginados = productosFiltrados.slice(indiceInicial, indiceFinal);
+
+  // Returns condicionales SIEMPRE después de los hooks
   if (cargando) {
     return (
       <div style={{ textAlign: "center", marginTop: "2rem" }}>
@@ -30,25 +50,6 @@ const Inicio = () => {
       </ErrorBox>
     );
   }
-
-  // ✅ Filtrar por búsqueda
-  const productosFiltrados = productos.filter((p) =>
-    p.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-    p.categoria?.toLowerCase().includes(busqueda.toLowerCase()) ||
-    p.subCategoria?.toLowerCase().includes(busqueda.toLowerCase())
-  );
-
-  //  Calcular paginación
-  const totalPaginas = Math.ceil(productosFiltrados.length / productosPorPagina);
-  const indiceInicial = (paginaActual - 1) * productosPorPagina;
-  const indiceFinal = indiceInicial + productosPorPagina;
-
-  const productosPaginados = productosFiltrados.slice(indiceInicial, indiceFinal);
-
-  //  Resetear a página 1 cuando cambia la búsqueda
-  useState(() => {
-    setPaginaActual(1);
-  }, [busqueda]);
 
   return (
     <InicioMain>
@@ -72,7 +73,6 @@ const Inicio = () => {
             error={error}
           />
 
-          {/* Paginador */}
           <Paginador
             paginaActual={paginaActual}
             totalPaginas={totalPaginas}
