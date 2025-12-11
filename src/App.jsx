@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { useState, useContext } from 'react';
 import styled from 'styled-components';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
@@ -21,8 +21,7 @@ import Overlay from './ui/Overlay';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Ofertas from './pages/Ofertas';
-
-
+import Carrusel from './components/Carrusel';
 
 const MainWrapper = styled.main`
   min-height: 80vh;
@@ -33,6 +32,7 @@ const MainWrapper = styled.main`
 function App() {
   const [mostrarAside, setMostrarAside] = useState(false);
   const { carrito } = useContext(CarritoContext);
+  const location = useLocation();
 
   const toggleAside = () => {
     setMostrarAside((prev) => !prev);
@@ -61,7 +61,10 @@ function App() {
         )}
 
         <CarritoAside cerrarAside={toggleAside} isOpen={mostrarAside} />
-        
+
+        {/* ✅ Carrusel fuera del MainWrapper */}
+        {location.pathname === "/" && <Carrusel />}
+
         <MainWrapper aria-label="Contenido principal">
           <Routes>
             <Route path="/" element={<Inicio />} />

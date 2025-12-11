@@ -20,13 +20,7 @@ const GlobalStyle = createGlobalStyle`
     background: ${({ theme }) => theme.colors.background};
   }
 
-  #root {
-    max-width: 1280px;
-    margin: 0 auto;
-  }
-
   body {
-    padding-top: 90px;
     min-width: 320px;
     min-height: 100vh;
     color: ${({ theme }) => theme.colors.text};
@@ -71,11 +65,13 @@ const GlobalStyle = createGlobalStyle`
 
   /* Main layout */
   main {
+    max-width: 1280px;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     width: 100%;
-    margin-top: 80px;
+    margin-top: 90px;
     padding: 2rem 2rem 120px 2rem;
     box-sizing: border-box;
     text-align: left;
@@ -96,4 +92,6 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export default GlobalStyle
+
+
+export default GlobalStyle;
