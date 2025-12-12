@@ -22,10 +22,12 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Ofertas from './pages/Ofertas';
 import Carrusel from './components/Carrusel';
+import TodosProductos from './pages/TodosProductos';
+import ScrollToTop from './ui/ScrollToTop';
 
 const MainWrapper = styled.main`
   min-height: 80vh;
-  padding: 2rem;
+  padding: ${({ $isHome }) => ($isHome ? '0' : '2rem')};
   background: #f9f9f9;
 `;
 
@@ -40,7 +42,8 @@ function App() {
 
   return (
     <>
-      <HelmetProvider>    
+      <HelmetProvider>   
+        <ScrollToTop/> 
         <Helmet>
           <title>Detutti - Tienda Online</title>
           <meta name="description" content="Explora productos de moda, tecnología y accesorios en Detutti." />
@@ -65,9 +68,10 @@ function App() {
         {/* ✅ Carrusel fuera del MainWrapper */}
         {location.pathname === "/" && <Carrusel />}
 
-        <MainWrapper aria-label="Contenido principal">
+        <MainWrapper $isHome={location.pathname === "/"} data-home={location.pathname === "/"} aria-label="Contenido principal">
           <Routes>
             <Route path="/" element={<Inicio />} />
+            <Route path="/productos" element={<TodosProductos />} />
             <Route path="/productos/:id" element={<ProductoDetalle />} />
             <Route path="/tecnologia" element={<Tecnologia />} />
             <Route path="/moda" element={<Moda />} />

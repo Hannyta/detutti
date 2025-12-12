@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { useProductosContext } from '../context/ProductosContext';
 import { useSearch } from "../context/SearchContext";
-import Productos from '../components/Productos';
-import Paginador from '../components/Paginador';
 import { Helmet } from 'react-helmet-async';
-import { InicioMain, TituloSeccion, Mensaje, ErrorBox } from '../ui/InicioLayout';
+import { InicioMain, ErrorBox } from '../ui/InicioLayout';
 import CarruselDestacados from "../components/CarruselDestacados";
+import CarruselModaHombre from "../components/CarruselModaHombre";
+import CarruselModaMujer from "../components/CarruselModaMujer";
+import CarruselModaInfante from "../components/CarruselModaInfante";
+import CarruselTecnologia from "../components/CarruselTecnologia";
+import CarruselAccesorios from "../components/CarruselAccesorios";
 
 const Inicio = () => {
   const { productos, cargando, error } = useProductosContext();
@@ -23,11 +26,6 @@ const Inicio = () => {
     p.categoria?.toLowerCase().includes(busqueda.toLowerCase()) ||
     p.subCategoria?.toLowerCase().includes(busqueda.toLowerCase())
   );
-
-  const totalPaginas = Math.ceil(productosFiltrados.length / productosPorPagina);
-  const indiceInicial = (paginaActual - 1) * productosPorPagina;
-  const indiceFinal = indiceInicial + productosPorPagina;
-  const productosPaginados = productosFiltrados.slice(indiceInicial, indiceFinal);
 
   if (cargando) {
     return (
@@ -57,23 +55,13 @@ const Inicio = () => {
         />
       </Helmet>
 
-      <InicioMain>
+      <InicioMain $isHome>
         <CarruselDestacados/>
-        <TituloSeccion>Todos los Productos</TituloSeccion>
-
-        {productosFiltrados.length === 0 ? (
-          <Mensaje>No se encontraron productos</Mensaje>
-        ) : (
-          <>
-            <Productos productos={productosPaginados} />
-
-            <Paginador
-              paginaActual={paginaActual}
-              totalPaginas={totalPaginas}
-              cambiarPagina={setPaginaActual}
-            />
-          </>
-        )}
+        <CarruselModaHombre/>
+        <CarruselModaMujer/>
+        <CarruselModaInfante/>
+        <CarruselTecnologia/>
+        <CarruselAccesorios/>
       </InicioMain>
     </>
   );

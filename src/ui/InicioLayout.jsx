@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const InicioMain = styled.main`
   max-width: 100%;
   margin: 0 auto;
-  padding: 10px;
+  padding: ${({ $isHome }) => ($isHome ? '0' : '10px')};
 `;
 
 export const TituloSeccion = styled.h2`

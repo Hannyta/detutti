@@ -1,30 +1,37 @@
 import { useProductosContext } from "../context/ProductosContext";
-import TarjetaProducto from "../components/TarjetaProducto";
+import TarjetaProducto from "./TarjetaProducto";
 import { CarruselHomeLayout as Wrapper } from "../ui/CarruselHomeLayout";
 import Boton from "../ui/Boton";
 import { Link } from "react-router-dom";
 
-const CarruselDestacados = () => {
+const CarruselAccesorios = () => {
   const { productos } = useProductosContext();
 
-  const ofertas = productos.filter((p) => p.descuento > 0);
+  const accesorios = productos.filter((p) => {
+    const cat = p.categoria?.toLowerCase?.() || "";
+    const sub = p.subCategoria?.toLowerCase?.() || "";
+    return (
+      cat === "accesorios" ||
+      sub.includes("accesorio") ||
+      cat.includes("accesorio")
+    );
+  });
 
   let slides = [];
-
-  if (ofertas.length >= 4) {
-    for (let i = 0; i <= ofertas.length - 4; i++) {
-      slides.push(ofertas.slice(i, i + 4));
+  if (accesorios.length >= 4) {
+    for (let i = 0; i <= accesorios.length - 4; i++) {
+      slides.push(accesorios.slice(i, i + 4));
     }
   } else {
-    slides = [ofertas];
+    slides = [accesorios];
   }
 
   return (
     <Wrapper>
-      <h2>Productos destacados</h2>
+      <h2>Accesorios</h2>
 
       <div
-        id="carouselDestacados"
+        id="carouselAccesorios"
         className="carousel slide carousel-fade"
         data-bs-ride="carousel"
         data-bs-interval="4000"
@@ -64,7 +71,7 @@ const CarruselDestacados = () => {
         <button
           className="carousel-control-prev"
           type="button"
-          data-bs-target="#carouselDestacados"
+          data-bs-target="#carouselAccesorios"
           data-bs-slide="prev"
         >
           <span className="carousel-control-prev-icon"></span>
@@ -73,7 +80,7 @@ const CarruselDestacados = () => {
         <button
           className="carousel-control-next"
           type="button"
-          data-bs-target="#carouselDestacados"
+          data-bs-target="#carouselAccesorios"
           data-bs-slide="next"
         >
           <span className="carousel-control-next-icon"></span>
@@ -81,14 +88,12 @@ const CarruselDestacados = () => {
       </div>
 
       <div className="text-center cta">
-        <Link to="/ofertas" style={{ textDecoration: "none" }}>
-          <Boton tipo="primary" ariaLabel="Ver todas las ofertas">
-            Ver todas las ofertas
-          </Boton>
+        <Link to="/accesorios" style={{ textDecoration: "none" }}>
+          <Boton tipo="primary">Ver Accesorios</Boton>
         </Link>
       </div>
     </Wrapper>
   );
 };
 
-export default CarruselDestacados;
+export default CarruselAccesorios;

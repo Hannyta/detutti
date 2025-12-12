@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 import styled from "styled-components";
+import { Link } from 'react-router-dom';
 import HeroDetutti from "./HeroDetutti";
 import heroTecnologia from "../assets/hero-tecnologia.png";
 import heroOferta from "../assets/hero-oferta.png";
@@ -94,19 +95,20 @@ const Carrusel = () => {
         <div className="carousel-inner">
 
           <div className="carousel-item active">
-            <div
-              style={{
-                height: "520px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                overflow: "hidden",
-                pointerEvents: "none"
-              }}
-            >
-              <NieveEffect />
-              <HeroDetutti />
-            </div>
+            <Link to="/moda" aria-label="Ir a Moda" style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
+              <div
+                style={{
+                  height: "520px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  overflow: "hidden",
+                }}
+              >
+                <NieveEffect />
+                <HeroDetutti />
+              </div>
+            </Link>
           </div>
 
           <div className="carousel-item">

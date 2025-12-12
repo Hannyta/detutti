@@ -90,6 +90,11 @@ const GlobalStyle = createGlobalStyle`
       gap: 1rem;
     }
   }
+
+  /* Reduce the top margin on the home page so hero and main sit closer */
+  main[data-home="true"] {
+    margin-top: 10px;
+  }
 `;
 
 

@@ -8,6 +8,7 @@ const Navbar = () => {
   return (
     <Nav>
       <NavList>
+        <li><NavItem to="/productos">Productos</NavItem></li>
         <li><NavItem to="/moda">Moda</NavItem></li>
         <li><NavItem to="/tecnologia">Tecnología</NavItem></li>
         <li><NavItem to="/accesorios">Accesorios</NavItem></li>

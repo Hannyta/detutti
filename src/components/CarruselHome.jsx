@@ -1,30 +1,26 @@
-import { useProductosContext } from "../context/ProductosContext";
-import TarjetaProducto from "../components/TarjetaProducto";
+import TarjetaProducto from "./TarjetaProducto";
 import { CarruselHomeLayout as Wrapper } from "../ui/CarruselHomeLayout";
 import Boton from "../ui/Boton";
 import { Link } from "react-router-dom";
 
-const CarruselDestacados = () => {
-  const { productos } = useProductosContext();
-
-  const ofertas = productos.filter((p) => p.descuento > 0);
-
+const CarruselHome = ({ titulo, productos, ruta, id }) => {
+  // Crear slides de 4 productos
   let slides = [];
 
-  if (ofertas.length >= 4) {
-    for (let i = 0; i <= ofertas.length - 4; i++) {
-      slides.push(ofertas.slice(i, i + 4));
+  if (productos.length >= 4) {
+    for (let i = 0; i <= productos.length - 4; i++) {
+      slides.push(productos.slice(i, i + 4));
     }
   } else {
-    slides = [ofertas];
+    slides = [productos];
   }
 
   return (
     <Wrapper>
-      <h2>Productos destacados</h2>
+      <h2>{titulo}</h2>
 
       <div
-        id="carouselDestacados"
+        id={id}
         className="carousel slide carousel-fade"
         data-bs-ride="carousel"
         data-bs-interval="4000"
@@ -44,13 +40,7 @@ const CarruselDestacados = () => {
                   return (
                     <div className="tarjeta-wrapper" key={producto.id}>
                       <TarjetaProducto
-                        id={producto.id}
-                        imagen={producto.imagen}
-                        nombre={producto.nombre}
-                        precio={producto.precio}
-                        descuento={producto.descuento}
-                        aplicaCuotas={producto.aplicaCuotas}
-                        cuotas={producto.cuotas}
+                        {...producto}
                         valorCuota={valorCuotaNormalizado}
                       />
                     </div>
@@ -64,7 +54,7 @@ const CarruselDestacados = () => {
         <button
           className="carousel-control-prev"
           type="button"
-          data-bs-target="#carouselDestacados"
+          data-bs-target={`#${id}`}
           data-bs-slide="prev"
         >
           <span className="carousel-control-prev-icon"></span>
@@ -73,7 +63,7 @@ const CarruselDestacados = () => {
         <button
           className="carousel-control-next"
           type="button"
-          data-bs-target="#carouselDestacados"
+          data-bs-target={`#${id}`}
           data-bs-slide="next"
         >
           <span className="carousel-control-next-icon"></span>
@@ -81,14 +71,12 @@ const CarruselDestacados = () => {
       </div>
 
       <div className="text-center cta">
-        <Link to="/ofertas" style={{ textDecoration: "none" }}>
-          <Boton tipo="primary" ariaLabel="Ver todas las ofertas">
-            Ver todas las ofertas
-          </Boton>
+        <Link to={ruta} style={{ textDecoration: "none" }}>
+          <Boton tipo="primary">Ver todo</Boton>
         </Link>
       </div>
     </Wrapper>
   );
 };
 
-export default CarruselDestacados;
+export default CarruselHome;
