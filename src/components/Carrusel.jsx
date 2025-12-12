@@ -3,6 +3,8 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 import styled from "styled-components";
 import HeroDetutti from "./HeroDetutti";
+import heroTecnologia from "../assets/hero-tecnologia.png";
+import heroOferta from "../assets/hero-oferta.png";
 
 const CarruselWrapper = styled.div`
   width: 100vw;
@@ -18,6 +20,28 @@ const CarruselWrapper = styled.div`
     margin: 0;
     padding: 0;
   }
+`;
+
+const BannerTecnologia = styled.div`
+  width: 100%;
+  height: 520px;
+  background-image: url(${heroTecnologia});
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #af1515ff; 
+  cursor: pointer;
+`;
+
+const BannerOferta = styled.div`
+  width: 100%;
+  height: 520px;
+  background-image: url(${heroOferta});
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #4a99daff; 
+  cursor: pointer;
 `;
 
 const Carrusel = () => {
@@ -52,29 +76,20 @@ const Carrusel = () => {
 
         <div className="carousel-inner">
 
-          {/* SLIDE 1 */}
           <div className="carousel-item active">
             <HeroDetutti />
           </div>
 
-          {/* SLIDE 2 */}
           <div className="carousel-item">
             <a href="/tecnologia">
-              <img
-                src="/assets/hero-tecnologia.png"
-                className="d-block w-100"
-                alt="6 cuotas sin interés en tecnología"
-              />
+              <BannerTecnologia />
             </a>
           </div>
 
-          {/* SLIDE 3 */}
           <div className="carousel-item">
-            <img
-              src="/assets/carrusel1.jpg"
-              className="d-block w-100"
-              alt="Slide 1"
-            />
+            <a href="/ofertas">
+              <BannerOferta />
+            </a>
           </div>
 
         </div>

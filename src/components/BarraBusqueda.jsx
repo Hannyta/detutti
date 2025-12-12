@@ -10,7 +10,7 @@ const SearchWrapper = styled.div`
 
 const Input = styled.input`
   padding: 0.45rem 1rem 0.45rem 2.5rem;
-  border-radius: 8px;
+  border-radius: 22px;
   border: 1px solid #d0d7ff;
   font-size: 0.95rem;
   outline: none;
