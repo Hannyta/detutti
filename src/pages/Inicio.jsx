@@ -5,6 +5,7 @@ import Productos from '../components/Productos';
 import Paginador from '../components/Paginador';
 import { Helmet } from 'react-helmet-async';
 import { InicioMain, TituloSeccion, Mensaje, ErrorBox } from '../ui/InicioLayout';
+import CarruselDestacados from "../components/CarruselDestacados";
 
 const Inicio = () => {
   const { productos, cargando, error } = useProductosContext();
@@ -57,7 +58,8 @@ const Inicio = () => {
       </Helmet>
 
       <InicioMain>
-        <TituloSeccion>Productos</TituloSeccion>
+        <CarruselDestacados/>
+        <TituloSeccion>Todos los Productos</TituloSeccion>
 
         {productosFiltrados.length === 0 ? (
           <Mensaje>No se encontraron productos</Mensaje>

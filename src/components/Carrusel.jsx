@@ -5,6 +5,7 @@ import styled from "styled-components";
 import HeroDetutti from "./HeroDetutti";
 import heroTecnologia from "../assets/hero-tecnologia.png";
 import heroOferta from "../assets/hero-oferta.png";
+import NieveEffect from "./NieveEffect";
 
 const CarruselWrapper = styled.div`
   width: 100vw;
@@ -12,6 +13,7 @@ const CarruselWrapper = styled.div`
   margin-right: calc(50% - 50vw);
   padding: 90px 0 0 0;
   margin-top: 0;
+  overflow: hidden
 
   .carousel,
   .carousel-inner,
@@ -19,6 +21,15 @@ const CarruselWrapper = styled.div`
   #carouselExampleIndicators {
     margin: 0;
     padding: 0;
+  }
+
+  .carousel-item {
+    height: 520px;
+    transition: transform 1.4s cubic-bezier(.25,.1,.25,1);
+  }
+
+  .carousel-inner {
+    transition: none;
   }
 `;
 
@@ -29,7 +40,7 @@ const BannerTecnologia = styled.div`
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: #af1515ff; 
+  background-color: #af1515ff;
   cursor: pointer;
 `;
 
@@ -40,14 +51,20 @@ const BannerOferta = styled.div`
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: #4a99daff; 
+  background-color: #4a99daff;
   cursor: pointer;
 `;
 
 const Carrusel = () => {
   return (
     <CarruselWrapper>
-      <div id="carouselExampleIndicators" className="carousel slide">
+      <div
+        id="carouselExampleIndicators"
+        className="carousel slide"
+        data-bs-ride="carousel"
+        data-bs-interval="3000"
+        data-bs-pause="false"
+      >
 
         <div className="carousel-indicators">
           <button
@@ -77,17 +94,31 @@ const Carrusel = () => {
         <div className="carousel-inner">
 
           <div className="carousel-item active">
-            <HeroDetutti />
+            <div
+              style={{
+                height: "520px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                overflow: "hidden",
+                pointerEvents: "none"
+              }}
+            >
+              <NieveEffect />
+              <HeroDetutti />
+            </div>
           </div>
 
           <div className="carousel-item">
             <a href="/tecnologia">
+              <NieveEffect />
               <BannerTecnologia />
             </a>
           </div>
 
           <div className="carousel-item">
             <a href="/ofertas">
+              <NieveEffect />
               <BannerOferta />
             </a>
           </div>
