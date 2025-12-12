@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import FormularioProducto from './FormularioProducto';
 import { useProductosContext } from '../context/ProductosContext';
+import { useSearch } from "../context/SearchContext";
 import { CiCirclePlus } from 'react-icons/ci';
 import { LuSquarePen } from 'react-icons/lu';
 import { FaTrashCan } from 'react-icons/fa6';
@@ -20,6 +21,7 @@ import {
 
 const GestionDeProductos = () => {
   const { productos, eliminarProducto } = useProductosContext();
+  const { busqueda } = useSearch();
 
   const [mostrarForm, setMostrarForm] = useState(false);
   const [modoFormulario, setModoFormulario] = useState("agregar");
@@ -30,19 +32,29 @@ const GestionDeProductos = () => {
   const [paginaActual, setPaginaActual] = useState(1);
   const productosPorPagina = 12;
 
-  const totalPaginas = Math.ceil(productos.length / productosPorPagina);
+  // 🔍 FILTRO DE BÚSQUEDA
+  const texto = busqueda.toLowerCase();
+
+  const productosFiltrados = productos.filter((p) =>
+    p.nombre?.toLowerCase().includes(texto) ||
+    p.categoria?.toLowerCase().includes(texto) ||
+    p.subCategoria?.toLowerCase().includes(texto)
+  );
+
+  const totalPaginas = Math.ceil(productosFiltrados.length / productosPorPagina);
   const indiceInicial = (paginaActual - 1) * productosPorPagina;
   const indiceFinal = indiceInicial + productosPorPagina;
 
-  const productosPaginados = productos.slice(indiceInicial, indiceFinal);
+  const productosPaginados = productosFiltrados.slice(indiceInicial, indiceFinal);
 
   // Resetear página cuando cambia la cantidad de productos (agregar/eliminar)
   useEffect(() => {
     if (paginaActual > totalPaginas) {
       setPaginaActual(1);
     }
-  }, [productos, totalPaginas]);
+  }, [productosFiltrados, totalPaginas]);
 
+  // Cerrar modal con Escape
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {
@@ -97,9 +109,9 @@ const GestionDeProductos = () => {
       </GestionHeader>
 
       <GridProductos>
-        {productos.length === 0 ? (
+        {productosFiltrados.length === 0 ? (
           <ProductoCard>
-            <p>No hay productos</p>
+            <p>No se encontraron productos</p>
           </ProductoCard>
         ) : (
           productosPaginados.map((producto) => {
@@ -167,6 +179,7 @@ const GestionDeProductos = () => {
         />
       )}
 
+      {/* Modal de eliminación */}
       {productoAEliminar && (
         <ModalOverlay role="dialog" aria-modal="true" aria-labelledby="modalEliminarTitle">
           <ModalContainer>
@@ -197,6 +210,7 @@ const GestionDeProductos = () => {
         </ModalOverlay>
       )}
 
+      {/* Formulario agregar/editar */}
       {mostrarForm && (
         <FormularioProducto
           productoInicial={productoSeleccionado || {}}

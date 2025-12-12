@@ -1,12 +1,12 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-
 import styled from "styled-components";
-import { Link } from 'react-router-dom';
 import HeroDetutti from "./HeroDetutti";
 import heroTecnologia from "../assets/hero-tecnologia.png";
 import heroOferta from "../assets/hero-oferta.png";
 import NieveEffect from "./NieveEffect";
+
+const altura = "400px";
 
 const CarruselWrapper = styled.div`
   width: 100vw;
@@ -14,7 +14,7 @@ const CarruselWrapper = styled.div`
   margin-right: calc(50% - 50vw);
   padding: 90px 0 0 0;
   margin-top: 0;
-  overflow: hidden
+  overflow: hidden;
 
   .carousel,
   .carousel-inner,
@@ -25,18 +25,41 @@ const CarruselWrapper = styled.div`
   }
 
   .carousel-item {
-    height: 520px;
-    transition: transform 1.4s cubic-bezier(.25,.1,.25,1);
+    height: ${altura};
+    width: 100vw;
+    backface-visibility: hidden;
+    will-change: opacity;
+    transition: opacity 1.2s ease-in-out !important;
+  }
+
+  .carousel-fade .carousel-item {
+    opacity: 0;
+    position: absolute;
+    inset: 0;
+    transform: scale(1.02);
+  }
+
+  .carousel-fade .carousel-item.active {
+    opacity: 1;
+    position: relative;
+    transform: scale(1);
+  }
+
+  .carousel-item > div,
+  .carousel-item > a {
+    position: relative;
+    height: 100%;
+    display: block;
   }
 
   .carousel-inner {
-    transition: none;
+    overflow: hidden;
   }
 `;
 
 const BannerTecnologia = styled.div`
   width: 100%;
-  height: 520px;
+  height: ${altura};
   background-image: url(${heroTecnologia});
   background-size: contain;
   background-position: center;
@@ -47,7 +70,7 @@ const BannerTecnologia = styled.div`
 
 const BannerOferta = styled.div`
   width: 100%;
-  height: 520px;
+  height: ${altura};
   background-image: url(${heroOferta});
   background-size: contain;
   background-position: center;
@@ -61,56 +84,37 @@ const Carrusel = () => {
     <CarruselWrapper>
       <div
         id="carouselExampleIndicators"
-        className="carousel slide"
+        className="carousel slide carousel-fade"
         data-bs-ride="carousel"
         data-bs-interval="3000"
         data-bs-pause="false"
       >
 
         <div className="carousel-indicators">
-          <button
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to="0"
-            className="active"
-            aria-current="true"
-            aria-label="Slide 1"
-          ></button>
-
-          <button
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to="1"
-            aria-label="Slide 2"
-          ></button>
-
-          <button
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to="2"
-            aria-label="Slide 3"
-          ></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
 
         <div className="carousel-inner">
 
+          {/* SLIDE 1 — HERO */}
           <div className="carousel-item active">
-            <Link to="/moda" aria-label="Ir a Moda" style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
-              <div
-                style={{
-                  height: "520px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  overflow: "hidden",
-                }}
-              >
-                <NieveEffect />
-                <HeroDetutti />
-              </div>
-            </Link>
+            <div
+              style={{
+                height: altura,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                overflow: "hidden",
+              }}
+            >
+              <NieveEffect />
+              <HeroDetutti />
+            </div>
           </div>
 
+          {/* SLIDE 2 — TECNOLOGÍA */}
           <div className="carousel-item">
             <a href="/tecnologia">
               <NieveEffect />
@@ -118,6 +122,7 @@ const Carrusel = () => {
             </a>
           </div>
 
+          {/* SLIDE 3 — OFERTAS */}
           <div className="carousel-item">
             <a href="/ofertas">
               <NieveEffect />
@@ -128,22 +133,12 @@ const Carrusel = () => {
         </div>
 
         {/* CONTROLES */}
-        <button
-          className="carousel-control-prev"
-          type="button"
-          data-bs-target="#carouselExampleIndicators"
-          data-bs-slide="prev"
-        >
+        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
           <span className="carousel-control-prev-icon" aria-hidden="true"></span>
           <span className="visually-hidden">Anterior</span>
         </button>
 
-        <button
-          className="carousel-control-next"
-          type="button"
-          data-bs-target="#carouselExampleIndicators"
-          data-bs-slide="next"
-        >
+        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
           <span className="carousel-control-next-icon" aria-hidden="true"></span>
           <span className="visually-hidden">Siguiente</span>
         </button>

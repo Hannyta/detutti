@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import heroModa from "../assets/hero-moda.png";
 import Arbol from "../assets/Arbol.png";
 
 const HeroWrapper = styled.section`
   width: 100%;
-  min-height: 520px;
+  min-height: 400px;
   background-image: url(${heroModa});
   background-size: contain;
   background-repeat: no-repeat;
@@ -17,6 +17,8 @@ const HeroWrapper = styled.section`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  cursor: pointer;
+  z-index: 1;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     flex-direction: column;
@@ -28,7 +30,6 @@ const HeroWrapper = styled.section`
     justify-content: flex-start;
     align-items: center;
 
-    /* Overlay para mejorar contraste */
     &::before {
       content: "";
       position: absolute;
@@ -96,75 +97,89 @@ const LightBulb = styled(motion.div)`
 `;
 
 export default function HeroDetutti() {
+  const navigate = useNavigate();
   const isMobile = window.innerWidth < 768;
   const snowflakes = Array.from({ length: 25 });
   const bulbColors = ["#ff3b3b", "#3bff62", "#3bb8ff", "#ffe23b"];
 
+  const handleClick = (e) => {
+    if (
+      e.target.closest(".carousel-control-prev") ||
+      e.target.closest(".carousel-control-next")
+    ) {
+      return;
+    }
+
+    navigate("/moda");
+  };
+
   return (
-    <Link to="/moda" style={{ width: "100%", display: "block" }}>
-      <HeroWrapper>
+    <HeroWrapper
+      role="button"
+      tabIndex={0}
+      onClick={handleClick}
+      onKeyDown={(e) => e.key === "Enter" && navigate("/moda")}
+    >
+      {/* ✨ Luces navideñas */}
+      {!isMobile && (
+        <Lights>
+          {Array.from({ length: 20 }).map((_, i) => (
+            <LightBulb
+              key={i}
+              color={bulbColors[i % bulbColors.length]}
+              animate={{ opacity: [0.4, 1, 0.4] }}
+              transition={{
+                duration: 1.2,
+                repeat: Infinity,
+                delay: i * 0.1,
+              }}
+            />
+          ))}
+        </Lights>
+      )}
 
-        {/* ✨ Luces navideñas */}
-        {!isMobile && (
-          <Lights>
-            {Array.from({ length: 20 }).map((_, i) => (
-              <LightBulb
-                key={i}
-                color={bulbColors[i % bulbColors.length]}
-                animate={{ opacity: [0.4, 1, 0.4] }}
-                transition={{
-                  duration: 1.2,
-                  repeat: Infinity,
-                  delay: i * 0.1,
-                }}
-              />
-            ))}
-          </Lights>
-        )}
+      {/* 🌲 Árbol izquierdo */}
+      {!isMobile && (
+        <Tree
+          style={{ left: "20px" }}
+          initial={{ opacity: 0, y: 40, scale: 0.8 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.6 }}
+        />
+      )}
 
-        {/* 🌲 Árbol izquierdo */}
-        {!isMobile && (
-          <Tree
-            style={{ left: "20px" }}
-            initial={{ opacity: 0, y: 40, scale: 0.8 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.6 }}
-          />
-        )}
+      {/* 🌲 Árbol derecho */}
+      {!isMobile && (
+        <Tree
+          style={{ right: "20px" }}
+          initial={{ opacity: 0, y: 40, scale: 0.8 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        />
+      )}
 
-        {/* 🌲 Árbol derecho */}
-        {!isMobile && (
-          <Tree
-            style={{ right: "20px" }}
-            initial={{ opacity: 0, y: 40, scale: 0.8 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          />
-        )}
+      {/* ❄️ Nieve */}
+      {!isMobile &&
+        snowflakes.map((_, i) => {
+          const size = 6 + Math.random() * 10;
+          const opacity = 0.4 + Math.random() * 0.6;
 
-        {/* ❄️ Nieve */}
-        {!isMobile &&
-          snowflakes.map((_, i) => {
-            const size = 6 + Math.random() * 10;
-            const opacity = 0.4 + Math.random() * 0.6;
-
-            return (
-              <Snowflake
-                key={i}
-                size={size}
-                opacity={opacity}
-                initial={{ y: -220, x: Math.random() * window.innerWidth }}
-                animate={{ y: 520 }}
-                transition={{
-                  duration: 2 + Math.random() * 3,
-                  repeat: Infinity,
-                  repeatType: "loop",
-                  delay: i * 0.12,
-                }}
-              />
-            );
-          })}
-      </HeroWrapper>
-    </Link>
+          return (
+            <Snowflake
+              key={i}
+              size={size}
+              opacity={opacity}
+              initial={{ y: -220, x: Math.random() * window.innerWidth }}
+              animate={{ y: 520 }}
+              transition={{
+                duration: 2 + Math.random() * 3,
+                repeat: Infinity,
+                repeatType: "loop",
+                delay: i * 0.12,
+              }}
+            />
+          );
+        })}
+    </HeroWrapper>
   );
 }
