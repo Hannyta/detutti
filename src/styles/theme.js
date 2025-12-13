@@ -1,6 +1,6 @@
 const theme = {
   colors: {
-    primary: "#005BAC",   // azul marca
+    primary: "#005BAC",
     secondary: "#0aa8bd",
     text: "#333",
     background: "#fff",

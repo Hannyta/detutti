@@ -13,7 +13,6 @@ const ForgotPassword = () => {
       setError("Por favor ingresa tu correo electrónico.");
       return;
     }
-    // Simulación de envío
     setMensaje("Se ha enviado un enlace de recuperación a tu correo.");
     setError(null);
   };

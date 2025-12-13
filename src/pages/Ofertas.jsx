@@ -49,26 +49,21 @@ const Ofertas = () => {
   const { productos } = useProductosContext();
   const { busqueda } = useSearch();
 
-  // Paginación
   const [paginaActual, setPaginaActual] = useState(1);
   const productosPorPagina = 12;
 
-  // Filtrar productos con descuento
   const ofertas = productos.filter((p) => p.descuento > 0);
 
-  // Aplicar búsqueda global
   const resultados = ofertas.filter((p) =>
     p.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
     p.categoria?.toLowerCase().includes(busqueda.toLowerCase()) ||
     p.subCategoria?.toLowerCase().includes(busqueda.toLowerCase())
   );
 
-  // Resetear página cuando cambia la búsqueda
   useEffect(() => {
     setPaginaActual(1);
   }, [busqueda]);
 
-  // Calcular paginación
   const totalPaginas = Math.ceil(resultados.length / productosPorPagina);
   const indiceInicial = (paginaActual - 1) * productosPorPagina;
   const indiceFinal = indiceInicial + productosPorPagina;

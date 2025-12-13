@@ -4,7 +4,6 @@ import Boton from "../ui/Boton";
 import { Link } from "react-router-dom";
 
 const CarruselHome = ({ titulo, productos, ruta, id }) => {
-  // Crear slides de 4 productos
   let slides = [];
 
   if (productos.length >= 4) {

@@ -28,11 +28,9 @@ const GestionDeProductos = () => {
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
   const [productoAEliminar, setProductoAEliminar] = useState(null);
 
-  // Paginación
   const [paginaActual, setPaginaActual] = useState(1);
   const productosPorPagina = 12;
 
-  // 🔍 FILTRO DE BÚSQUEDA
   const texto = busqueda.toLowerCase();
 
   const productosFiltrados = productos.filter((p) =>
@@ -47,14 +45,12 @@ const GestionDeProductos = () => {
 
   const productosPaginados = productosFiltrados.slice(indiceInicial, indiceFinal);
 
-  // Resetear página cuando cambia la cantidad de productos (agregar/eliminar)
   useEffect(() => {
     if (paginaActual > totalPaginas) {
       setPaginaActual(1);
     }
   }, [productosFiltrados, totalPaginas]);
 
-  // Cerrar modal con Escape
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {

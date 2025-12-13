@@ -59,7 +59,6 @@ const Categoria = ({ nombreCategoria, categoriaAPI, subCategoriaAPI }) => {
   const { productos, cargando, error } = useProductosContext();
   const { busqueda } = useSearch();
 
-  // Filtrar por categoría y subcategoría
   const productosFiltrados = productos.filter(
     (p) =>
       p.categoria?.toLowerCase() === categoriaAPI.toLowerCase() &&
@@ -67,14 +66,12 @@ const Categoria = ({ nombreCategoria, categoriaAPI, subCategoriaAPI }) => {
         p.subCategoria?.toLowerCase() === subCategoriaAPI.toLowerCase())
   );
 
-  // Aplicar búsqueda global
   const productosBuscados = productosFiltrados.filter((p) =>
     p.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
     p.categoria?.toLowerCase().includes(busqueda.toLowerCase()) ||
     p.subCategoria?.toLowerCase().includes(busqueda.toLowerCase())
   );
 
-  // Leer ofertas guardadas desde localStorage
   const ofertasGuardadas =
     JSON.parse(localStorage.getItem("productosConOferta")) || [];
 

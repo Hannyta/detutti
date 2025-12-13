@@ -65,7 +65,6 @@ function App() {
 
         <CarritoAside cerrarAside={toggleAside} isOpen={mostrarAside} />
 
-        {/* ✅ Carrusel fuera del MainWrapper */}
         {location.pathname === "/" && <Carrusel />}
 
         <MainWrapper $isHome={location.pathname === "/"} data-home={location.pathname === "/"} aria-label="Contenido principal">

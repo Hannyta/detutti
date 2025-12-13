@@ -29,7 +29,6 @@ const Compra = ({ productos = [] }) => {
     metodoPago: "tarjeta",
   });
 
-  // ✅ Unificar incrementar/decrementar
   const actualizarCantidad = (id, delta) => {
     setProductosCompra(prev =>
       prev.map(p =>
@@ -40,7 +39,6 @@ const Compra = ({ productos = [] }) => {
     );
   };
 
-  // ✅ Memorizar total con descuento aplicado
   const total = useMemo(() =>
     productosCompra.reduce((acc, p) => {
       const precioBase = Number(p.precio) || 0;
@@ -54,7 +52,6 @@ const Compra = ({ productos = [] }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // ✅ Validación
   const validarForm = () => {
     if (!formData.nombre || !formData.dni || !formData.direccion || !formData.codigoPostal) {
       return "Por favor completa todos los campos.";

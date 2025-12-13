@@ -6,7 +6,6 @@ import {
   PorcentajeDescuento
 } from '../ui/ProductosLayout';
 
-// Configuración de estilos según tamaño
 const sizeStyles = {
   small: {
     row: { gap: '0.5rem', fontSize: '1em', justify: 'flex-start' },
